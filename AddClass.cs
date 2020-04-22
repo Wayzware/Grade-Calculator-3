@@ -164,10 +164,12 @@ namespace Grade_Calculator_3
 
                 c = 0;
                 Double prevVal = Double.MaxValue;
+                Boolean flag = false; //if no checkbox is enabled (other than F)
                 foreach (Double element in gradeScaleValues)
                 {
                     if (gradeScaleEnableds[c])
                     {
+                        flag = true;
                         if (ErrorChecking.textIsType("Double", gradeScaleTextBoxes[c].Text))
                         {
                             Double currentGradeScaleValue = Convert.ToDouble(gradeScaleTextBoxes[c].Text);
@@ -193,6 +195,11 @@ namespace Grade_Calculator_3
                         gradeScaleValues[c] = -1; //if this grade value is disabled
                     }
                     c++;
+                }
+                if (!flag)
+                {
+                    MessageBox.Show("At least one grade must be enabled!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
                 schoolClass.gradeScale = gradeScaleValues;
             }
@@ -456,6 +463,11 @@ namespace Grade_Calculator_3
                 if(type == "Double")
                 {
                     Double temp = Convert.ToDouble(value);
+                    return true;
+                }
+                else if(type == "int")
+                {
+                    int temp = Convert.ToInt32(value);
                     return true;
                 }
             }

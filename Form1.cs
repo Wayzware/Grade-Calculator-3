@@ -12,6 +12,7 @@ namespace Grade_Calculator_3
 {
     public partial class Main : Form
     {
+
         public Main()
         {
             InitializeComponent();
@@ -20,6 +21,7 @@ namespace Grade_Calculator_3
         private void Main_Load(object sender, EventArgs e)
         {
             XMLHandler.DIRECTORY = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "/Grade Calculator/Classes/";
+            XMLHandler.Data = XMLHandler.ReadSchoolClasses();
         }
 
         private void addClassToolStripMenuItem_Click(object sender, EventArgs e)

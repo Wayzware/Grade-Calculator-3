@@ -74,6 +74,7 @@
             this.TextBoxDP = new System.Windows.Forms.TextBox();
             this.TextBoxD = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.LabelPage = new System.Windows.Forms.Label();
             this.LabelWorth4 = new System.Windows.Forms.Label();
             this.buttonPgForward = new System.Windows.Forms.Button();
             this.TextBoxWorth4 = new System.Windows.Forms.TextBox();
@@ -105,7 +106,6 @@
             this.label5 = new System.Windows.Forms.Label();
             this.textBoxClassName = new System.Windows.Forms.TextBox();
             this.buttonSave = new System.Windows.Forms.Button();
-            this.LabelPage = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -588,6 +588,15 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Categories";
             // 
+            // LabelPage
+            // 
+            this.LabelPage.AutoSize = true;
+            this.LabelPage.Location = new System.Drawing.Point(66, 372);
+            this.LabelPage.Name = "LabelPage";
+            this.LabelPage.Size = new System.Drawing.Size(41, 13);
+            this.LabelPage.TabIndex = 103;
+            this.LabelPage.Text = "Page 1";
+            // 
             // LabelWorth4
             // 
             this.LabelWorth4.AutoSize = true;
@@ -781,7 +790,7 @@
             this.groupBox3.Controls.Add(this.textBoxClassName);
             this.groupBox3.Location = new System.Drawing.Point(13, 28);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(211, 393);
+            this.groupBox3.Size = new System.Drawing.Size(211, 223);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Class Information";
@@ -891,15 +900,6 @@
             this.buttonSave.Text = "Save";
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
-            // 
-            // LabelPage
-            // 
-            this.LabelPage.AutoSize = true;
-            this.LabelPage.Location = new System.Drawing.Point(66, 372);
-            this.LabelPage.Name = "LabelPage";
-            this.LabelPage.Size = new System.Drawing.Size(41, 13);
-            this.LabelPage.TabIndex = 103;
-            this.LabelPage.Text = "Page 1";
             // 
             // AddClass
             // 
