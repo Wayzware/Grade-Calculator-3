@@ -108,7 +108,7 @@ namespace Grade_Calculator_3
             {
                 MessageBox.Show("At least one " + FILE_EXT + " file had an invalid entry!", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            MessageBox.Show("Loaded " + Convert.ToString(schoolClasses.Length)+ " classes successfully!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //MessageBox.Show("Loaded " + Convert.ToString(schoolClasses.Length)+ " classes successfully!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
             return schoolClasses;
         }
 
