@@ -14,13 +14,16 @@ namespace Grade_Calculator_3
     {
         public readonly string VERSION = "0.1";
 
+        Main main;
+
         string[] categoryNames;
         string[] categoryWorthsS;
         int pages, currentPage;
 
-        public AddClass()
+        public AddClass(Main sender)
         {
             InitializeComponent();
+            main = sender;
         }
 
         private void AddClass_Load(object sender, EventArgs e)
@@ -250,6 +253,8 @@ namespace Grade_Calculator_3
 
             //Data has been verified and is ready to be written to a file!
             XMLHandler.SaveSchoolClassToFile(schoolClass);
+            main.RefreshClassList();
+            this.Close();
         }
 
 
@@ -460,7 +465,7 @@ namespace Grade_Calculator_3
         {
             try
             {
-                if(type == "Double")
+                if(type == "Double" || type == "double")
                 {
                     Double temp = Convert.ToDouble(value);
                     return true;

@@ -37,17 +37,17 @@
             // 
             this.Label1.AutoSize = true;
             this.Label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label1.Location = new System.Drawing.Point(66, 49);
+            this.Label1.Location = new System.Drawing.Point(75, 51);
             this.Label1.Name = "Label1";
-            this.Label1.Size = new System.Drawing.Size(88, 15);
+            this.Label1.Size = new System.Drawing.Size(68, 15);
             this.Label1.TabIndex = 5;
-            this.Label1.Text = "Version [Alpha]";
+            this.Label1.Text = "Version 0.1";
             // 
             // Label2
             // 
             this.Label2.AutoSize = true;
             this.Label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label2.Location = new System.Drawing.Point(34, 25);
+            this.Label2.Location = new System.Drawing.Point(40, 25);
             this.Label2.Name = "Label2";
             this.Label2.Size = new System.Drawing.Size(143, 15);
             this.Label2.TabIndex = 4;
@@ -61,6 +61,8 @@
             this.Controls.Add(this.Label1);
             this.Controls.Add(this.Label2);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximumSize = new System.Drawing.Size(238, 135);
+            this.MinimumSize = new System.Drawing.Size(238, 135);
             this.Name = "About";
             this.Text = "About";
             this.ResumeLayout(false);

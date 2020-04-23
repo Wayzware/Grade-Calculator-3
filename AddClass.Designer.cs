@@ -755,7 +755,7 @@
             this.groupBox3.Controls.Add(this.textBoxClassName);
             this.groupBox3.Location = new System.Drawing.Point(12, 12);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(211, 223);
+            this.groupBox3.Size = new System.Drawing.Size(211, 174);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Class Information";
@@ -868,6 +868,7 @@
             // 
             // ButtonClear
             // 
+            this.ButtonClear.Enabled = false;
             this.ButtonClear.Location = new System.Drawing.Point(12, 257);
             this.ButtonClear.Name = "ButtonClear";
             this.ButtonClear.Size = new System.Drawing.Size(102, 52);
@@ -877,6 +878,7 @@
             // 
             // ButtonImport
             // 
+            this.ButtonImport.Enabled = false;
             this.ButtonImport.Location = new System.Drawing.Point(120, 257);
             this.ButtonImport.Name = "ButtonImport";
             this.ButtonImport.Size = new System.Drawing.Size(102, 52);
@@ -896,6 +898,8 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximumSize = new System.Drawing.Size(579, 431);
+            this.MinimumSize = new System.Drawing.Size(579, 431);
             this.Name = "AddClass";
             this.Text = "Add/Edit Class";
             this.Load += new System.EventHandler(this.AddClass_Load);

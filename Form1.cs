@@ -13,9 +13,10 @@ namespace Grade_Calculator_3
     public partial class Main : Form
     {
         private readonly int PAGE_LEN = 5;
-        int currentPage, pages;
-        private DataRow[] DataRows;
+        public int currentPage, pages;
+        public DataRow[] DataRows;
         private SchoolClass CurrentClass;
+        private AddPoints[] addPoints;
 
 
         public Main()
@@ -31,14 +32,16 @@ namespace Grade_Calculator_3
             currentPage = 1;
             pages = 1;
             CurrentClass = null;
+            addPoints = new AddPoints[0];
             LoadClassData("");
             RefreshClassList();
         }
 
         private void addClassToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AddClass addClassForm = new AddClass();
+            AddClass addClassForm = new AddClass(this);
             addClassForm.Show();
+            
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -51,6 +54,10 @@ namespace Grade_Calculator_3
         {
             XMLHandler.Data = XMLHandler.ReadSchoolClasses();
             comboBoxClasses.Items.Clear();
+            if(XMLHandler.Data == null)
+            {
+                return;
+            }
             foreach(SchoolClass schoolClass in XMLHandler.Data)
             {
                 comboBoxClasses.Items.Add(schoolClass.className);
@@ -59,6 +66,7 @@ namespace Grade_Calculator_3
 
         private void comboBoxClasses_SelectedIndexChanged(object sender, EventArgs e)
         {
+            CloseAllAddWindows();
             LoadClassData(comboBoxClasses.Text);
         }
 
@@ -123,7 +131,7 @@ namespace Grade_Calculator_3
 
         }
 
-        private void DisplayPage(int page)
+        public void DisplayPage(int page)
         {
             TextBox[] TextBoxes1 = { TextBoxCat1, TextBoxP1, TextBoxOutOf1, TextBoxW1, TextBoxPer1, TextBoxT1 };
             TextBox[] TextBoxes2 = { TextBoxCat2, TextBoxP2, TextBoxOutOf2, TextBoxW2, TextBoxPer2, TextBoxT2 };
@@ -278,31 +286,31 @@ namespace Grade_Calculator_3
             if (row == 1)
             {
                 TextBox[] TextBoxes = { TextBoxCat1, TextBoxP1, TextBoxOutOf1, TextBoxW1, TextBoxPer1, TextBoxT1 };
-                Button[] Buttons = { ButtonA1, ButtonP1 };
+                Button[] Buttons = { ButtonA1 };
                 ChangeRowVisHelper(TextBoxes, Buttons, visible);
             }
             else if (row == 2)
             {
                 TextBox[] TextBoxes = { TextBoxCat2, TextBoxP2, TextBoxOutOf2, TextBoxW2, TextBoxPer2, TextBoxT2 };
-                Button[] Buttons = { ButtonA2, ButtonP2 };
+                Button[] Buttons = { ButtonA2 };
                 ChangeRowVisHelper(TextBoxes, Buttons, visible);
             }
             else if (row == 3)
             {
                 TextBox[] TextBoxes = { TextBoxCat3, TextBoxP3, TextBoxOutOf3, TextBoxW3, TextBoxPer3, TextBoxT3 };
-                Button[] Buttons = { ButtonA3, ButtonP3 };
+                Button[] Buttons = { ButtonA3 };
                 ChangeRowVisHelper(TextBoxes, Buttons, visible);
             }
             else if (row == 4)
             {
                 TextBox[] TextBoxes = { TextBoxCat4, TextBoxP4, TextBoxOutOf4, TextBoxW4, TextBoxPer4, TextBoxT4 };
-                Button[] Buttons = { ButtonA4, ButtonP4 };
+                Button[] Buttons = { ButtonA4 };
                 ChangeRowVisHelper(TextBoxes, Buttons, visible);
             }
             else if (row == 5)
             {
                 TextBox[] TextBoxes = { TextBoxCat5, TextBoxP5, TextBoxOutOf5, TextBoxW5, TextBoxPer5, TextBoxT5 };
-                Button[] Buttons = { ButtonA5, ButtonP5 };
+                Button[] Buttons = { ButtonA5 };
                 ChangeRowVisHelper(TextBoxes, Buttons, visible);
             }
             else
@@ -329,8 +337,141 @@ namespace Grade_Calculator_3
             double[] weight = new double[DataRows.Length];
             double[] percent = new double[DataRows.Length];
             double[] total = new double[DataRows.Length];
+            double finalPercentage = 0;
+            string finalGrade = "";
+
+            int c = 0;
+            foreach(DataRow dataRow in DataRows)
+            {
+                //convert the strings in the text boxes to numerical values (if possible)
+                if(dataRow.Points.Equals(""))
+                {
+                    points[c] = 0;
+                }
+                else
+                {
+                    try
+                    {
+                        points[c] = Convert.ToDouble(dataRow.Points);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("At least one entry in points is invalid.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+                if (dataRow.OutOf.Equals(""))
+                {
+                    outOf[c] = 0;
+                }
+                else
+                {
+                    try
+                    {
+                        outOf[c] = Convert.ToDouble(dataRow.OutOf);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("At least one entry in out of is invalid.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+                if (dataRow.Weight.Equals(""))
+                {
+                    weight[c] = 0;
+                }
+                else
+                {
+                    try
+                    {
+                        weight[c] = Convert.ToDouble(dataRow.Weight);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("At least one entry in weight is invalid.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+
+                if(weight[c] != 0)
+                {
+                    if(outOf[c] == 0)
+                    {
+                        MessageBox.Show("Out of cannot be 0 if points is non-zero.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    percent[c] = 100 * points[c] / outOf[c];
+                    total[c] = percent[c] * weight[c] / 100;
+                    finalPercentage += total[c];
+                }
+                c++;
+            }
 
 
+            //get the grade scale
+            double[] gradeScaleVals = new double[0];
+            string[] gradeScaleGrade = new string[0];
+            if(CurrentClass == null)
+            {
+                //will not find a letter grade for a non-class
+            }
+            else if(CurrentClass.gradeScaleFormat == 1)
+            {
+                c = 0;
+                foreach(double val in CurrentClass.gradeScale)
+                {
+                    if(val != -1) //if the grade is enabled
+                    {
+                        Array.Resize(ref gradeScaleVals, gradeScaleVals.Length + 1);
+                        Array.Resize(ref gradeScaleGrade, gradeScaleGrade.Length + 1);
+                        gradeScaleVals[gradeScaleVals.Length - 1] = val;
+                        gradeScaleGrade[gradeScaleGrade.Length - 1] = GetGradeFromIndexAF(c);
+                    }
+                    c++;
+                }
+                //for adding F at the end
+                Array.Resize(ref gradeScaleVals, gradeScaleVals.Length + 1);
+                Array.Resize(ref gradeScaleGrade, gradeScaleGrade.Length + 1);
+                gradeScaleVals[gradeScaleVals.Length - 1] = 0;
+                gradeScaleGrade[gradeScaleGrade.Length - 1] = GetGradeFromIndexAF(11);
+
+                bool found = false;
+                c = 0;
+                while (!found && (c != gradeScaleVals.Length))
+                {
+                    if(gradeScaleVals[c] <= finalPercentage)
+                    {
+                        finalGrade = gradeScaleGrade[c];
+                        found = true;
+                    }
+                    c++;
+                }
+            }
+            else
+            {
+                throw new NotImplementedException("S/N grading is not yet supported");
+            }
+            TextBoxGrade.Text = finalGrade;
+            TextBoxTotalPer.Text = finalPercentage.ToString();
+
+            c = 0;
+            foreach(DataRow dataRow in DataRows)
+            {
+                DataRows[c].Points = points[c].ToString();
+                DataRows[c].OutOf = outOf[c].ToString();
+                DataRows[c].Weight = weight[c].ToString();
+                DataRows[c].Percent = percent[c].ToString();
+                DataRows[c].Total = total[c].ToString();
+                c++;
+            }
+            DisplayPage(currentPage);
+
+        }
+
+        private string GetGradeFromIndexAF(int index)
+        {
+            string[] grades = { "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F" };
+            return grades[index];
         }
 
         private void ButtonClear_Click(object sender, EventArgs e)
@@ -352,10 +493,54 @@ namespace Grade_Calculator_3
 
         private void ButtonCalculate_Click(object sender, EventArgs e)
         {
+            SaveDataToMem(currentPage);
             CalculateGrade();
         }
 
-        private class DataRow
+        private void ButtonA1_Click(object sender, EventArgs e)
+        {
+            LaunchAddWindow(1);
+        }
+
+        private void ButtonA2_Click(object sender, EventArgs e)
+        {
+            LaunchAddWindow(2);
+        }
+
+        private void ButtonA3_Click(object sender, EventArgs e)
+        {
+            LaunchAddWindow(3);
+        }
+
+        private void ButtonA4_Click(object sender, EventArgs e)
+        {
+            LaunchAddWindow(4);
+        }
+
+        private void ButtonA5_Click(object sender, EventArgs e)
+        {
+            LaunchAddWindow(5);
+        }
+
+        private void LaunchAddWindow(int button)
+        {
+            int offset = button - 1;
+            int index = (currentPage - 1) * PAGE_LEN + offset;
+            Array.Resize(ref addPoints, addPoints.Length + 1);
+            addPoints[addPoints.Length - 1] = new AddPoints(index, this);
+            addPoints[addPoints.Length - 1].Show();
+        }
+
+        private void CloseAllAddWindows()
+        {
+            foreach(AddPoints form in addPoints)
+            {
+                form.Close();
+            }
+            addPoints = new AddPoints[0];
+        }
+
+        public class DataRow
         {
             public string CatName, Points, OutOf, Weight, Percent, Total;
 
