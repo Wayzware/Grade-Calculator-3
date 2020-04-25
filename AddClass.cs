@@ -252,8 +252,8 @@ namespace Grade_Calculator_3
             }
 
             //Data has been verified and is ready to be written to a file!
-            XMLHandler.SaveSchoolClassToFile(schoolClass);
-            main.RefreshClassList();
+            XMLHandler.SaveSchoolClassToFile(schoolClass, XMLHandler.SCHEMA_VER);
+            main.InitialSetup();
             this.Close();
         }
 

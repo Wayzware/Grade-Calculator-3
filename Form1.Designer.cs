@@ -140,10 +140,10 @@
             // 
             // refreshClassListToolStripMenuItem
             // 
-            this.refreshClassListToolStripMenuItem.Enabled = false;
             this.refreshClassListToolStripMenuItem.Name = "refreshClassListToolStripMenuItem";
             this.refreshClassListToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.refreshClassListToolStripMenuItem.Text = "Refresh Class List";
+            this.refreshClassListToolStripMenuItem.Click += new System.EventHandler(this.refreshClassListToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
@@ -172,7 +172,7 @@
             this.groupBox1.Location = new System.Drawing.Point(12, 27);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(171, 211);
-            this.groupBox1.TabIndex = 65;
+            this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Score Input";
             // 
@@ -257,7 +257,7 @@
             this.TextBoxP3.MaxLength = 6;
             this.TextBoxP3.Name = "TextBoxP3";
             this.TextBoxP3.Size = new System.Drawing.Size(39, 20);
-            this.TextBoxP3.TabIndex = 69;
+            this.TextBoxP3.TabIndex = 70;
             this.TextBoxP3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // TextBoxP4
@@ -266,7 +266,7 @@
             this.TextBoxP4.MaxLength = 6;
             this.TextBoxP4.Name = "TextBoxP4";
             this.TextBoxP4.Size = new System.Drawing.Size(39, 20);
-            this.TextBoxP4.TabIndex = 70;
+            this.TextBoxP4.TabIndex = 72;
             this.TextBoxP4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label2
@@ -337,7 +337,7 @@
             this.TextBoxOutOf4.MaxLength = 6;
             this.TextBoxOutOf4.Name = "TextBoxOutOf4";
             this.TextBoxOutOf4.Size = new System.Drawing.Size(39, 20);
-            this.TextBoxOutOf4.TabIndex = 84;
+            this.TextBoxOutOf4.TabIndex = 73;
             this.TextBoxOutOf4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // TextBoxOutOf3
@@ -346,7 +346,7 @@
             this.TextBoxOutOf3.MaxLength = 6;
             this.TextBoxOutOf3.Name = "TextBoxOutOf3";
             this.TextBoxOutOf3.Size = new System.Drawing.Size(39, 20);
-            this.TextBoxOutOf3.TabIndex = 83;
+            this.TextBoxOutOf3.TabIndex = 71;
             this.TextBoxOutOf3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // TextBoxOutOf2
@@ -355,7 +355,7 @@
             this.TextBoxOutOf2.MaxLength = 6;
             this.TextBoxOutOf2.Name = "TextBoxOutOf2";
             this.TextBoxOutOf2.Size = new System.Drawing.Size(39, 20);
-            this.TextBoxOutOf2.TabIndex = 82;
+            this.TextBoxOutOf2.TabIndex = 69;
             this.TextBoxOutOf2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // TextBoxOutOf1
@@ -364,7 +364,7 @@
             this.TextBoxOutOf1.MaxLength = 6;
             this.TextBoxOutOf1.Name = "TextBoxOutOf1";
             this.TextBoxOutOf1.Size = new System.Drawing.Size(39, 20);
-            this.TextBoxOutOf1.TabIndex = 81;
+            this.TextBoxOutOf1.TabIndex = 67;
             this.TextBoxOutOf1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label4
@@ -429,6 +429,7 @@
             this.TextBoxPer4.ReadOnly = true;
             this.TextBoxPer4.Size = new System.Drawing.Size(39, 20);
             this.TextBoxPer4.TabIndex = 94;
+            this.TextBoxPer4.TabStop = false;
             this.TextBoxPer4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // TextBoxPer3
@@ -439,6 +440,7 @@
             this.TextBoxPer3.ReadOnly = true;
             this.TextBoxPer3.Size = new System.Drawing.Size(39, 20);
             this.TextBoxPer3.TabIndex = 93;
+            this.TextBoxPer3.TabStop = false;
             this.TextBoxPer3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // TextBoxPer2
@@ -449,6 +451,7 @@
             this.TextBoxPer2.ReadOnly = true;
             this.TextBoxPer2.Size = new System.Drawing.Size(39, 20);
             this.TextBoxPer2.TabIndex = 92;
+            this.TextBoxPer2.TabStop = false;
             this.TextBoxPer2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // TextBoxPer1
@@ -459,6 +462,7 @@
             this.TextBoxPer1.ReadOnly = true;
             this.TextBoxPer1.Size = new System.Drawing.Size(39, 20);
             this.TextBoxPer1.TabIndex = 91;
+            this.TextBoxPer1.TabStop = false;
             this.TextBoxPer1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // TextBoxPer5
@@ -469,6 +473,7 @@
             this.TextBoxPer5.ReadOnly = true;
             this.TextBoxPer5.Size = new System.Drawing.Size(39, 20);
             this.TextBoxPer5.TabIndex = 102;
+            this.TextBoxPer5.TabStop = false;
             this.TextBoxPer5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // TextBoxW5
@@ -486,7 +491,7 @@
             this.TextBoxOutOf5.MaxLength = 6;
             this.TextBoxOutOf5.Name = "TextBoxOutOf5";
             this.TextBoxOutOf5.Size = new System.Drawing.Size(39, 20);
-            this.TextBoxOutOf5.TabIndex = 85;
+            this.TextBoxOutOf5.TabIndex = 75;
             this.TextBoxOutOf5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // ButtonA5
@@ -506,7 +511,7 @@
             this.TextBoxP5.MaxLength = 6;
             this.TextBoxP5.Name = "TextBoxP5";
             this.TextBoxP5.Size = new System.Drawing.Size(39, 20);
-            this.TextBoxP5.TabIndex = 71;
+            this.TextBoxP5.TabIndex = 74;
             this.TextBoxP5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // groupBox2
@@ -532,26 +537,26 @@
             this.groupBox2.Location = new System.Drawing.Point(398, 27);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(242, 211);
-            this.groupBox2.TabIndex = 66;
+            this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Score Output";
             // 
             // ButtonCurve
             // 
-            this.ButtonCurve.Enabled = false;
             this.ButtonCurve.Location = new System.Drawing.Point(10, 162);
             this.ButtonCurve.Name = "ButtonCurve";
             this.ButtonCurve.Size = new System.Drawing.Size(84, 38);
-            this.ButtonCurve.TabIndex = 69;
+            this.ButtonCurve.TabIndex = 10;
             this.ButtonCurve.Text = "Curve";
             this.ButtonCurve.UseVisualStyleBackColor = true;
+            this.ButtonCurve.Click += new System.EventHandler(this.ButtonCurve_Click);
             // 
             // ButtonCalculate
             // 
             this.ButtonCalculate.Location = new System.Drawing.Point(100, 162);
             this.ButtonCalculate.Name = "ButtonCalculate";
             this.ButtonCalculate.Size = new System.Drawing.Size(134, 38);
-            this.ButtonCalculate.TabIndex = 67;
+            this.ButtonCalculate.TabIndex = 999;
             this.ButtonCalculate.Text = "Calculate";
             this.ButtonCalculate.UseVisualStyleBackColor = true;
             this.ButtonCalculate.Click += new System.EventHandler(this.ButtonCalculate_Click);
@@ -574,6 +579,7 @@
             this.comboBoxClasses.Size = new System.Drawing.Size(134, 21);
             this.comboBoxClasses.Sorted = true;
             this.comboBoxClasses.TabIndex = 109;
+            this.comboBoxClasses.TabStop = false;
             this.comboBoxClasses.SelectedIndexChanged += new System.EventHandler(this.comboBoxClasses_SelectedIndexChanged);
             // 
             // TextBoxGrade
@@ -583,6 +589,7 @@
             this.TextBoxGrade.ReadOnly = true;
             this.TextBoxGrade.Size = new System.Drawing.Size(134, 20);
             this.TextBoxGrade.TabIndex = 108;
+            this.TextBoxGrade.TabStop = false;
             // 
             // TextBoxTotalPer
             // 
@@ -591,6 +598,7 @@
             this.TextBoxTotalPer.ReadOnly = true;
             this.TextBoxTotalPer.Size = new System.Drawing.Size(134, 20);
             this.TextBoxTotalPer.TabIndex = 67;
+            this.TextBoxTotalPer.TabStop = false;
             // 
             // TextBoxT5
             // 
@@ -600,6 +608,7 @@
             this.TextBoxT5.ReadOnly = true;
             this.TextBoxT5.Size = new System.Drawing.Size(39, 20);
             this.TextBoxT5.TabIndex = 107;
+            this.TextBoxT5.TabStop = false;
             this.TextBoxT5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label6
@@ -619,6 +628,7 @@
             this.TextBoxT4.ReadOnly = true;
             this.TextBoxT4.Size = new System.Drawing.Size(39, 20);
             this.TextBoxT4.TabIndex = 105;
+            this.TextBoxT4.TabStop = false;
             this.TextBoxT4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // TextBoxT3
@@ -629,6 +639,7 @@
             this.TextBoxT3.ReadOnly = true;
             this.TextBoxT3.Size = new System.Drawing.Size(39, 20);
             this.TextBoxT3.TabIndex = 104;
+            this.TextBoxT3.TabStop = false;
             this.TextBoxT3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // TextBoxT2
@@ -639,6 +650,7 @@
             this.TextBoxT2.ReadOnly = true;
             this.TextBoxT2.Size = new System.Drawing.Size(39, 20);
             this.TextBoxT2.TabIndex = 103;
+            this.TextBoxT2.TabStop = false;
             this.TextBoxT2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // TextBoxT1
@@ -649,6 +661,7 @@
             this.TextBoxT1.ReadOnly = true;
             this.TextBoxT1.Size = new System.Drawing.Size(39, 20);
             this.TextBoxT1.TabIndex = 102;
+            this.TextBoxT1.TabStop = false;
             this.TextBoxT1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // ButtonClear
@@ -691,7 +704,7 @@
             this.groupBox3.Location = new System.Drawing.Point(189, 27);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(203, 211);
-            this.groupBox3.TabIndex = 102;
+            this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Score Input";
             // 
@@ -709,7 +722,7 @@
             this.MaximumSize = new System.Drawing.Size(671, 286);
             this.MinimumSize = new System.Drawing.Size(671, 286);
             this.Name = "Main";
-            this.Text = "Grade Calculator 3 Alpha";
+            this.Text = "Grade Calculator 3";
             this.Load += new System.EventHandler(this.Main_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

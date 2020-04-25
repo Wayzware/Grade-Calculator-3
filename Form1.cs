@@ -17,6 +17,7 @@ namespace Grade_Calculator_3
         public DataRow[] DataRows;
         private SchoolClass CurrentClass;
         private AddPoints[] addPoints;
+        public bool blank = true;
 
 
         public Main()
@@ -26,9 +27,13 @@ namespace Grade_Calculator_3
 
         private void Main_Load(object sender, EventArgs e)
         {
-            XMLHandler.DIRECTORY = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "/Grade Calculator/Classes/";
-            XMLHandler.Data = XMLHandler.ReadSchoolClasses();
+            XMLHandler.DIRECTORY = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "/Grade Calculator/";
             comboBoxClasses.DropDownStyle = ComboBoxStyle.DropDownList;
+            InitialSetup();
+        }
+
+        public void InitialSetup()
+        {
             currentPage = 1;
             pages = 1;
             CurrentClass = null;
@@ -50,7 +55,7 @@ namespace Grade_Calculator_3
             about.Show();
         }
 
-        public void RefreshClassList()
+        public void RefreshClassList(bool refreshDependents=true)
         {
             XMLHandler.Data = XMLHandler.ReadSchoolClasses();
             comboBoxClasses.Items.Clear();
@@ -62,10 +67,48 @@ namespace Grade_Calculator_3
             {
                 comboBoxClasses.Items.Add(schoolClass.className);
             }
+
+            if (refreshDependents)
+            {
+                RefreshEditClass();
+                RefreshRemoveClass();
+            }
         }
+
+        private void RefreshEditClass()
+        {
+            editClassToolStripMenuItem.DropDownItems.Clear();
+            if (XMLHandler.Data == null)
+            {
+                editClassToolStripMenuItem.Enabled = false;
+                return;
+            }
+            editClassToolStripMenuItem.Enabled = true;
+            foreach (SchoolClass schoolClass in XMLHandler.Data)
+            {
+                editClassToolStripMenuItem.DropDownItems.Add(schoolClass.className);
+            }
+        }
+
+        private void RefreshRemoveClass()
+        {
+            removeClassToolStripMenuItem.DropDownItems.Clear();
+            if (XMLHandler.Data == null)
+            {
+                removeClassToolStripMenuItem.Enabled = false;
+                return;
+            }
+            removeClassToolStripMenuItem.Enabled = true;
+            foreach (SchoolClass schoolClass in XMLHandler.Data)
+            {
+                removeClassToolStripMenuItem.DropDownItems.Add(schoolClass.className);
+            }
+        }
+
 
         private void comboBoxClasses_SelectedIndexChanged(object sender, EventArgs e)
         {
+            blank = false;
             CloseAllAddWindows();
             LoadClassData(comboBoxClasses.Text);
         }
@@ -540,6 +583,22 @@ namespace Grade_Calculator_3
             addPoints = new AddPoints[0];
         }
 
+        private void ButtonCurve_Click(object sender, EventArgs e)
+        {
+            CurveForm CF = new CurveForm();
+            CF.Show();
+        }
+
+        private void refreshClassListToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            InitialSetup();
+        }
+
+        private void EditClassHandler(object sender, EventArgs e)
+        {
+            //TODO: figure out how to make this work lol
+        } 
+
         public class DataRow
         {
             public string CatName, Points, OutOf, Weight, Percent, Total;
@@ -562,6 +621,4 @@ namespace Grade_Calculator_3
             }
         }
     }
-
-
 }

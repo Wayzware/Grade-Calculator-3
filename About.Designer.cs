@@ -41,7 +41,7 @@
             this.Label1.Name = "Label1";
             this.Label1.Size = new System.Drawing.Size(68, 15);
             this.Label1.TabIndex = 5;
-            this.Label1.Text = "Version 0.1";
+            this.Label1.Text = "Version 0.2";
             // 
             // Label2
             // 
