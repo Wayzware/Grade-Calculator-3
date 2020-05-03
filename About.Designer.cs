@@ -37,11 +37,11 @@
             // 
             this.Label1.AutoSize = true;
             this.Label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label1.Location = new System.Drawing.Point(75, 51);
+            this.Label1.Location = new System.Drawing.Point(71, 50);
             this.Label1.Name = "Label1";
-            this.Label1.Size = new System.Drawing.Size(68, 15);
+            this.Label1.Size = new System.Drawing.Size(78, 15);
             this.Label1.TabIndex = 5;
-            this.Label1.Text = "Version 0.2";
+            this.Label1.Text = "Version 0.1.1";
             // 
             // Label2
             // 

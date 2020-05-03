@@ -70,8 +70,8 @@ namespace Grade_Calculator_3
 
             if (refreshDependents)
             {
-                RefreshEditClass();
-                RefreshRemoveClass();
+                //RefreshEditClass();
+                //RefreshRemoveClass();
             }
         }
 
@@ -207,7 +207,7 @@ namespace Grade_Calculator_3
             currentPage = page;
         }
 
-        private void SaveDataToMem(int page)
+        public void SaveDataToMem(int page)
         {
             TextBox[] TextBoxes1 = { TextBoxCat1, TextBoxP1, TextBoxOutOf1, TextBoxW1, TextBoxPer1, TextBoxT1 };
             TextBox[] TextBoxes2 = { TextBoxCat2, TextBoxP2, TextBoxOutOf2, TextBoxW2, TextBoxPer2, TextBoxT2 };
@@ -236,6 +236,49 @@ namespace Grade_Calculator_3
                 c++;
                 start++;
             }
+        }
+
+        public bool SaveIndexToMem(int index, string points_i, string outOf_i, bool neg)
+        {
+            double coe = 1;
+            if (neg)
+            {
+                coe = -1;
+            }
+            string points, outOf;
+            if (points_i.Equals(""))
+            {
+                points = "0";
+            }
+            else
+            {
+                points = points_i;
+            }
+
+            if (outOf_i.Equals(""))
+            {
+                outOf = "0";
+            }
+            else
+            {
+                outOf = outOf_i;
+            }
+            SaveDataToMem(currentPage);
+            if (ErrorChecking.textIsType("Double", points) && ErrorChecking.textIsType("Double", outOf))
+            {
+                if(ErrorChecking.textIsType("Double", DataRows[index].Points) && ErrorChecking.textIsType("Double", DataRows[index].OutOf))
+                {
+                    DataRows[index].Points = (Convert.ToDouble(DataRows[index].Points) + coe * Convert.ToDouble(points)).ToString();
+                    DataRows[index].OutOf = (Convert.ToDouble(DataRows[index].OutOf) + coe * Convert.ToDouble(outOf)).ToString();
+                }
+                else
+                {
+                    DataRows[index].Points = (coe * Convert.ToDouble(points)).ToString();
+                    DataRows[index].OutOf = (coe * Convert.ToDouble(outOf)).ToString();
+                }
+                return true;
+            }
+            return false;
         }
 
         private void ClearInput()

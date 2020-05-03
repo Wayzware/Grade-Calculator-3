@@ -120,7 +120,7 @@
             // addClassToolStripMenuItem
             // 
             this.addClassToolStripMenuItem.Name = "addClassToolStripMenuItem";
-            this.addClassToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.addClassToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.addClassToolStripMenuItem.Text = "Add Class";
             this.addClassToolStripMenuItem.Click += new System.EventHandler(this.addClassToolStripMenuItem_Click);
             // 
@@ -128,27 +128,27 @@
             // 
             this.editClassToolStripMenuItem.Enabled = false;
             this.editClassToolStripMenuItem.Name = "editClassToolStripMenuItem";
-            this.editClassToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.editClassToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.editClassToolStripMenuItem.Text = "Edit Class...";
             // 
             // removeClassToolStripMenuItem
             // 
             this.removeClassToolStripMenuItem.Enabled = false;
             this.removeClassToolStripMenuItem.Name = "removeClassToolStripMenuItem";
-            this.removeClassToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.removeClassToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.removeClassToolStripMenuItem.Text = "Remove Class...";
             // 
             // refreshClassListToolStripMenuItem
             // 
             this.refreshClassListToolStripMenuItem.Name = "refreshClassListToolStripMenuItem";
-            this.refreshClassListToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.refreshClassListToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.refreshClassListToolStripMenuItem.Text = "Refresh Class List";
             this.refreshClassListToolStripMenuItem.Click += new System.EventHandler(this.refreshClassListToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -543,6 +543,7 @@
             // 
             // ButtonCurve
             // 
+            this.ButtonCurve.Enabled = false;
             this.ButtonCurve.Location = new System.Drawing.Point(10, 162);
             this.ButtonCurve.Name = "ButtonCurve";
             this.ButtonCurve.Size = new System.Drawing.Size(84, 38);

@@ -40,28 +40,9 @@ namespace Grade_Calculator_3
         {
             if(ErrorChecking.textIsType("double", TextBoxPE.Text) && ErrorChecking.textIsType("double", TextBoxPP.Text))
             {
-                double PE = Convert.ToDouble(TextBoxPE.Text);
-                double PP = Convert.ToDouble(TextBoxPP.Text);
-                if (neg)
-                {
-                    PE = -PE;
-                    PP = -PP;
-                }
-                if(ErrorChecking.textIsType("double", main.DataRows[Index].Points)){
-                    main.DataRows[Index].Points = (Convert.ToDouble(main.DataRows[Index].Points) + PE).ToString();
-                }
-                else
-                {
-                    main.DataRows[Index].Points = PE.ToString();
-                }
-                if (ErrorChecking.textIsType("double", main.DataRows[Index].OutOf))
-                {
-                    main.DataRows[Index].OutOf = (Convert.ToDouble(main.DataRows[Index].OutOf) + PP).ToString();
-                }
-                else
-                {
-                    main.DataRows[Index].OutOf = PP.ToString();
-                }
+                string PE = TextBoxPE.Text;
+                string PP = TextBoxPP.Text;
+                main.SaveIndexToMem(Index, PE, PP, neg);
                 main.DisplayPage(main.currentPage);
             }
         }
