@@ -10,6 +10,8 @@ using System.Xml.Linq;
 
 namespace Grade_Calculator_3
 {
+    /*NOTE: An exception will be thrown if an invalid XML string is passed into this class
+    This may be fixed in future versions */
     static class XMLHandler
     {
         public static readonly string[] GradesAF = { "A", "AM", "BP", "B", "BM", "CP", "C", "CM", "DP", "D", "DM", "F" };
@@ -274,6 +276,41 @@ namespace Grade_Calculator_3
                 }
             }
             return 0;
+        }
+
+        public static bool DeleteClass(string className, bool warning=true)
+        {
+            string fullFilePath = DIRECTORY + CLASS_DIR + className + FILE_EXT;
+            if (ClassFileExists(className))
+            {
+                if (warning)
+                {
+                    var result = MessageBox.Show("Are you sure you wish to delete all data for " + className + "?" 
+                        + "\n" + "\n" + "NOTE: This will clear any data you entered in the Score Input section", "Warning!",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (result == DialogResult.No)
+                    {
+                        return false;
+                    }
+                }
+                File.Delete(fullFilePath);
+                return true;
+            }
+            else
+            {
+                if (warning)
+                {
+                    MessageBox.Show("File could not be deleted. It has probably already been deleted.",
+                        "Notice", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                return false;
+            }
+        }
+
+        private static bool ClassFileExists(string className)
+        {
+            string fullFilePath = DIRECTORY + CLASS_DIR + className + FILE_EXT;
+            return File.Exists(fullFilePath);
         }
     }
 }

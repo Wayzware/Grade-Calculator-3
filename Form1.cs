@@ -70,8 +70,8 @@ namespace Grade_Calculator_3
 
             if (refreshDependents)
             {
-                //RefreshEditClass();
-                //RefreshRemoveClass();
+                RefreshEditClass();
+                RefreshRemoveClass();
             }
         }
 
@@ -86,7 +86,11 @@ namespace Grade_Calculator_3
             editClassToolStripMenuItem.Enabled = true;
             foreach (SchoolClass schoolClass in XMLHandler.Data)
             {
-                editClassToolStripMenuItem.DropDownItems.Add(schoolClass.className);
+                ToolStripItem temp = editClassToolStripMenuItem.DropDownItems.Add(schoolClass.className);
+                temp.Click += delegate
+                {
+                    EditClassHandler(temp.Text);
+                };
             }
         }
 
@@ -101,7 +105,11 @@ namespace Grade_Calculator_3
             removeClassToolStripMenuItem.Enabled = true;
             foreach (SchoolClass schoolClass in XMLHandler.Data)
             {
-                removeClassToolStripMenuItem.DropDownItems.Add(schoolClass.className);
+                ToolStripItem temp = removeClassToolStripMenuItem.DropDownItems.Add(schoolClass.className);
+                temp.Click += delegate
+                {
+                    DeleteClassHandler(temp.Text);
+                };
             }
         }
 
@@ -637,10 +645,38 @@ namespace Grade_Calculator_3
             InitialSetup();
         }
 
-        private void EditClassHandler(object sender, EventArgs e)
+        public void EditClassHandler(string className)
         {
-            //TODO: figure out how to make this work lol
-        } 
+            bool found = false;
+            int c = 0;
+            SchoolClass workingClass = null;
+            while (!found && c != XMLHandler.Data.Length)
+            {
+                workingClass = XMLHandler.Data[c];
+                if (workingClass.className.Equals(className))
+                {
+                    found = true;
+                }
+                c++;
+            }
+            if (!found)
+            {
+                throw new ArgumentException("The class selected does not exist. This should never happen.");
+            }
+
+            AddClass edit = new AddClass(this, workingClass);
+            edit.Show();
+        }
+
+        public void DeleteClassHandler(string className)
+        {
+            //if class was deleted
+            if (XMLHandler.DeleteClass(className))
+            {
+                InitialSetup();
+            }
+        }
+
 
         public class DataRow
         {
@@ -662,6 +698,31 @@ namespace Grade_Calculator_3
                 Percent = "";
                 Total = "";
             }
+        }
+    }
+
+    public static class ErrorChecking
+    {
+        public static bool textIsType(string type, Object value)
+        {
+            try
+            {
+                if (type == "Double" || type == "double")
+                {
+                    Double temp = Convert.ToDouble(value);
+                    return true;
+                }
+                else if (type == "int")
+                {
+                    int temp = Convert.ToInt32(value);
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+            throw new System.ArgumentException("Argument passed to textIsType has not been implemented");
         }
     }
 }

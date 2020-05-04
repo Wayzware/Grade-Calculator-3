@@ -12,7 +12,7 @@ namespace Grade_Calculator_3
 {
     public partial class AddClass : Form
     {
-        public readonly string VERSION = "0.1";
+        public readonly string VERSION = "0.1.1";
 
         Main main;
 
@@ -24,11 +24,7 @@ namespace Grade_Calculator_3
         {
             InitializeComponent();
             main = sender;
-        }
 
-        private void AddClass_Load(object sender, EventArgs e)
-        {
-            
             categoryNames = new string[1];
             categoryNames[0] = "";
             categoryWorthsS = new string[1];
@@ -52,6 +48,64 @@ namespace Grade_Calculator_3
             {
                 chkbx.Checked = true;
             }
+        }
+
+        public AddClass(Main sender, SchoolClass schoolClass)
+        {
+            InitializeComponent();
+            main = sender;
+            DisplayData(schoolClass);
+        }
+
+        private void DisplayData(SchoolClass schoolClass)
+        {
+            int c = 0;
+
+            textBoxClassName.Text = schoolClass.className;
+            textBoxProfessor.Text = schoolClass.professor;
+            comboBoxTermSeason.Text = schoolClass.termSeason;
+            numericUpDownTermYear.Value = schoolClass.termYear;
+            numericUpDownCredits.Value = schoolClass.credits;
+
+            if (schoolClass.gradeScaleFormat == 1)
+            {
+                radioButtonAF.Checked = true;
+                TextBox[] GradesAF = { TextBoxA, TextBoxAM, TextBoxBP, TextBoxB, TextBoxBM, TextBoxCP, TextBoxC, TextBoxCM, TextBoxDP, TextBoxD, TextBoxDM, textBoxF };
+                CheckBox[] GradesAFEnabled = { checkBoxA, checkBoxAM, checkBoxBP, checkBoxB, checkBoxBM, checkBoxCP, checkBoxC, checkBoxCM, checkBoxDP, checkBoxD, checkBoxDM, checkBoxF };
+
+                c = 0;
+                foreach (double x in schoolClass.gradeScale)
+                {
+                    if(schoolClass.gradeScale[c] != -1)
+                    {
+                        GradesAFEnabled[c].Checked = true;
+                        GradesAF[c].Text = schoolClass.gradeScale[c].ToString();
+                    }
+                    else
+                    {
+                        GradesAFEnabled[c].Checked = false;
+                    }
+                    c++;
+                }
+            }
+
+            categoryNames = schoolClass.catNames;
+            categoryWorthsS = new string[categoryNames.Length];
+            pages = categoryNames.Length / 5 + 1;
+            currentPage = 1;
+            c = 0;
+            foreach(double worth in schoolClass.catWorths)
+            {
+                categoryWorthsS[c] = worth.ToString();
+                c++;
+            }
+            DisplayPage(1);
+            numericUpDownCategories.Value = categoryNames.Length;
+        }
+
+        private void AddClass_Load(object sender, EventArgs e)
+        {
+            
         }
 
         private void buttonSave_Click(object sender, EventArgs e)
@@ -456,31 +510,6 @@ namespace Grade_Calculator_3
             }
 
             currentPage = page;
-        }
-    }
-
-    public static class ErrorChecking
-    {
-        public static bool textIsType(string type, Object value)
-        {
-            try
-            {
-                if(type == "Double" || type == "double")
-                {
-                    Double temp = Convert.ToDouble(value);
-                    return true;
-                }
-                else if(type == "int")
-                {
-                    int temp = Convert.ToInt32(value);
-                    return true;
-                }
-            }
-            catch
-            {
-                return false;
-            }
-            throw new System.ArgumentException("Argument passed to textIsType has not been implemented");
         }
     }
 

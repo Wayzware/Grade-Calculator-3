@@ -29,61 +29,62 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CurveForm));
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tabControl1.SuspendLayout();
+            this.Tabs = new System.Windows.Forms.TabControl();
+            this.TabBasic = new System.Windows.Forms.TabPage();
+            this.TabAdvanced = new System.Windows.Forms.TabPage();
+            this.Tabs.SuspendLayout();
             this.SuspendLayout();
             // 
-            // tabControl1
+            // Tabs
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(12, 12);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(230, 279);
-            this.tabControl1.TabIndex = 0;
+            this.Tabs.Controls.Add(this.TabBasic);
+            this.Tabs.Controls.Add(this.TabAdvanced);
+            this.Tabs.Enabled = false;
+            this.Tabs.Location = new System.Drawing.Point(12, 7);
+            this.Tabs.Name = "Tabs";
+            this.Tabs.SelectedIndex = 0;
+            this.Tabs.Size = new System.Drawing.Size(230, 279);
+            this.Tabs.TabIndex = 0;
             // 
-            // tabPage1
+            // TabBasic
             // 
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(222, 253);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.TabBasic.BackColor = System.Drawing.Color.White;
+            this.TabBasic.Location = new System.Drawing.Point(4, 22);
+            this.TabBasic.Name = "TabBasic";
+            this.TabBasic.Padding = new System.Windows.Forms.Padding(3);
+            this.TabBasic.Size = new System.Drawing.Size(222, 253);
+            this.TabBasic.TabIndex = 0;
+            this.TabBasic.Text = "Basic";
             // 
-            // tabPage2
+            // TabAdvanced
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(192, 74);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.TabAdvanced.BackColor = System.Drawing.Color.White;
+            this.TabAdvanced.Location = new System.Drawing.Point(4, 22);
+            this.TabAdvanced.Name = "TabAdvanced";
+            this.TabAdvanced.Padding = new System.Windows.Forms.Padding(3);
+            this.TabAdvanced.Size = new System.Drawing.Size(222, 253);
+            this.TabAdvanced.TabIndex = 1;
+            this.TabAdvanced.Text = "Advanced (Coming Soon)";
             // 
             // CurveForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(254, 303);
-            this.Controls.Add(this.tabControl1);
+            this.ClientSize = new System.Drawing.Size(254, 296);
+            this.Controls.Add(this.Tabs);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "CurveForm";
             this.Text = "Curve";
             this.Load += new System.EventHandler(this.CurveForm_Load);
-            this.tabControl1.ResumeLayout(false);
+            this.Tabs.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabControl Tabs;
+        private System.Windows.Forms.TabPage TabBasic;
+        private System.Windows.Forms.TabPage TabAdvanced;
     }
 }
