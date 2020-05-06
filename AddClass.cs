@@ -12,8 +12,6 @@ namespace Grade_Calculator_3
 {
     public partial class AddClass : Form
     {
-        public readonly string VERSION = "0.1.1";
-
         Main main;
 
         string[] categoryNames;

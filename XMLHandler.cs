@@ -24,6 +24,11 @@ namespace Grade_Calculator_3
 
         public static SchoolClass[] ReadSchoolClasses()
         {
+            if (!Directory.Exists(DIRECTORY + CLASS_DIR))
+            {
+                Directory.CreateDirectory(DIRECTORY + CLASS_DIR);
+            }
+
             bool flag_needsUpdate = false;
             bool flag_error = false;
             int updated = 0;
