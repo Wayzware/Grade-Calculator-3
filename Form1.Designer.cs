@@ -89,6 +89,9 @@
             this.TextBoxT1 = new System.Windows.Forms.TextBox();
             this.ButtonClear = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.assignmentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.basicModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.advancedModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -98,7 +101,8 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.assignmentsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(655, 24);
@@ -709,6 +713,27 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Score Input";
             // 
+            // assignmentsToolStripMenuItem
+            // 
+            this.assignmentsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.basicModeToolStripMenuItem,
+            this.advancedModeToolStripMenuItem});
+            this.assignmentsToolStripMenuItem.Name = "assignmentsToolStripMenuItem";
+            this.assignmentsToolStripMenuItem.Size = new System.Drawing.Size(87, 20);
+            this.assignmentsToolStripMenuItem.Text = "Assignments";
+            // 
+            // basicModeToolStripMenuItem
+            // 
+            this.basicModeToolStripMenuItem.Name = "basicModeToolStripMenuItem";
+            this.basicModeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.basicModeToolStripMenuItem.Text = "Basic Mode";
+            // 
+            // advancedModeToolStripMenuItem
+            // 
+            this.advancedModeToolStripMenuItem.Name = "advancedModeToolStripMenuItem";
+            this.advancedModeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.advancedModeToolStripMenuItem.Text = "Advanced Mode";
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -800,6 +825,9 @@
         private System.Windows.Forms.Button ButtonClear;
         private System.Windows.Forms.Button ButtonCurve;
         private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.ToolStripMenuItem assignmentsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem basicModeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem advancedModeToolStripMenuItem;
     }
 }
 

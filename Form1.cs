@@ -113,7 +113,6 @@ namespace Grade_Calculator_3
             }
         }
 
-
         private void comboBoxClasses_SelectedIndexChanged(object sender, EventArgs e)
         {
             blank = false;
@@ -125,7 +124,7 @@ namespace Grade_Calculator_3
         {
             TextBox[] CatTextBoxes = { TextBoxCat1, TextBoxCat2, TextBoxCat3, TextBoxCat4, TextBoxCat5 };
 
-            //if the class if blank (initialization), add PAGE_LEN blank categories to DataRows
+            //if the class is blank (initialization), add PAGE_LEN blank categories to DataRows
             if (className.Equals(""))
             {
                 DataRows = new DataRow[PAGE_LEN];
@@ -161,7 +160,6 @@ namespace Grade_Calculator_3
 
                 //fill DataRows with category data
                 DataRows = new DataRow[CurrentClass.catNames.Length];
-
 
                 c = 0;
                 foreach(DataRow dataRow in DataRows)
@@ -677,6 +675,47 @@ namespace Grade_Calculator_3
             }
         }
 
+        private void ChangeInputMode(int mode)
+        {
+            //basic = 1, advanced = 2
+            Button[] addButtons = { ButtonA1, ButtonA2, ButtonA3, ButtonA4, ButtonA5 };
+            TextBox[] pointsTextBoxes = { TextBoxP1, TextBoxP2, TextBoxP3, TextBoxP4, TextBoxP5 };
+            TextBox[] outOfTextBoxes = { TextBoxOutOf1, TextBoxOutOf2, TextBoxOutOf3, TextBoxOutOf4, TextBoxOutOf5 };
+
+            if(mode == 1)
+            {
+                foreach(Button btn in addButtons)
+                {
+                    btn.Text = "Add";
+                }
+                foreach(TextBox tb in pointsTextBoxes)
+                {
+                    tb.Enabled = true;
+                }
+                foreach(TextBox tb in outOfTextBoxes)
+                {
+                    tb.Enabled = true;
+                }
+                return;
+            }
+            else if(mode == 2)
+            {
+                foreach (Button btn in addButtons)
+                {
+                    btn.Text = "Q Add";
+                }
+                foreach (TextBox tb in pointsTextBoxes)
+                {
+                    tb.Enabled = false;
+                }
+                foreach (TextBox tb in outOfTextBoxes)
+                {
+                    tb.Enabled = false;
+                }
+                return;
+            }
+            throw new NotImplementedException("Invalid mode passed to ChangeInputMode");
+        }
 
         public class DataRow
         {

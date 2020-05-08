@@ -8,5 +8,6 @@ namespace Grade_Calculator_3
 {
     class Canvas
     {
+
     }
 }
