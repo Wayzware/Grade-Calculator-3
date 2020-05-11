@@ -36,6 +36,9 @@
             this.removeClassToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.refreshClassListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.assignmentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.basicModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.advancedModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TextBoxCat1 = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.TextBoxCat5 = new System.Windows.Forms.TextBox();
@@ -89,9 +92,6 @@
             this.TextBoxT1 = new System.Windows.Forms.TextBox();
             this.ButtonClear = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.assignmentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.basicModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.advancedModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -155,6 +155,28 @@
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // assignmentsToolStripMenuItem
+            // 
+            this.assignmentsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.basicModeToolStripMenuItem,
+            this.advancedModeToolStripMenuItem});
+            this.assignmentsToolStripMenuItem.Name = "assignmentsToolStripMenuItem";
+            this.assignmentsToolStripMenuItem.Size = new System.Drawing.Size(87, 20);
+            this.assignmentsToolStripMenuItem.Text = "Assignments";
+            this.assignmentsToolStripMenuItem.Visible = false;
+            // 
+            // basicModeToolStripMenuItem
+            // 
+            this.basicModeToolStripMenuItem.Name = "basicModeToolStripMenuItem";
+            this.basicModeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.basicModeToolStripMenuItem.Text = "Basic Mode";
+            // 
+            // advancedModeToolStripMenuItem
+            // 
+            this.advancedModeToolStripMenuItem.Name = "advancedModeToolStripMenuItem";
+            this.advancedModeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.advancedModeToolStripMenuItem.Text = "Advanced Mode";
             // 
             // TextBoxCat1
             // 
@@ -712,27 +734,6 @@
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Score Input";
-            // 
-            // assignmentsToolStripMenuItem
-            // 
-            this.assignmentsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.basicModeToolStripMenuItem,
-            this.advancedModeToolStripMenuItem});
-            this.assignmentsToolStripMenuItem.Name = "assignmentsToolStripMenuItem";
-            this.assignmentsToolStripMenuItem.Size = new System.Drawing.Size(87, 20);
-            this.assignmentsToolStripMenuItem.Text = "Assignments";
-            // 
-            // basicModeToolStripMenuItem
-            // 
-            this.basicModeToolStripMenuItem.Name = "basicModeToolStripMenuItem";
-            this.basicModeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.basicModeToolStripMenuItem.Text = "Basic Mode";
-            // 
-            // advancedModeToolStripMenuItem
-            // 
-            this.advancedModeToolStripMenuItem.Name = "advancedModeToolStripMenuItem";
-            this.advancedModeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.advancedModeToolStripMenuItem.Text = "Advanced Mode";
             // 
             // Main
             // 

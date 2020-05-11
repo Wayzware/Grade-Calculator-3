@@ -62,8 +62,24 @@ namespace Grade_Calculator_3
             textBoxClassName.Text = schoolClass.className;
             textBoxProfessor.Text = schoolClass.professor;
             comboBoxTermSeason.Text = schoolClass.termSeason;
-            numericUpDownTermYear.Value = schoolClass.termYear;
-            numericUpDownCredits.Value = schoolClass.credits;
+
+            //Due to my dumb implementation of -1 for these values, this if statement is needed
+            if (schoolClass.termYear == -1)
+            {
+                numericUpDownTermYear.Value = 2020;
+            }
+            else
+            {
+                numericUpDownTermYear.Value = schoolClass.termYear;
+            }
+            if (schoolClass.credits == -1)
+            {
+                numericUpDownCredits.Value = 0;
+            }
+            else
+            {
+                numericUpDownCredits.Value = schoolClass.credits;
+            }
 
             if (schoolClass.gradeScaleFormat == 1)
             {
@@ -151,14 +167,7 @@ namespace Grade_Calculator_3
             }
 
             //Credits
-            if (((int)numericUpDownCredits.Value) != 0)
-            {
-                schoolClass.credits = (int)numericUpDownCredits.Value;
-            }
-            else
-            {
-                schoolClass.credits = -1;
-            }
+            schoolClass.credits = (int)numericUpDownCredits.Value;
 
             //Grade Scale
             //Grade Scale Format

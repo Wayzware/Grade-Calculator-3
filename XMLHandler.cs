@@ -299,6 +299,8 @@ namespace Grade_Calculator_3
                     }
                 }
                 File.Delete(fullFilePath);
+                if(warning) MessageBox.Show("File Deleted!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                 return true;
             }
             else
@@ -318,4 +320,6 @@ namespace Grade_Calculator_3
             return File.Exists(fullFilePath);
         }
     }
+
+
 }

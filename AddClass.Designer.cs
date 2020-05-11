@@ -104,6 +104,7 @@
             this.buttonSave = new System.Windows.Forms.Button();
             this.ButtonClear = new System.Windows.Forms.Button();
             this.ButtonImport = new System.Windows.Forms.Button();
+            this.label16 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCategories)).BeginInit();
@@ -886,11 +887,21 @@
             this.ButtonImport.Text = "Import";
             this.ButtonImport.UseVisualStyleBackColor = true;
             // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(18, 215);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(163, 13);
+            this.label16.TabIndex = 903;
+            this.label16.Text = "Note: This UI design is temporary";
+            // 
             // AddClass
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(563, 392);
+            this.Controls.Add(this.label16);
             this.Controls.Add(this.ButtonImport);
             this.Controls.Add(this.ButtonClear);
             this.Controls.Add(this.buttonSave);
@@ -913,6 +924,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCredits)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTermYear)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -992,5 +1004,6 @@
         private System.Windows.Forms.Label LabelPage;
         private System.Windows.Forms.Button ButtonClear;
         private System.Windows.Forms.Button ButtonImport;
+        private System.Windows.Forms.Label label16;
     }
 }

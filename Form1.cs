@@ -39,6 +39,7 @@ namespace Grade_Calculator_3
             CurrentClass = null;
             addPoints = new AddPoints[0];
             LoadClassData("");
+            ChangeInputMode(1);
             RefreshClassList();
         }
 
@@ -690,11 +691,11 @@ namespace Grade_Calculator_3
                 }
                 foreach(TextBox tb in pointsTextBoxes)
                 {
-                    tb.Enabled = true;
+                    tb.ReadOnly = false;
                 }
                 foreach(TextBox tb in outOfTextBoxes)
                 {
-                    tb.Enabled = true;
+                    tb.ReadOnly = false;
                 }
                 return;
             }
@@ -706,11 +707,11 @@ namespace Grade_Calculator_3
                 }
                 foreach (TextBox tb in pointsTextBoxes)
                 {
-                    tb.Enabled = false;
+                    tb.ReadOnly = true;
                 }
                 foreach (TextBox tb in outOfTextBoxes)
                 {
-                    tb.Enabled = false;
+                    tb.ReadOnly = true;
                 }
                 return;
             }
