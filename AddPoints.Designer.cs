@@ -125,6 +125,9 @@
             this.Controls.Add(this.ButtonRemove);
             this.Controls.Add(this.ButtonAdd);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(217, 145);
+            this.MinimumSize = new System.Drawing.Size(217, 145);
             this.Name = "AddPoints";
             this.Text = "Add";
             this.Load += new System.EventHandler(this.AddPoints_Load);

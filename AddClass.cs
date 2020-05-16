@@ -313,11 +313,10 @@ namespace Grade_Calculator_3
             }
 
             //Data has been verified and is ready to be written to a file!
-            XMLHandler.SaveSchoolClassToFile(schoolClass, XMLHandler.SCHEMA_VER);
+            XMLHandler.SaveSchoolClassToFile(schoolClass, XMLHandler.D_SCHEMA_VER);
             main.InitialSetup();
             this.Close();
         }
-
 
         private void SaveCurrentCatData()
         {
@@ -518,15 +517,5 @@ namespace Grade_Calculator_3
 
             currentPage = page;
         }
-    }
-
-    public class SchoolClass
-    {
-        public string className, professor, termSeason;
-        public int termYear, credits, gradeScaleFormat;
-        public Double[] gradeScale;
-        public string[] catNames;
-        public Double[] catWorths;
-
     }
 }

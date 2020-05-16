@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,8 +18,18 @@ namespace Grade_Calculator_3
         public static readonly string[] GradesAF = { "A", "AM", "BP", "B", "BM", "CP", "C", "CM", "DP", "D", "DM", "F" };
         public static string DIRECTORY;
         private static readonly string CLASS_DIR = "Classes/";
-        private static readonly string FILE_EXT = ".gcdx";
-        public static readonly int SCHEMA_VER = 1;
+        private static readonly string D_FILE_EXT = ".gcdx";
+        public static readonly int D_SCHEMA_VER = 1;
+        private static readonly string ASSGN_DIR = "Assignments/";
+        private static readonly string A_FILE_EXT = ".gcax";
+        public static readonly int A_SCHEMA_VER = 1;
+
+        /* Schema version history:
+         *      D_SCHEMA_VER:
+         *          1 : v0.1-Present
+         *      A_SCHEMA_VER:
+         *          1 : v0.3-Present
+         */
 
         public static SchoolClass[] Data;
 
@@ -33,7 +44,7 @@ namespace Grade_Calculator_3
             bool flag_error = false;
             int updated = 0;
             SchoolClass[] schoolClasses = new SchoolClass[0];
-            string[] GC3Files = Directory.GetFiles(DIRECTORY + CLASS_DIR, "*" + FILE_EXT);
+            string[] GC3Files = Directory.GetFiles(DIRECTORY + CLASS_DIR, "*" + D_FILE_EXT);
             string[] useableFiles = new string[0];
             foreach(string file in GC3Files)
             {
@@ -58,12 +69,12 @@ namespace Grade_Calculator_3
                     continue;
                 }
                 int fileSchemaVer = Convert.ToInt32(temp);
-                if(fileSchemaVer > SCHEMA_VER)
+                if(fileSchemaVer > D_SCHEMA_VER)
                 {
                     flag_needsUpdate = true;
                     continue;
                 }
-                else if(fileSchemaVer < SCHEMA_VER)
+                else if(fileSchemaVer < D_SCHEMA_VER)
                 {
                     //the following line should be used for non-backwards compatible schema changes
                     //updated += UpdateSchema(fileSchemaVer, file);
@@ -75,17 +86,17 @@ namespace Grade_Calculator_3
             }
             if(updated > 0)
             {
-                ReadSchoolClasses();
+                schoolClasses = ReadSchoolClasses();
             }
 
             //error notifications
             if (flag_error)
             {
-                MessageBox.Show("At least one " + FILE_EXT + " file was not in a readable format!", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("At least one " + D_FILE_EXT + " file was not in a readable format!", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             if (flag_needsUpdate)
             {
-                MessageBox.Show("At least one " + FILE_EXT + " file was made for a newer version of Grade Calculator 3 than is installed. There may be an update.", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("At least one " + D_FILE_EXT + " file was made for a newer version of Grade Calculator 3 than is installed. There may be an update.", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             if (useableFiles.Length == 0)
             {
@@ -121,7 +132,7 @@ namespace Grade_Calculator_3
             }
             if (flag_invalidEntryInFile)
             {
-                MessageBox.Show("At least one " + FILE_EXT + " file had an invalid entry!", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("At least one " + D_FILE_EXT + " file had an invalid entry!", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             //MessageBox.Show("Loaded " + Convert.ToString(schoolClasses.Length)+ " classes successfully!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
             return schoolClasses;
@@ -170,7 +181,7 @@ namespace Grade_Calculator_3
                 Directory.CreateDirectory(DIRECTORY + CLASS_DIR);
             }
             //check that overwriting data is ok (if overwriting is going to happen)
-            string fullFilePath = DIRECTORY + CLASS_DIR + schoolClass.className + FILE_EXT;
+            string fullFilePath = DIRECTORY + CLASS_DIR + schoolClass.className + D_FILE_EXT;
             if (File.Exists(fullFilePath) && warning)
             {
                 var result = MessageBox.Show("Data already exists for " + schoolClass.className + ". Overwrite the file?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -285,7 +296,7 @@ namespace Grade_Calculator_3
 
         public static bool DeleteClass(string className, bool warning=true)
         {
-            string fullFilePath = DIRECTORY + CLASS_DIR + className + FILE_EXT;
+            string fullFilePath = DIRECTORY + CLASS_DIR + className + D_FILE_EXT;
             if (ClassFileExists(className))
             {
                 if (warning)
@@ -316,10 +327,171 @@ namespace Grade_Calculator_3
 
         private static bool ClassFileExists(string className)
         {
-            string fullFilePath = DIRECTORY + CLASS_DIR + className + FILE_EXT;
+            string fullFilePath = DIRECTORY + CLASS_DIR + className + D_FILE_EXT;
             return File.Exists(fullFilePath);
+        }
+
+        public static void SaveAssignmentToFile(SchoolClass schoolClass, Assignment assignment, bool warning=true)
+        {
+            //checks to make sure DirectoryNotFoundException does not occur
+            if (!Directory.Exists(DIRECTORY + ASSGN_DIR))
+            {
+                Directory.CreateDirectory(DIRECTORY + ASSGN_DIR);
+            }
+            string fullFilePath = DIRECTORY + ASSGN_DIR + schoolClass.className + "/";
+            if (!Directory.Exists(fullFilePath))
+            {
+                Directory.CreateDirectory(fullFilePath);
+            }
+
+            fullFilePath += assignment.name + A_FILE_EXT;
+
+            if (File.Exists(fullFilePath) && warning)
+            {
+                var result = MessageBox.Show("Data already exists for " + assignment.name + ". Overwrite the file?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (result == DialogResult.No)
+                {
+                    return;
+                }
+            }
+
+            XElement xAssignment = 
+                new XElement("GC3_Assignment", 
+                new XElement("SCHEMA_VER", A_SCHEMA_VER),
+                new XElement("AssignmentData",
+                    new XElement("Name", assignment.name),
+                    new XElement("CatIndex", assignment.catIndex),
+                    new XElement("Real", assignment.real),
+                    new XElement("Active", assignment.active),
+                    new XElement("Points", assignment.points),
+                    new XElement("OutOf", assignment.outOf)
+                    )
+                );
+            XDocument xDocument = new XDocument(xAssignment);
+            xDocument.Save(fullFilePath);
+
+            if (warning)
+            {
+                MessageBox.Show("File saved successfully!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        public static Assignment[] ReadAssignments(SchoolClass schoolClass)
+        {
+            //checks to make sure DirectoryNotFoundException does not occur
+            if (!Directory.Exists(DIRECTORY + ASSGN_DIR))
+            {
+                Directory.CreateDirectory(DIRECTORY + ASSGN_DIR);
+            }
+            string fullDirPath = DIRECTORY + ASSGN_DIR + schoolClass.className + "/";
+            if (!Directory.Exists(fullDirPath))
+            {
+                Directory.CreateDirectory(fullDirPath);
+            }
+
+            bool flag_needsUpdate = false;
+            bool flag_error = false;
+            int updated = 0;
+            Assignment[] assignments = new Assignment[0];
+            string[] GC3Files = Directory.GetFiles(fullDirPath, "*" + A_FILE_EXT);
+            string[] useableFiles = new string[0];
+            foreach (string file in GC3Files)
+            {
+                XElement workingXE;
+                try
+                {
+                    workingXE = XElement.Load(file); //<GC3_Data>
+                }
+                catch
+                {
+                    flag_error = true;
+                    continue;
+                }
+                var temp = workingXE.Element("SCHEMA_VER").Value;
+                if (temp == null)
+                {
+                    continue;
+                }
+                if (!ErrorChecking.textIsType("int", temp))
+                {
+                    flag_error = true;
+                    continue;
+                }
+                int fileSchemaVer = Convert.ToInt32(temp);
+                if (fileSchemaVer > A_SCHEMA_VER)
+                {
+                    flag_needsUpdate = true;
+                    continue;
+                }
+                else if (fileSchemaVer < A_SCHEMA_VER)
+                {
+                    //implement a way to update Assignment schema versions
+                }
+
+                //the file is good, add it to the list to be imported
+                Array.Resize(ref useableFiles, useableFiles.Length + 1);
+                useableFiles[useableFiles.Length - 1] = file;
+            }
+            if (updated > 0)
+            {
+                assignments = ReadAssignments(schoolClass);
+            }
+
+            //error notifications
+            if (flag_error)
+            {
+                MessageBox.Show("At least one " + A_FILE_EXT + " file was not in a readable format!", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            if (flag_needsUpdate)
+            {
+                MessageBox.Show("At least one " + A_FILE_EXT + " file was made for a newer version of Grade Calculator 3 than is installed. There may be an update.", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            if (useableFiles.Length == 0)
+            {
+                return null;
+            }
+
+            //continue on to converting the XML to <Assignment> type
+            bool flag_invalidEntryInFile = false;
+            foreach (string file in useableFiles)
+            {
+                try
+                {
+                    XElement XE = XElement.Load(file);
+                    XE = XE.Element("AssignmentData");
+                    Assignment assgn = new Assignment();
+                    assgn.name = XE.Element("Name").Value;
+                    assgn.catIndex = Convert.ToInt32(XE.Element("CatIndex"));
+                    assgn.real = Convert.ToBoolean(XE.Element("Real"));
+                    assgn.active = Convert.ToBoolean(XE.Element("Active"));
+                    assgn.points = Convert.ToDouble(XE.Element("Points"));
+                    assgn.outOf = Convert.ToDouble(XE.Element("OutOf"));
+                    Array.Resize(ref assignments, assignments.Length + 1);
+                    assignments[assignments.Length - 1] = assgn;
+                }
+                catch
+                {
+                    flag_invalidEntryInFile = true;
+                    continue;
+                }
+            }
+            if (flag_invalidEntryInFile)
+            {
+                MessageBox.Show("At least one " + A_FILE_EXT + " file had an invalid entry!", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+            if (Settings.debugMsg)
+            {
+                MessageBox.Show("Loaded " + Convert.ToString(assignments.Length) + " assignments successfully!",
+                    "Success!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            return assignments;
         }
     }
 
-
+    static class Settings
+    {
+        public static bool debugMsg = false;
+    }
 }

@@ -1,22 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Grade_Calculator_3
 {
     public partial class Main : Form
     {
-        private readonly int PAGE_LEN = 5;
+        private const int PageLen = 5;
         public int currentPage, pages;
         public DataRow[] DataRows;
-        private SchoolClass CurrentClass;
-        private AddPoints[] addPoints;
+        private SchoolClass _currentClass;
+        private AddPoints[] _addPoints;
         public bool blank = true;
 
 
@@ -36,8 +29,8 @@ namespace Grade_Calculator_3
         {
             currentPage = 1;
             pages = 1;
-            CurrentClass = null;
-            addPoints = new AddPoints[0];
+            _currentClass = null;
+            _addPoints = new AddPoints[0];
             LoadClassData("");
             ChangeInputMode(1);
             RefreshClassList();
@@ -123,12 +116,12 @@ namespace Grade_Calculator_3
 
         public void LoadClassData(string className)
         {
-            TextBox[] CatTextBoxes = { TextBoxCat1, TextBoxCat2, TextBoxCat3, TextBoxCat4, TextBoxCat5 };
+            TextBox[] catTextBoxes = { TextBoxCat1, TextBoxCat2, TextBoxCat3, TextBoxCat4, TextBoxCat5 };
 
             //if the class is blank (initialization), add PAGE_LEN blank categories to DataRows
             if (className.Equals(""))
             {
-                DataRows = new DataRow[PAGE_LEN];
+                DataRows = new DataRow[PageLen];
                 int c = 0;
                 foreach(DataRow DataRow in DataRows)
                 {
@@ -137,7 +130,7 @@ namespace Grade_Calculator_3
                     DataRows[c] = temp;
                     c++;
                 }
-                setVisibility(PAGE_LEN, 1);
+                SetVisibility(PageLen, 1);
             }
             else
             {
@@ -150,7 +143,7 @@ namespace Grade_Calculator_3
                     if (workingClass.className.Equals(className))
                     {
                         found = true;
-                        CurrentClass = workingClass;
+                        _currentClass = workingClass;
                     }
                     c++;
                 }
@@ -160,7 +153,7 @@ namespace Grade_Calculator_3
                 }
 
                 //fill DataRows with category data
-                DataRows = new DataRow[CurrentClass.catNames.Length];
+                DataRows = new DataRow[_currentClass.catNames.Length];
 
                 c = 0;
                 foreach(DataRow dataRow in DataRows)
@@ -173,7 +166,7 @@ namespace Grade_Calculator_3
                 }
             }
             currentPage = 1;
-            pages = (int)Math.Ceiling(Convert.ToDouble(DataRows.Length) / Convert.ToDouble(PAGE_LEN));
+            pages = (int)Math.Ceiling(Convert.ToDouble(DataRows.Length) / Convert.ToDouble(PageLen));
 
             //DataRows is now populated with non-point data
             //Display the data in DataRows in the textboxes
@@ -191,15 +184,15 @@ namespace Grade_Calculator_3
 
             TextBox[][] TextBox2D = { TextBoxes1, TextBoxes2, TextBoxes3, TextBoxes4, TextBoxes5 };
 
-            int start = (page - 1) * PAGE_LEN; //start INDEX
-            int end = start + PAGE_LEN - 1;
+            int start = (page - 1) * PageLen; //start INDEX
+            int end = start + PageLen - 1;
             if(end > (DataRows.Length - 1))
             {
                 end = DataRows.Length - 1;
             }
-            setVisibility(DataRows.Length, page);
+            SetVisibility(DataRows.Length, page);
             int c = 0;
-            int offset = (page - 1) * PAGE_LEN;
+            int offset = (page - 1) * PageLen;
             while(start <= end)
             {
                 TextBox2D[c][0].Text = DataRows[c + offset].CatName;
@@ -224,14 +217,14 @@ namespace Grade_Calculator_3
 
             TextBox[][] TextBox2D = { TextBoxes1, TextBoxes2, TextBoxes3, TextBoxes4, TextBoxes5 };
 
-            int start = (page - 1) * PAGE_LEN; //start INDEX
-            int end = start + PAGE_LEN - 1;
+            int start = (page - 1) * PageLen; //start INDEX
+            int end = start + PageLen - 1;
             if (end > (DataRows.Length - 1))
             {
                 end = DataRows.Length - 1;
             }
             int c = 0;
-            int offset = (page - 1) * PAGE_LEN;
+            int offset = (page - 1) * PageLen;
             while (start <= end)
             {
                 DataRows[c + offset].CatName = TextBox2D[c][0].Text;
@@ -344,12 +337,12 @@ namespace Grade_Calculator_3
             }
         }
 
-        private void setVisibility(int elements, int currentPage)
+        private void SetVisibility(int elements, int currentPage)
         {
-            int start = (currentPage - 1) * PAGE_LEN;
+            int start = (currentPage - 1) * PageLen;
             int end = elements;
             int c = 1;
-            while(c <= PAGE_LEN) //should set row's visibility
+            while(c <= PageLen) //should set row's visibility
             {
                 ChangeRowVisibility(c, start + c <= end);
                 c++;
@@ -504,14 +497,14 @@ namespace Grade_Calculator_3
             //get the grade scale
             double[] gradeScaleVals = new double[0];
             string[] gradeScaleGrade = new string[0];
-            if(CurrentClass == null)
+            if(_currentClass == null)
             {
                 //will not find a letter grade for a non-class
             }
-            else if(CurrentClass.gradeScaleFormat == 1)
+            else if(_currentClass.gradeScaleFormat == 1)
             {
                 c = 0;
-                foreach(double val in CurrentClass.gradeScale)
+                foreach(double val in _currentClass.gradeScale)
                 {
                     if(val != -1) //if the grade is enabled
                     {
@@ -618,19 +611,19 @@ namespace Grade_Calculator_3
         private void LaunchAddWindow(int button)
         {
             int offset = button - 1;
-            int index = (currentPage - 1) * PAGE_LEN + offset;
-            Array.Resize(ref addPoints, addPoints.Length + 1);
-            addPoints[addPoints.Length - 1] = new AddPoints(index, this);
-            addPoints[addPoints.Length - 1].Show();
+            int index = (currentPage - 1) * PageLen + offset;
+            Array.Resize(ref _addPoints, _addPoints.Length + 1);
+            _addPoints[_addPoints.Length - 1] = new AddPoints(index, this);
+            _addPoints[_addPoints.Length - 1].Show();
         }
 
         private void CloseAllAddWindows()
         {
-            foreach(AddPoints form in addPoints)
+            foreach(AddPoints form in _addPoints)
             {
                 form.Close();
             }
-            addPoints = new AddPoints[0];
+            _addPoints = new AddPoints[0];
         }
 
         private void ButtonCurve_Click(object sender, EventArgs e)
@@ -685,6 +678,8 @@ namespace Grade_Calculator_3
 
             if(mode == 1)
             {
+                basicModeToolStripMenuItem.Checked = true;
+                advancedModeToolStripMenuItem.Checked = false;
                 foreach(Button btn in addButtons)
                 {
                     btn.Text = "Add";
@@ -701,6 +696,8 @@ namespace Grade_Calculator_3
             }
             else if(mode == 2)
             {
+                basicModeToolStripMenuItem.Checked = false;
+                advancedModeToolStripMenuItem.Checked = true;
                 foreach (Button btn in addButtons)
                 {
                     btn.Text = "Q Add";
@@ -716,6 +713,40 @@ namespace Grade_Calculator_3
                 return;
             }
             throw new NotImplementedException("Invalid mode passed to ChangeInputMode");
+        }
+
+        public void AssgnToDataRow(Assignment assgn)
+        {
+            if (assgn.active)
+            {
+                double temp = Convert.ToDouble(DataRows[assgn.catIndex].Points);
+                temp += assgn.points;
+                DataRows[assgn.catIndex].Points = temp.ToString();
+
+                temp = Convert.ToDouble(DataRows[assgn.catIndex].OutOf);
+                temp += assgn.outOf;
+                DataRows[assgn.catIndex].OutOf = temp.ToString();
+            }
+            else
+            {
+                double temp = Convert.ToDouble(DataRows[assgn.catIndex].Points);
+                temp -= assgn.points;
+                DataRows[assgn.catIndex].Points = temp.ToString();
+
+                temp = Convert.ToDouble(DataRows[assgn.catIndex].OutOf);
+                temp -= assgn.outOf;
+                DataRows[assgn.catIndex].OutOf = temp.ToString();
+            }
+        }
+
+        private void basicModeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ChangeInputMode(1);
+        }
+
+        private void advancedModeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ChangeInputMode(2);
         }
 
         public class DataRow
@@ -739,6 +770,25 @@ namespace Grade_Calculator_3
                 Total = "";
             }
         }
+    }
+
+    public class SchoolClass
+    {
+        public string className, professor, termSeason;
+        public int termYear, credits, gradeScaleFormat;
+        public Double[] gradeScale;
+        public string[] catNames;
+        public Double[] catWorths;
+        public Assignment[] assignments;
+    }
+
+    //based upon the Canvas LMS API assignment
+    public class Assignment
+    {
+        public bool active = false, real = true;
+        public int catIndex;
+        public string name;
+        public double points, outOf;
     }
 
     public static class ErrorChecking

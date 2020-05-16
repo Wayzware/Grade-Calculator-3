@@ -124,7 +124,7 @@
             // addClassToolStripMenuItem
             // 
             this.addClassToolStripMenuItem.Name = "addClassToolStripMenuItem";
-            this.addClassToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.addClassToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.addClassToolStripMenuItem.Text = "Add Class";
             this.addClassToolStripMenuItem.Click += new System.EventHandler(this.addClassToolStripMenuItem_Click);
             // 
@@ -132,27 +132,27 @@
             // 
             this.editClassToolStripMenuItem.Enabled = false;
             this.editClassToolStripMenuItem.Name = "editClassToolStripMenuItem";
-            this.editClassToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.editClassToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.editClassToolStripMenuItem.Text = "Edit Class...";
             // 
             // removeClassToolStripMenuItem
             // 
             this.removeClassToolStripMenuItem.Enabled = false;
             this.removeClassToolStripMenuItem.Name = "removeClassToolStripMenuItem";
-            this.removeClassToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.removeClassToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.removeClassToolStripMenuItem.Text = "Remove Class...";
             // 
             // refreshClassListToolStripMenuItem
             // 
             this.refreshClassListToolStripMenuItem.Name = "refreshClassListToolStripMenuItem";
-            this.refreshClassListToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.refreshClassListToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.refreshClassListToolStripMenuItem.Text = "Refresh Class List";
             this.refreshClassListToolStripMenuItem.Click += new System.EventHandler(this.refreshClassListToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -164,19 +164,20 @@
             this.assignmentsToolStripMenuItem.Name = "assignmentsToolStripMenuItem";
             this.assignmentsToolStripMenuItem.Size = new System.Drawing.Size(87, 20);
             this.assignmentsToolStripMenuItem.Text = "Assignments";
-            this.assignmentsToolStripMenuItem.Visible = false;
             // 
             // basicModeToolStripMenuItem
             // 
             this.basicModeToolStripMenuItem.Name = "basicModeToolStripMenuItem";
-            this.basicModeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.basicModeToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.basicModeToolStripMenuItem.Text = "Basic Mode";
+            this.basicModeToolStripMenuItem.Click += new System.EventHandler(this.basicModeToolStripMenuItem_Click);
             // 
             // advancedModeToolStripMenuItem
             // 
             this.advancedModeToolStripMenuItem.Name = "advancedModeToolStripMenuItem";
-            this.advancedModeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.advancedModeToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.advancedModeToolStripMenuItem.Text = "Advanced Mode";
+            this.advancedModeToolStripMenuItem.Click += new System.EventHandler(this.advancedModeToolStripMenuItem_Click);
             // 
             // TextBoxCat1
             // 
@@ -746,6 +747,7 @@
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
+            this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(671, 286);
             this.MinimumSize = new System.Drawing.Size(671, 286);
             this.Name = "Main";
