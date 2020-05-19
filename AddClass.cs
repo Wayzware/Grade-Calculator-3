@@ -234,7 +234,7 @@ namespace Grade_Calculator_3
                     if (gradeScaleEnableds[c])
                     {
                         flag = true;
-                        if (ErrorChecking.textIsType("Double", gradeScaleTextBoxes[c].Text))
+                        if (ErrorChecking.TextIsType("Double", gradeScaleTextBoxes[c].Text))
                         {
                             Double currentGradeScaleValue = Convert.ToDouble(gradeScaleTextBoxes[c].Text);
                             if (prevVal > currentGradeScaleValue)
@@ -291,7 +291,7 @@ namespace Grade_Calculator_3
             Double total = 0;
             foreach(string worthString in categoryWorthsS)
             {
-                if(ErrorChecking.textIsType("Double", worthString))
+                if(ErrorChecking.TextIsType("Double", worthString))
                 {
                     schoolClass.catWorths[c] = Convert.ToDouble(worthString);
                     total += schoolClass.catWorths[c];

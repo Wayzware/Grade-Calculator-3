@@ -29,36 +29,38 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(About));
-            this.Label1 = new System.Windows.Forms.Label();
             this.Label2 = new System.Windows.Forms.Label();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
-            // 
-            // Label1
-            // 
-            this.Label1.AutoSize = true;
-            this.Label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label1.Location = new System.Drawing.Point(68, 50);
-            this.Label1.Name = "Label1";
-            this.Label1.Size = new System.Drawing.Size(68, 15);
-            this.Label1.TabIndex = 5;
-            this.Label1.Text = "Version 0.3";
             // 
             // Label2
             // 
             this.Label2.AutoSize = true;
             this.Label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label2.Location = new System.Drawing.Point(40, 25);
+            this.Label2.Location = new System.Drawing.Point(36, 9);
             this.Label2.Name = "Label2";
-            this.Label2.Size = new System.Drawing.Size(143, 15);
+            this.Label2.Size = new System.Drawing.Size(154, 60);
             this.Label2.TabIndex = 4;
-            this.Label2.Text = "© 2016-2020 Jacob Rice";
+            this.Label2.Text = "© 2016-2020 Jacob Rice\r\nReleased on May 19, 2020\r\n\r\nVersion 0.3\r\n";
+            this.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(41, 74);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(144, 13);
+            this.linkLabel1.TabIndex = 5;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "Grade Calculator 3 on Github";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // About
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(222, 96);
-            this.Controls.Add(this.Label1);
+            this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.Label2);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -73,7 +75,7 @@
 
         #endregion
 
-        internal System.Windows.Forms.Label Label1;
         internal System.Windows.Forms.Label Label2;
+        private System.Windows.Forms.LinkLabel linkLabel1;
     }
 }

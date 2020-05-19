@@ -10,6 +10,7 @@ namespace Grade_Calculator_3
         public DataRow[] DataRows;
         private SchoolClass _currentClass;
         private AddPoints[] _addPoints;
+        private Assignments _assignments;
         public bool blank = true;
 
 
@@ -34,6 +35,7 @@ namespace Grade_Calculator_3
             LoadClassData("");
             ChangeInputMode(1);
             RefreshClassList();
+            LoadAllAssignments();
         }
 
         private void addClassToolStripMenuItem_Click(object sender, EventArgs e)
@@ -264,9 +266,9 @@ namespace Grade_Calculator_3
                 outOf = outOf_i;
             }
             SaveDataToMem(currentPage);
-            if (ErrorChecking.textIsType("Double", points) && ErrorChecking.textIsType("Double", outOf))
+            if (ErrorChecking.TextIsType("Double", points) && ErrorChecking.TextIsType("Double", outOf))
             {
-                if(ErrorChecking.textIsType("Double", DataRows[index].Points) && ErrorChecking.textIsType("Double", DataRows[index].OutOf))
+                if(ErrorChecking.TextIsType("Double", DataRows[index].Points) && ErrorChecking.TextIsType("Double", DataRows[index].OutOf))
                 {
                     DataRows[index].Points = (Convert.ToDouble(DataRows[index].Points) + coe * Convert.ToDouble(points)).ToString();
                     DataRows[index].OutOf = (Convert.ToDouble(DataRows[index].OutOf) + coe * Convert.ToDouble(outOf)).ToString();
@@ -483,12 +485,19 @@ namespace Grade_Calculator_3
                 {
                     if(outOf[c] == 0)
                     {
-                        MessageBox.Show("Out of cannot be 0 if points is non-zero.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
+                        if (Settings.WarningLevel >= 1)
+                        {
+                            MessageBox.Show("At least one entry for Out Of is invalid!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                        percent[c] = 0;
+                        total[c] = 0;
                     }
-                    percent[c] = 100 * points[c] / outOf[c];
-                    total[c] = percent[c] * weight[c] / 100;
-                    finalPercentage += total[c];
+                    else
+                    {
+                        percent[c] = 100 * points[c] / outOf[c];
+                        total[c] = percent[c] * weight[c] / 100;
+                        finalPercentage += total[c];
+                    }
                 }
                 c++;
             }
@@ -727,16 +736,6 @@ namespace Grade_Calculator_3
                 temp += assgn.outOf;
                 DataRows[assgn.catIndex].OutOf = temp.ToString();
             }
-            else
-            {
-                double temp = Convert.ToDouble(DataRows[assgn.catIndex].Points);
-                temp -= assgn.points;
-                DataRows[assgn.catIndex].Points = temp.ToString();
-
-                temp = Convert.ToDouble(DataRows[assgn.catIndex].OutOf);
-                temp -= assgn.outOf;
-                DataRows[assgn.catIndex].OutOf = temp.ToString();
-            }
         }
 
         private void basicModeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -747,6 +746,17 @@ namespace Grade_Calculator_3
         private void advancedModeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ChangeInputMode(2);
+            //temporary 2 lines below
+            Assignments a = new Assignments(this, _currentClass);
+            a.Show();
+        }
+
+        public void LoadAllAssignments()
+        {
+            foreach (SchoolClass schoolClass in XMLHandler.Data)
+            {
+                schoolClass.LoadAssignments();
+            }
         }
 
         public class DataRow
@@ -780,6 +790,11 @@ namespace Grade_Calculator_3
         public string[] catNames;
         public Double[] catWorths;
         public Assignment[] assignments;
+
+        public void LoadAssignments()
+        {
+            assignments = XMLHandler.ReadAssignments(this);
+        }
     }
 
     //based upon the Canvas LMS API assignment
@@ -788,12 +803,21 @@ namespace Grade_Calculator_3
         public bool active = false, real = true;
         public int catIndex;
         public string name;
-        public double points, outOf;
+        public double points, outOf, meanPoints;
+
+        public Object[] ToDataView(SchoolClass schoolClass)
+        {
+            double percent = 0.0;
+            if (!(points == 0.0 || outOf == 0.0))
+                 percent = points / outOf * 100.0;
+            Object[] retVal = {active, name, schoolClass.catNames[catIndex], points, outOf, percent, real};
+            return retVal;
+        }
     }
 
     public static class ErrorChecking
     {
-        public static bool textIsType(string type, Object value)
+        public static bool TextIsType(string type, Object value)
         {
             try
             {

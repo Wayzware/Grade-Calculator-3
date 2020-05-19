@@ -38,7 +38,7 @@ namespace Grade_Calculator_3
 
         private void AddSubPoints(bool neg)
         {
-            if(ErrorChecking.textIsType("double", TextBoxPE.Text) && ErrorChecking.textIsType("double", TextBoxPP.Text))
+            if(ErrorChecking.TextIsType("double", TextBoxPE.Text) && ErrorChecking.TextIsType("double", TextBoxPP.Text))
             {
                 string PE = TextBoxPE.Text;
                 string PP = TextBoxPP.Text;

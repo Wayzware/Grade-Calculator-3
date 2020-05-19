@@ -63,7 +63,7 @@ namespace Grade_Calculator_3
                 {
                     continue;
                 }
-                if(!ErrorChecking.textIsType("int", temp))
+                if(!ErrorChecking.TextIsType("int", temp))
                 {
                     flag_error = true;
                     continue;
@@ -364,7 +364,8 @@ namespace Grade_Calculator_3
                     new XElement("Real", assignment.real),
                     new XElement("Active", assignment.active),
                     new XElement("Points", assignment.points),
-                    new XElement("OutOf", assignment.outOf)
+                    new XElement("OutOf", assignment.outOf),
+                    new XElement("MeanPoints", assignment.meanPoints)
                     )
                 );
             XDocument xDocument = new XDocument(xAssignment);
@@ -412,7 +413,7 @@ namespace Grade_Calculator_3
                 {
                     continue;
                 }
-                if (!ErrorChecking.textIsType("int", temp))
+                if (!ErrorChecking.TextIsType("int", temp))
                 {
                     flag_error = true;
                     continue;
@@ -461,11 +462,12 @@ namespace Grade_Calculator_3
                     XE = XE.Element("AssignmentData");
                     Assignment assgn = new Assignment();
                     assgn.name = XE.Element("Name").Value;
-                    assgn.catIndex = Convert.ToInt32(XE.Element("CatIndex"));
-                    assgn.real = Convert.ToBoolean(XE.Element("Real"));
-                    assgn.active = Convert.ToBoolean(XE.Element("Active"));
-                    assgn.points = Convert.ToDouble(XE.Element("Points"));
-                    assgn.outOf = Convert.ToDouble(XE.Element("OutOf"));
+                    assgn.catIndex = Convert.ToInt32(XE.Element("CatIndex").Value);
+                    assgn.real = Convert.ToBoolean(XE.Element("Real").Value);
+                    assgn.active = Convert.ToBoolean(XE.Element("Active").Value);
+                    assgn.points = Convert.ToDouble(XE.Element("Points").Value);
+                    assgn.outOf = Convert.ToDouble(XE.Element("OutOf").Value);
+                    assgn.meanPoints = Convert.ToDouble(XE.Element("MeanPoints").Value);
                     Array.Resize(ref assignments, assignments.Length + 1);
                     assignments[assignments.Length - 1] = assgn;
                 }
@@ -477,13 +479,13 @@ namespace Grade_Calculator_3
             }
             if (flag_invalidEntryInFile)
             {
-                MessageBox.Show("At least one " + A_FILE_EXT + " file had an invalid entry!", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(@"At least one " + A_FILE_EXT + @" file had an invalid entry!", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
-            if (Settings.debugMsg)
+            if (Settings.DebugMsg)
             {
-                MessageBox.Show("Loaded " + Convert.ToString(assignments.Length) + " assignments successfully!",
-                    "Success!",
+                MessageBox.Show(@"Loaded " + Convert.ToString(assignments.Length) + @" assignments successfully!",
+                    @"Success!",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             return assignments;
@@ -492,6 +494,7 @@ namespace Grade_Calculator_3
 
     static class Settings
     {
-        public static bool debugMsg = false;
+        public static bool DebugMsg = false;
+        public static int WarningLevel = 0;
     }
 }
