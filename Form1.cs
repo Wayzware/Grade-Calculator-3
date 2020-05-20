@@ -32,6 +32,7 @@ namespace Grade_Calculator_3
             pages = 1;
             _currentClass = null;
             _addPoints = new AddPoints[0];
+            advancedModeToolStripMenuItem.Enabled = false;
             LoadClassData("");
             ChangeInputMode(1);
             RefreshClassList();
@@ -112,6 +113,7 @@ namespace Grade_Calculator_3
         private void comboBoxClasses_SelectedIndexChanged(object sender, EventArgs e)
         {
             blank = false;
+            advancedModeToolStripMenuItem.Enabled = true;
             CloseAllAddWindows();
             LoadClassData(comboBoxClasses.Text);
         }
@@ -418,7 +420,7 @@ namespace Grade_Calculator_3
             }
         }
 
-        private void CalculateGrade()
+        public void CalculateGrade()
         {
             double[] points = new double[DataRows.Length];
             double[] outOf = new double[DataRows.Length];
@@ -686,12 +688,14 @@ namespace Grade_Calculator_3
             TextBox[] outOfTextBoxes = { TextBoxOutOf1, TextBoxOutOf2, TextBoxOutOf3, TextBoxOutOf4, TextBoxOutOf5 };
 
             if(mode == 1)
-            {
+            { 
+                _assignments?.Close();
+                _assignments = null;
                 basicModeToolStripMenuItem.Checked = true;
                 advancedModeToolStripMenuItem.Checked = false;
                 foreach(Button btn in addButtons)
                 {
-                    btn.Text = "Add";
+                    btn.Visible = true;
                 }
                 foreach(TextBox tb in pointsTextBoxes)
                 {
@@ -701,6 +705,7 @@ namespace Grade_Calculator_3
                 {
                     tb.ReadOnly = false;
                 }
+                DisplayPage(currentPage);
                 return;
             }
             else if(mode == 2)
@@ -709,7 +714,7 @@ namespace Grade_Calculator_3
                 advancedModeToolStripMenuItem.Checked = true;
                 foreach (Button btn in addButtons)
                 {
-                    btn.Text = "Q Add";
+                    btn.Visible = false;
                 }
                 foreach (TextBox tb in pointsTextBoxes)
                 {
@@ -719,6 +724,12 @@ namespace Grade_Calculator_3
                 {
                     tb.ReadOnly = true;
                 }
+                if (_assignments == null)
+                {
+                    _assignments = new Assignments(this, _currentClass);
+                    _assignments.Show();
+                }
+                DisplayPage(currentPage);
                 return;
             }
             throw new NotImplementedException("Invalid mode passed to ChangeInputMode");
@@ -728,13 +739,14 @@ namespace Grade_Calculator_3
         {
             if (assgn.active)
             {
-                double temp = Convert.ToDouble(DataRows[assgn.catIndex].Points);
+                double temp = Convert.ToDouble("0" + DataRows[assgn.catIndex].Points);
                 temp += assgn.points;
                 DataRows[assgn.catIndex].Points = temp.ToString();
 
-                temp = Convert.ToDouble(DataRows[assgn.catIndex].OutOf);
+                temp = Convert.ToDouble("0" + DataRows[assgn.catIndex].OutOf);
                 temp += assgn.outOf;
                 DataRows[assgn.catIndex].OutOf = temp.ToString();
+                DisplayPage(currentPage);
             }
         }
 
@@ -746,9 +758,6 @@ namespace Grade_Calculator_3
         private void advancedModeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ChangeInputMode(2);
-            //temporary 2 lines below
-            Assignments a = new Assignments(this, _currentClass);
-            a.Show();
         }
 
         public void LoadAllAssignments()
@@ -797,7 +806,6 @@ namespace Grade_Calculator_3
         }
     }
 
-    //based upon the Canvas LMS API assignment
     public class Assignment
     {
         public bool active = false, real = true;

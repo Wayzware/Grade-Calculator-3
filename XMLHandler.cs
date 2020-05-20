@@ -490,11 +490,24 @@ namespace Grade_Calculator_3
             }
             return assignments;
         }
+
+        public static bool AssignmentFileExists(SchoolClass schoolClass, Assignment assignment)
+        {
+            string fullFilePath = DIRECTORY + ASSGN_DIR + schoolClass.className + "/" + assignment.name + A_FILE_EXT;
+            return File.Exists(fullFilePath);
+        }
+
+        public static void DeleteAssignment(SchoolClass schoolClass, Assignment assignment, bool warning = true)
+        {
+            string fullFilePath = DIRECTORY + ASSGN_DIR + schoolClass.className + "/" + assignment.name + A_FILE_EXT;
+            File.Delete(fullFilePath);
+        }
     }
 
     static class Settings
     {
         public static bool DebugMsg = false;
         public static int WarningLevel = 0;
+        public static bool AlwaysDeleteOldAssignment = false;
     }
 }
