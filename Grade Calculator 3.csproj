@@ -23,8 +23,9 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>7</ApplicationRevision>
-    <ApplicationVersion>0.2.2.%2a</ApplicationVersion>
+    <PublisherName>Jacob Rice</PublisherName>
+    <ApplicationRevision>9</ApplicationRevision>
+    <ApplicationVersion>0.3.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -173,6 +174,20 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="1494114905_Test-paper-24.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <FileAssociation Include=".gcax">
+      <Visible>False</Visible>
+      <Description>Grade Calculator 3 assignment</Description>
+      <Progid>GC3</Progid>
+      <DefaultIcon>1494114905_Test-paper-24.ico</DefaultIcon>
+    </FileAssociation>
+    <FileAssociation Include=".gcdx">
+      <Visible>False</Visible>
+      <Description>Grade Calculator 3 class</Description>
+      <Progid>GC3</Progid>
+      <DefaultIcon>1494114905_Test-paper-24.ico</DefaultIcon>
+    </FileAssociation>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

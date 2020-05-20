@@ -695,7 +695,7 @@ namespace Grade_Calculator_3
                 advancedModeToolStripMenuItem.Checked = false;
                 foreach(Button btn in addButtons)
                 {
-                    btn.Visible = true;
+                    btn.Enabled = true;
                 }
                 foreach(TextBox tb in pointsTextBoxes)
                 {
@@ -714,7 +714,7 @@ namespace Grade_Calculator_3
                 advancedModeToolStripMenuItem.Checked = true;
                 foreach (Button btn in addButtons)
                 {
-                    btn.Visible = false;
+                    btn.Enabled = false;
                 }
                 foreach (TextBox tb in pointsTextBoxes)
                 {
