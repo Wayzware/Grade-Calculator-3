@@ -16,7 +16,6 @@ namespace Grade_Calculator_3
         private Main _main;
         private Assignment[] _assignments;
         private Assignment _currentAssignment;
-        private bool _shutdown = false;
 
         public Assignments(Main main, SchoolClass schoolClass)
         {
@@ -24,6 +23,10 @@ namespace Grade_Calculator_3
             _schoolClass = schoolClass;
             _assignments = _schoolClass.assignments;
             _main = main;
+            this.Closing += delegate
+            {
+                _main.SetAssignmentsToNull();
+            };
             FillDataView();
             Clear();
             DataGridView.CurrentCellChanged += delegate
@@ -161,6 +164,7 @@ namespace Grade_Calculator_3
                 }
                 return false;
             }
+
             if (!ErrorChecking.TextIsType("double", TextBoxMeanPoints.Text))
             {
                 if (!TextBoxMeanPoints.Text.Equals("") && warning)

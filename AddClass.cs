@@ -16,6 +16,7 @@ namespace Grade_Calculator_3
 
         string[] categoryNames;
         string[] categoryWorthsS;
+        private SchoolClass _oldClass;
         int pages, currentPage;
 
         public AddClass(Main sender)
@@ -52,6 +53,7 @@ namespace Grade_Calculator_3
         {
             InitializeComponent();
             main = sender;
+            _oldClass = schoolClass;
             DisplayData(schoolClass);
         }
 
@@ -311,11 +313,29 @@ namespace Grade_Calculator_3
                     return;
                 }
             }
+            if (!schoolClass.IsParseable())
+            {
+                MessageBox.Show("An entry contains an illegal XML character! Try removing any symbols entered.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             //Data has been verified and is ready to be written to a file!
-            XMLHandler.SaveSchoolClassToFile(schoolClass, XMLHandler.D_SCHEMA_VER);
-            main.InitialSetup();
-            this.Close();
+            _oldClass?.RemapAssignments(schoolClass, true);
+            if (_oldClass != null && !_oldClass.className.Equals(schoolClass.className))
+            {
+                XMLHandler.ChangeAssignmentDirName(schoolClass, _oldClass);
+                XMLHandler.DeleteClass(_oldClass.className, false);
+            }
+
+            if (XMLHandler.SaveSchoolClassToFile(schoolClass, XMLHandler.D_SCHEMA_VER))
+            {
+                main.InitialSetup();
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("An entry contains an illegal XML character! Try removing any symbols entered.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void SaveCurrentCatData()

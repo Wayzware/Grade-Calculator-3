@@ -24,14 +24,15 @@ namespace Grade_Calculator_3
         private static readonly string A_FILE_EXT = ".gcax";
         public static readonly int A_SCHEMA_VER = 1;
 
+        public static SchoolClass[] Data;
+
         /* Schema version history:
          *      D_SCHEMA_VER:
          *          1 : v0.1-Present
          *      A_SCHEMA_VER:
-         *          1 : v0.3-Present
-         */
+         *          1 : v0.3-Present */
 
-        public static SchoolClass[] Data;
+
 
         public static SchoolClass[] ReadSchoolClasses()
         {
@@ -173,7 +174,7 @@ namespace Grade_Calculator_3
             throw new NotImplementedException("XGradeScaleToDouble has not been updated for S/N");
         }
 
-        public static void SaveSchoolClassToFile(SchoolClass schoolClass, int schemaVer, bool warning=true)
+        public static bool SaveSchoolClassToFile(SchoolClass schoolClass, int schemaVer, bool warning=true)
         {
             //make the directory if it does not exist
             if (!Directory.Exists(DIRECTORY + CLASS_DIR))
@@ -187,7 +188,7 @@ namespace Grade_Calculator_3
                 var result = MessageBox.Show("Data already exists for " + schoolClass.className + ". Overwrite the file?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (result == DialogResult.No)
                 {
-                    return;
+                    return false;
                 }
             }
 
@@ -206,12 +207,21 @@ namespace Grade_Calculator_3
 
 
             XDocument xDocument = new XDocument(xSchoolClass);
-            xDocument.Save(fullFilePath);
+            try
+            {
+                xDocument.Save(fullFilePath);
+            }
+            catch
+            {
+                return false;
+            }
 
             if (warning)
             {
                 MessageBox.Show("File saved successfully!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+
+            return true;
         }
 
         private static XElement CatToXElement(string[] catNames, Double[] catWorths)
@@ -297,20 +307,26 @@ namespace Grade_Calculator_3
         public static bool DeleteClass(string className, bool warning=true)
         {
             string fullFilePath = DIRECTORY + CLASS_DIR + className + D_FILE_EXT;
+            string assgnDir = DIRECTORY + ASSGN_DIR + className + "/";
             if (ClassFileExists(className))
             {
                 if (warning)
                 {
                     var result = MessageBox.Show("Are you sure you wish to delete all data for " + className + "?" 
-                        + "\n" + "\n" + "NOTE: This will clear any data you entered in the Score Input section", "Warning!",
+                        + "\n" + "\n" + "NOTE: This will also delete all assignments associated with this class", "Warning!",
                         MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                     if (result == DialogResult.No)
                     {
                         return false;
                     }
                 }
+                foreach (var file in Directory.GetFiles(assgnDir))
+                {
+                    File.Delete(file);
+                }
+                Directory.Delete(assgnDir);
                 File.Delete(fullFilePath);
-                if(warning) MessageBox.Show("File Deleted!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (warning) MessageBox.Show("File Deleted!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 return true;
             }
@@ -369,8 +385,15 @@ namespace Grade_Calculator_3
                     )
                 );
             XDocument xDocument = new XDocument(xAssignment);
-            xDocument.Save(fullFilePath);
-
+            try
+            {
+                xDocument.Save(fullFilePath);
+            }
+            catch
+            {
+                MessageBox.Show(@"Name is invalid", @"Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             if (warning)
             {
                 MessageBox.Show("File saved successfully!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -501,6 +524,13 @@ namespace Grade_Calculator_3
         {
             string fullFilePath = DIRECTORY + ASSGN_DIR + schoolClass.className + "/" + assignment.name + A_FILE_EXT;
             File.Delete(fullFilePath);
+        }
+
+        public static void ChangeAssignmentDirName(SchoolClass newClass, SchoolClass oldClass)
+        {
+            string oldDir = DIRECTORY + ASSGN_DIR + oldClass.className + "/";
+            string newDir = DIRECTORY + ASSGN_DIR + newClass.className + "/";
+            Directory.Move(oldDir, newDir);
         }
     }
 

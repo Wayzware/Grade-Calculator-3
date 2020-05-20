@@ -39,9 +39,9 @@
             this.Label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label2.Location = new System.Drawing.Point(36, 9);
             this.Label2.Name = "Label2";
-            this.Label2.Size = new System.Drawing.Size(154, 60);
+            this.Label2.Size = new System.Drawing.Size(157, 60);
             this.Label2.TabIndex = 4;
-            this.Label2.Text = "© 2016-2020 Jacob Rice\r\nReleased on May 19, 2020\r\n\r\nVersion 0.3\r\n";
+            this.Label2.Text = "© 2016-2020 Jacob Rice\r\nReleased on May, 20, 2020\r\n\r\nVersion 0.3.1\r\n";
             this.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // linkLabel1

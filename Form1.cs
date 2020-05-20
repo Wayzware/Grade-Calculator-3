@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace Grade_Calculator_3
 {
@@ -34,7 +37,9 @@ namespace Grade_Calculator_3
             _addPoints = new AddPoints[0];
             advancedModeToolStripMenuItem.Enabled = false;
             LoadClassData("");
+            LockWeights(false);
             ChangeInputMode(1);
+            ClearInput();
             RefreshClassList();
             LoadAllAssignments();
         }
@@ -115,7 +120,20 @@ namespace Grade_Calculator_3
             blank = false;
             advancedModeToolStripMenuItem.Enabled = true;
             CloseAllAddWindows();
+            ClearInput();
             LoadClassData(comboBoxClasses.Text);
+            _assignments?.Close();
+            _assignments = null;
+            LockWeights(true);
+        }
+
+        private void LockWeights(bool locked)
+        {
+            TextBox[] wBoxes = {TextBoxW1, TextBoxW2, TextBoxW3, TextBoxW4, TextBoxW5};
+            foreach (TextBox t in wBoxes)
+            {
+                t.ReadOnly = locked;
+            }
         }
 
         public void LoadClassData(string className)
@@ -683,7 +701,7 @@ namespace Grade_Calculator_3
         private void ChangeInputMode(int mode)
         {
             //basic = 1, advanced = 2
-            Button[] addButtons = { ButtonA1, ButtonA2, ButtonA3, ButtonA4, ButtonA5 };
+            Button[] buttons = { ButtonA1, ButtonA2, ButtonA3, ButtonA4, ButtonA5, ButtonClear, ButtonCalculate };
             TextBox[] pointsTextBoxes = { TextBoxP1, TextBoxP2, TextBoxP3, TextBoxP4, TextBoxP5 };
             TextBox[] outOfTextBoxes = { TextBoxOutOf1, TextBoxOutOf2, TextBoxOutOf3, TextBoxOutOf4, TextBoxOutOf5 };
 
@@ -693,7 +711,7 @@ namespace Grade_Calculator_3
                 _assignments = null;
                 basicModeToolStripMenuItem.Checked = true;
                 advancedModeToolStripMenuItem.Checked = false;
-                foreach(Button btn in addButtons)
+                foreach(Button btn in buttons)
                 {
                     btn.Enabled = true;
                 }
@@ -712,7 +730,7 @@ namespace Grade_Calculator_3
             {
                 basicModeToolStripMenuItem.Checked = false;
                 advancedModeToolStripMenuItem.Checked = true;
-                foreach (Button btn in addButtons)
+                foreach (Button btn in buttons)
                 {
                     btn.Enabled = false;
                 }
@@ -768,6 +786,11 @@ namespace Grade_Calculator_3
             }
         }
 
+        public void SetAssignmentsToNull()
+        {
+            _assignments = null;
+        }
+
         public class DataRow
         {
             public string CatName, Points, OutOf, Weight, Percent, Total;
@@ -789,6 +812,7 @@ namespace Grade_Calculator_3
                 Total = "";
             }
         }
+
     }
 
     public class SchoolClass
@@ -803,6 +827,99 @@ namespace Grade_Calculator_3
         public void LoadAssignments()
         {
             assignments = XMLHandler.ReadAssignments(this);
+        }
+
+        public void RemapAssignments(SchoolClass newClass, bool deleteUnmapped = true)
+        {
+            if (assignments.Length == 0)
+            {
+                return;
+            }
+            Assignment[] unchanged = new Assignment[0];
+            Assignment[] updated = new Assignment[0];
+            Assignment[] deleted = new Assignment[0];
+            Dictionary<int, int> map = new Dictionary<int, int>();
+
+            int c = 0;
+            foreach (string oldCatName in catNames)
+            {
+                int newIndex = newClass.CatExists(oldCatName);
+                if (newIndex > -1)
+                {
+                    map.Add(c, newIndex);
+                }
+                c++;
+            }
+            foreach (Assignment a in assignments)
+            {
+                int oldCatIndex = a.catIndex;
+                try
+                {
+                    int newCatIndex = map[oldCatIndex];
+                    if (newCatIndex == oldCatIndex)
+                    {
+                        Array.Resize(ref unchanged, unchanged.Length + 1);
+                        unchanged[unchanged.Length - 1] = a;
+                    }
+                    else
+                    {
+                        a.catIndex = newCatIndex;
+                        Array.Resize(ref updated, updated.Length + 1);
+                        updated[updated.Length - 1] = a;
+                    }
+                }
+                catch (KeyNotFoundException)
+                {
+                    Array.Resize(ref deleted, deleted.Length + 1);
+                    deleted[deleted.Length - 1] = a;
+                }
+            }
+            foreach (Assignment a in updated)
+            {
+                XMLHandler.SaveAssignmentToFile(this, a, false);
+            }
+
+            if (!deleteUnmapped) return;
+            foreach (Assignment a in deleted)
+            {
+                XMLHandler.DeleteAssignment(this, a, false);
+            }
+        }
+
+        private int CatExists(string catName)
+        {
+            int c = 0;
+            foreach (string oldCatName in catNames)
+            {
+                if (oldCatName.Equals(catName))
+                    return c;
+                c++;
+            }
+            return -1;
+        }
+
+        public bool IsParseable()
+        {
+            try
+            {
+                var temp = new XElement("ClassData",
+                    new XElement("ClassName", className),
+                    new XElement("Professor", professor),
+                    new XElement("Term",
+                        new XElement("Year", termYear),
+                        new XElement("Season", termSeason)),
+                    new XElement("Credits", credits),
+                    new XElement("GradeScaleFormat", gradeScaleFormat),
+                    new XElement("GradeScale", gradeScale),
+                    new XElement("Categories", catNames));
+                var xDoc = new XDocument(temp);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
         }
     }
 
