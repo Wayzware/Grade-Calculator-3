@@ -102,9 +102,6 @@
             this.label5 = new System.Windows.Forms.Label();
             this.textBoxClassName = new System.Windows.Forms.TextBox();
             this.buttonSave = new System.Windows.Forms.Button();
-            this.ButtonClear = new System.Windows.Forms.Button();
-            this.ButtonImport = new System.Windows.Forms.Button();
-            this.label16 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCategories)).BeginInit();
@@ -154,7 +151,7 @@
             this.groupBox1.Controls.Add(this.TextBoxDM);
             this.groupBox1.Controls.Add(this.TextBoxDP);
             this.groupBox1.Controls.Add(this.TextBoxD);
-            this.groupBox1.Location = new System.Drawing.Point(229, 12);
+            this.groupBox1.Location = new System.Drawing.Point(12, 122);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(132, 369);
             this.groupBox1.TabIndex = 2;
@@ -547,7 +544,7 @@
             this.groupBox2.Controls.Add(this.TextBoxName2);
             this.groupBox2.Controls.Add(this.TextBoxWorth2);
             this.groupBox2.Controls.Add(this.LabelName2);
-            this.groupBox2.Location = new System.Drawing.Point(367, 12);
+            this.groupBox2.Location = new System.Drawing.Point(150, 122);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(179, 369);
             this.groupBox2.TabIndex = 3;
@@ -756,7 +753,7 @@
             this.groupBox3.Controls.Add(this.textBoxClassName);
             this.groupBox3.Location = new System.Drawing.Point(12, 12);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(211, 174);
+            this.groupBox3.Size = new System.Drawing.Size(317, 104);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Class Information";
@@ -764,7 +761,7 @@
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(163, 113);
+            this.label26.Location = new System.Drawing.Point(195, 73);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(39, 13);
             this.label26.TabIndex = 29;
@@ -772,7 +769,7 @@
             // 
             // numericUpDownCredits
             // 
-            this.numericUpDownCredits.Location = new System.Drawing.Point(166, 133);
+            this.numericUpDownCredits.Location = new System.Drawing.Point(240, 71);
             this.numericUpDownCredits.Maximum = new decimal(new int[] {
             20,
             0,
@@ -785,7 +782,7 @@
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(6, 117);
+            this.label25.Location = new System.Drawing.Point(182, 14);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(31, 13);
             this.label25.TabIndex = 27;
@@ -793,7 +790,7 @@
             // 
             // numericUpDownTermYear
             // 
-            this.numericUpDownTermYear.Location = new System.Drawing.Point(85, 134);
+            this.numericUpDownTermYear.Location = new System.Drawing.Point(261, 31);
             this.numericUpDownTermYear.Maximum = new decimal(new int[] {
             3000,
             0,
@@ -820,7 +817,7 @@
             "Spring",
             "Summer",
             "Fall"});
-            this.comboBoxTermSeason.Location = new System.Drawing.Point(6, 133);
+            this.comboBoxTermSeason.Location = new System.Drawing.Point(182, 30);
             this.comboBoxTermSeason.Name = "comboBoxTermSeason";
             this.comboBoxTermSeason.Size = new System.Drawing.Size(73, 21);
             this.comboBoxTermSeason.TabIndex = 4;
@@ -828,7 +825,7 @@
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(6, 70);
+            this.label24.Location = new System.Drawing.Point(6, 55);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(99, 13);
             this.label24.TabIndex = 24;
@@ -836,15 +833,15 @@
             // 
             // textBoxProfessor
             // 
-            this.textBoxProfessor.Location = new System.Drawing.Point(6, 86);
+            this.textBoxProfessor.Location = new System.Drawing.Point(6, 71);
             this.textBoxProfessor.Name = "textBoxProfessor";
-            this.textBoxProfessor.Size = new System.Drawing.Size(196, 20);
+            this.textBoxProfessor.Size = new System.Drawing.Size(161, 20);
             this.textBoxProfessor.TabIndex = 2;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 23);
+            this.label5.Location = new System.Drawing.Point(6, 15);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(141, 13);
             this.label5.TabIndex = 22;
@@ -852,66 +849,34 @@
             // 
             // textBoxClassName
             // 
-            this.textBoxClassName.Location = new System.Drawing.Point(6, 39);
+            this.textBoxClassName.Location = new System.Drawing.Point(6, 31);
             this.textBoxClassName.Name = "textBoxClassName";
-            this.textBoxClassName.Size = new System.Drawing.Size(196, 20);
+            this.textBoxClassName.Size = new System.Drawing.Size(161, 20);
             this.textBoxClassName.TabIndex = 0;
             // 
             // buttonSave
             // 
-            this.buttonSave.Location = new System.Drawing.Point(12, 326);
+            this.buttonSave.Location = new System.Drawing.Point(12, 497);
             this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(211, 52);
+            this.buttonSave.Size = new System.Drawing.Size(317, 33);
             this.buttonSave.TabIndex = 900;
             this.buttonSave.Text = "Save";
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
-            // ButtonClear
-            // 
-            this.ButtonClear.Enabled = false;
-            this.ButtonClear.Location = new System.Drawing.Point(12, 257);
-            this.ButtonClear.Name = "ButtonClear";
-            this.ButtonClear.Size = new System.Drawing.Size(102, 52);
-            this.ButtonClear.TabIndex = 901;
-            this.ButtonClear.Text = "Clear";
-            this.ButtonClear.UseVisualStyleBackColor = true;
-            // 
-            // ButtonImport
-            // 
-            this.ButtonImport.Enabled = false;
-            this.ButtonImport.Location = new System.Drawing.Point(120, 257);
-            this.ButtonImport.Name = "ButtonImport";
-            this.ButtonImport.Size = new System.Drawing.Size(102, 52);
-            this.ButtonImport.TabIndex = 902;
-            this.ButtonImport.Text = "Import";
-            this.ButtonImport.UseVisualStyleBackColor = true;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(18, 215);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(163, 13);
-            this.label16.TabIndex = 903;
-            this.label16.Text = "Note: This UI design is temporary";
-            // 
             // AddClass
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(563, 392);
-            this.Controls.Add(this.label16);
-            this.Controls.Add(this.ButtonImport);
-            this.Controls.Add(this.ButtonClear);
+            this.ClientSize = new System.Drawing.Size(339, 543);
             this.Controls.Add(this.buttonSave);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(579, 431);
-            this.MinimumSize = new System.Drawing.Size(579, 431);
+            this.MaximumSize = new System.Drawing.Size(355, 582);
+            this.MinimumSize = new System.Drawing.Size(355, 582);
             this.Name = "AddClass";
             this.Text = "Add/Edit Class";
             this.Load += new System.EventHandler(this.AddClass_Load);
@@ -925,7 +890,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCredits)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTermYear)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -1003,8 +967,5 @@
         internal System.Windows.Forms.TextBox textBoxClassName;
         private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.Label LabelPage;
-        private System.Windows.Forms.Button ButtonClear;
-        private System.Windows.Forms.Button ButtonImport;
-        private System.Windows.Forms.Label label16;
     }
 }

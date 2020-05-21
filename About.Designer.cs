@@ -41,7 +41,7 @@
             this.Label2.Name = "Label2";
             this.Label2.Size = new System.Drawing.Size(157, 60);
             this.Label2.TabIndex = 4;
-            this.Label2.Text = "© 2016-2020 Jacob Rice\r\nReleased on May, 20, 2020\r\n\r\nVersion 0.3.1\r\n";
+            this.Label2.Text = "© 2016-2020 Jacob Rice\r\nReleased on May, 21, 2020\r\n\r\nVersion 0.3.2\r\n";
             this.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // linkLabel1

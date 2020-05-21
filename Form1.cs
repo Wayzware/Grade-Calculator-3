@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Text;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using System.Xml.Linq;
 
 namespace Grade_Calculator_3
@@ -124,6 +127,12 @@ namespace Grade_Calculator_3
             LoadClassData(comboBoxClasses.Text);
             _assignments?.Close();
             _assignments = null;
+            LabelMeanZero.Visible = false;
+            if (advancedModeToolStripMenuItem.Checked)
+            {
+                _assignments = new Assignments(this, _currentClass);
+                _assignments.Show();
+            }
             LockWeights(true);
         }
 
@@ -312,6 +321,8 @@ namespace Grade_Calculator_3
             }
             TextBoxTotalPer.Text = "";
             TextBoxGrade.Text = "";
+            TextBoxMeanPercent.Text = "";
+            TextBoxMeanGrade.Text = "";
 
             foreach(DataRow dataRow in DataRows)
             {
@@ -583,6 +594,13 @@ namespace Grade_Calculator_3
 
         }
 
+        public void DisplayMean(string percent, string grade, bool zero)
+        {
+            TextBoxMeanPercent.Text = percent;
+            TextBoxMeanGrade.Text = grade;
+            LabelMeanZero.Visible = zero;
+        }
+
         private string GetGradeFromIndexAF(int index)
         {
             string[] grades = { "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F" };
@@ -704,6 +722,7 @@ namespace Grade_Calculator_3
             Button[] buttons = { ButtonA1, ButtonA2, ButtonA3, ButtonA4, ButtonA5, ButtonClear, ButtonCalculate };
             TextBox[] pointsTextBoxes = { TextBoxP1, TextBoxP2, TextBoxP3, TextBoxP4, TextBoxP5 };
             TextBox[] outOfTextBoxes = { TextBoxOutOf1, TextBoxOutOf2, TextBoxOutOf3, TextBoxOutOf4, TextBoxOutOf5 };
+            TextBox[] meanTextBoxes = {TextBoxMeanGrade, TextBoxMeanPercent};
 
             if(mode == 1)
             { 
@@ -723,6 +742,12 @@ namespace Grade_Calculator_3
                 {
                     tb.ReadOnly = false;
                 }
+                foreach (TextBox tb in meanTextBoxes)
+                {
+                    tb.Text = "";
+                    tb.Enabled = false;
+                }
+                LabelMeanZero.Visible = false;
                 DisplayPage(currentPage);
                 return;
             }
@@ -746,6 +771,10 @@ namespace Grade_Calculator_3
                 {
                     _assignments = new Assignments(this, _currentClass);
                     _assignments.Show();
+                }
+                foreach (TextBox tb in meanTextBoxes)
+                {
+                    tb.Enabled = true;
                 }
                 DisplayPage(currentPage);
                 return;
@@ -831,10 +860,11 @@ namespace Grade_Calculator_3
 
         public void RemapAssignments(SchoolClass newClass, bool deleteUnmapped = true)
         {
-            if (assignments.Length == 0)
+            if (assignments is null || assignments.Length == 0)
             {
                 return;
             }
+
             Assignment[] unchanged = new Assignment[0];
             Assignment[] updated = new Assignment[0];
             Assignment[] deleted = new Assignment[0];
@@ -848,8 +878,10 @@ namespace Grade_Calculator_3
                 {
                     map.Add(c, newIndex);
                 }
+
                 c++;
             }
+
             foreach (Assignment a in assignments)
             {
                 int oldCatIndex = a.catIndex;
@@ -874,6 +906,7 @@ namespace Grade_Calculator_3
                     deleted[deleted.Length - 1] = a;
                 }
             }
+
             foreach (Assignment a in updated)
             {
                 XMLHandler.SaveAssignmentToFile(this, a, false);
@@ -895,6 +928,7 @@ namespace Grade_Calculator_3
                     return c;
                 c++;
             }
+
             return -1;
         }
 
@@ -920,6 +954,104 @@ namespace Grade_Calculator_3
                 return false;
             }
 
+        }
+
+        public bool ActivesHaveMeans()
+        {
+            return assignments.Where(a => a.active).All(a => a.meanPoints != 0);
+        }
+
+        private string GetGradeFromIndexAF(int index)
+        {
+            string[] grades = {"A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F"};
+            return grades[index];
+        }
+
+        public (string, string, bool) GetMeanGrade(Main.DataRow[] data)
+        {
+            bool zero = false;
+            (string, string, bool) errorVal = ("Error in file!", "0.0", false);
+            double[] meanPoints = new double[catNames.Length];
+            double[] outOf = new double[catNames.Length];
+            double[] weight = new double[catNames.Length];
+            string[] retVal = new string[2];
+            int c = 0;
+            foreach (Main.DataRow dr in data)
+            {
+                if (double.TryParse(dr.Weight, out double tempWeight))
+                {
+                    weight[c] = tempWeight;
+                    c++;
+                }
+                else
+                {
+                    return errorVal;
+                }
+            }
+
+            foreach (Assignment a in assignments)
+            {
+                if (a.active)
+                {
+                    meanPoints[a.catIndex] += a.meanPoints;
+                    outOf[a.catIndex] += a.outOf;
+                }
+
+                if (a.meanPoints == 0) zero = true;
+            }
+
+            double meanPercent = 0.0;
+            c = 0;
+            foreach (double x in meanPoints)
+            {
+                if (outOf[c] == 0)
+                {
+                    c++;
+                    continue;
+                }
+                meanPercent += (meanPoints[c] / outOf[c]) * weight[c];
+                c++;
+            }
+
+            double[] gradeScaleVals = new double[0];
+            string[] gradeScaleGrade = new string[0];
+            if (this.gradeScaleFormat == 1)
+            {
+                c = 0;
+                foreach (double val in this.gradeScale)
+                {
+                    if (val != -1) //if the grade is enabled
+                    {
+                        Array.Resize(ref gradeScaleVals, gradeScaleVals.Length + 1);
+                        Array.Resize(ref gradeScaleGrade, gradeScaleGrade.Length + 1);
+                        gradeScaleVals[gradeScaleVals.Length - 1] = val;
+                        gradeScaleGrade[gradeScaleGrade.Length - 1] = GetGradeFromIndexAF(c);
+                    }
+
+                    c++;
+                }
+
+                //for adding F at the end
+                Array.Resize(ref gradeScaleVals, gradeScaleVals.Length + 1);
+                Array.Resize(ref gradeScaleGrade, gradeScaleGrade.Length + 1);
+                gradeScaleVals[gradeScaleVals.Length - 1] = 0;
+                gradeScaleGrade[gradeScaleGrade.Length - 1] = GetGradeFromIndexAF(11);
+
+                bool found = false;
+                c = 0;
+                while (!found && (c != gradeScaleVals.Length))
+                {
+                    if (gradeScaleVals[c] <= meanPercent)
+                    {
+                        retVal[0] = gradeScaleGrade[c];
+                        found = true;
+                    }
+                    c++;
+                }
+            }
+
+            retVal[1] = meanPercent.ToString();
+            return (retVal[0], retVal[1], zero);
         }
     }
 

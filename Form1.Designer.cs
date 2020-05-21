@@ -92,6 +92,10 @@
             this.TextBoxT1 = new System.Windows.Forms.TextBox();
             this.ButtonClear = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.TextBoxMeanGrade = new System.Windows.Forms.TextBox();
+            this.TextBoxMeanPercent = new System.Windows.Forms.TextBox();
+            this.LabelMeanZero = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -543,6 +547,10 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.LabelMeanZero);
+            this.groupBox2.Controls.Add(this.label8);
+            this.groupBox2.Controls.Add(this.TextBoxMeanGrade);
+            this.groupBox2.Controls.Add(this.TextBoxMeanPercent);
             this.groupBox2.Controls.Add(this.ButtonCurve);
             this.groupBox2.Controls.Add(this.ButtonCalculate);
             this.groupBox2.Controls.Add(this.label7);
@@ -592,11 +600,11 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(151, 39);
+            this.label7.Location = new System.Drawing.Point(103, 39);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(31, 13);
+            this.label7.Size = new System.Drawing.Size(56, 13);
             this.label7.TabIndex = 110;
-            this.label7.Text = "Total";
+            this.label7.Text = "Your Total";
             // 
             // comboBoxClasses
             // 
@@ -604,7 +612,7 @@
             this.comboBoxClasses.FormattingEnabled = true;
             this.comboBoxClasses.Location = new System.Drawing.Point(100, 109);
             this.comboBoxClasses.Name = "comboBoxClasses";
-            this.comboBoxClasses.Size = new System.Drawing.Size(134, 21);
+            this.comboBoxClasses.Size = new System.Drawing.Size(136, 21);
             this.comboBoxClasses.Sorted = true;
             this.comboBoxClasses.TabIndex = 109;
             this.comboBoxClasses.TabStop = false;
@@ -615,7 +623,7 @@
             this.TextBoxGrade.Location = new System.Drawing.Point(100, 84);
             this.TextBoxGrade.Name = "TextBoxGrade";
             this.TextBoxGrade.ReadOnly = true;
-            this.TextBoxGrade.Size = new System.Drawing.Size(134, 20);
+            this.TextBoxGrade.Size = new System.Drawing.Size(65, 20);
             this.TextBoxGrade.TabIndex = 108;
             this.TextBoxGrade.TabStop = false;
             // 
@@ -624,7 +632,7 @@
             this.TextBoxTotalPer.Location = new System.Drawing.Point(100, 58);
             this.TextBoxTotalPer.Name = "TextBoxTotalPer";
             this.TextBoxTotalPer.ReadOnly = true;
-            this.TextBoxTotalPer.Size = new System.Drawing.Size(134, 20);
+            this.TextBoxTotalPer.Size = new System.Drawing.Size(65, 20);
             this.TextBoxTotalPer.TabIndex = 67;
             this.TextBoxTotalPer.TabStop = false;
             // 
@@ -736,6 +744,44 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Score Input";
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(185, 39);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(34, 13);
+            this.label8.TabIndex = 1002;
+            this.label8.Text = "Mean";
+            // 
+            // TextBoxMeanGrade
+            // 
+            this.TextBoxMeanGrade.Location = new System.Drawing.Point(171, 58);
+            this.TextBoxMeanGrade.Name = "TextBoxMeanGrade";
+            this.TextBoxMeanGrade.ReadOnly = true;
+            this.TextBoxMeanGrade.Size = new System.Drawing.Size(65, 20);
+            this.TextBoxMeanGrade.TabIndex = 1001;
+            this.TextBoxMeanGrade.TabStop = false;
+            // 
+            // TextBoxMeanPercent
+            // 
+            this.TextBoxMeanPercent.Location = new System.Drawing.Point(171, 84);
+            this.TextBoxMeanPercent.Name = "TextBoxMeanPercent";
+            this.TextBoxMeanPercent.ReadOnly = true;
+            this.TextBoxMeanPercent.Size = new System.Drawing.Size(65, 20);
+            this.TextBoxMeanPercent.TabIndex = 1000;
+            this.TextBoxMeanPercent.TabStop = false;
+            // 
+            // LabelMeanZero
+            // 
+            this.LabelMeanZero.AutoSize = true;
+            this.LabelMeanZero.BackColor = System.Drawing.SystemColors.Control;
+            this.LabelMeanZero.ForeColor = System.Drawing.Color.Red;
+            this.LabelMeanZero.Location = new System.Drawing.Point(111, 139);
+            this.LabelMeanZero.Name = "LabelMeanZero";
+            this.LabelMeanZero.Size = new System.Drawing.Size(108, 13);
+            this.LabelMeanZero.TabIndex = 1003;
+            this.LabelMeanZero.Text = "Means of 0 detected!";
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -831,6 +877,10 @@
         private System.Windows.Forms.ToolStripMenuItem assignmentsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem basicModeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem advancedModeToolStripMenuItem;
+        private System.Windows.Forms.Label label8;
+        internal System.Windows.Forms.TextBox TextBoxMeanGrade;
+        internal System.Windows.Forms.TextBox TextBoxMeanPercent;
+        private System.Windows.Forms.Label LabelMeanZero;
     }
 }
 

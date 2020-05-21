@@ -12,8 +12,8 @@ namespace Grade_Calculator_3
 {
     public partial class Assignments : Form
     {
-        private SchoolClass _schoolClass;
-        private Main _main;
+        private readonly SchoolClass _schoolClass;
+        private readonly Main _main;
         private Assignment[] _assignments;
         private Assignment _currentAssignment;
 
@@ -66,6 +66,11 @@ namespace Grade_Calculator_3
                     _main.AssgnToDataRow(assgn);
                 }
             }
+
+            string arg1, arg2;
+            bool arg3;
+            (arg1, arg2, arg3) = _schoolClass.GetMeanGrade(_main.DataRows);
+            _main.DisplayMean(arg1, arg2, arg3);
             _main.CalculateGrade();
         }
 
