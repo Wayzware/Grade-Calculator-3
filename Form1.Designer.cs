@@ -78,6 +78,10 @@
             this.ButtonA5 = new System.Windows.Forms.Button();
             this.TextBoxP5 = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.LabelMeanZero = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.TextBoxMeanGrade = new System.Windows.Forms.TextBox();
+            this.TextBoxMeanPercent = new System.Windows.Forms.TextBox();
             this.ButtonCurve = new System.Windows.Forms.Button();
             this.ButtonCalculate = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
@@ -92,10 +96,6 @@
             this.TextBoxT1 = new System.Windows.Forms.TextBox();
             this.ButtonClear = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.TextBoxMeanGrade = new System.Windows.Forms.TextBox();
-            this.TextBoxMeanPercent = new System.Windows.Forms.TextBox();
-            this.LabelMeanZero = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -576,6 +576,44 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Score Output";
             // 
+            // LabelMeanZero
+            // 
+            this.LabelMeanZero.AutoSize = true;
+            this.LabelMeanZero.BackColor = System.Drawing.SystemColors.Control;
+            this.LabelMeanZero.ForeColor = System.Drawing.Color.Red;
+            this.LabelMeanZero.Location = new System.Drawing.Point(98, 140);
+            this.LabelMeanZero.Name = "LabelMeanZero";
+            this.LabelMeanZero.Size = new System.Drawing.Size(143, 13);
+            this.LabelMeanZero.TabIndex = 1003;
+            this.LabelMeanZero.Text = "Mean value(s) of 0 detected!";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(185, 39);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(34, 13);
+            this.label8.TabIndex = 1002;
+            this.label8.Text = "Mean";
+            // 
+            // TextBoxMeanGrade
+            // 
+            this.TextBoxMeanGrade.Location = new System.Drawing.Point(171, 58);
+            this.TextBoxMeanGrade.Name = "TextBoxMeanGrade";
+            this.TextBoxMeanGrade.ReadOnly = true;
+            this.TextBoxMeanGrade.Size = new System.Drawing.Size(65, 20);
+            this.TextBoxMeanGrade.TabIndex = 1001;
+            this.TextBoxMeanGrade.TabStop = false;
+            // 
+            // TextBoxMeanPercent
+            // 
+            this.TextBoxMeanPercent.Location = new System.Drawing.Point(171, 84);
+            this.TextBoxMeanPercent.Name = "TextBoxMeanPercent";
+            this.TextBoxMeanPercent.ReadOnly = true;
+            this.TextBoxMeanPercent.Size = new System.Drawing.Size(65, 20);
+            this.TextBoxMeanPercent.TabIndex = 1000;
+            this.TextBoxMeanPercent.TabStop = false;
+            // 
             // ButtonCurve
             // 
             this.ButtonCurve.Enabled = false;
@@ -743,44 +781,6 @@
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Score Input";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(185, 39);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(34, 13);
-            this.label8.TabIndex = 1002;
-            this.label8.Text = "Mean";
-            // 
-            // TextBoxMeanGrade
-            // 
-            this.TextBoxMeanGrade.Location = new System.Drawing.Point(171, 58);
-            this.TextBoxMeanGrade.Name = "TextBoxMeanGrade";
-            this.TextBoxMeanGrade.ReadOnly = true;
-            this.TextBoxMeanGrade.Size = new System.Drawing.Size(65, 20);
-            this.TextBoxMeanGrade.TabIndex = 1001;
-            this.TextBoxMeanGrade.TabStop = false;
-            // 
-            // TextBoxMeanPercent
-            // 
-            this.TextBoxMeanPercent.Location = new System.Drawing.Point(171, 84);
-            this.TextBoxMeanPercent.Name = "TextBoxMeanPercent";
-            this.TextBoxMeanPercent.ReadOnly = true;
-            this.TextBoxMeanPercent.Size = new System.Drawing.Size(65, 20);
-            this.TextBoxMeanPercent.TabIndex = 1000;
-            this.TextBoxMeanPercent.TabStop = false;
-            // 
-            // LabelMeanZero
-            // 
-            this.LabelMeanZero.AutoSize = true;
-            this.LabelMeanZero.BackColor = System.Drawing.SystemColors.Control;
-            this.LabelMeanZero.ForeColor = System.Drawing.Color.Red;
-            this.LabelMeanZero.Location = new System.Drawing.Point(111, 139);
-            this.LabelMeanZero.Name = "LabelMeanZero";
-            this.LabelMeanZero.Size = new System.Drawing.Size(108, 13);
-            this.LabelMeanZero.TabIndex = 1003;
-            this.LabelMeanZero.Text = "Means of 0 detected!";
             // 
             // Main
             // 

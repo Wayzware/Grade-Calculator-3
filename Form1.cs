@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing.Text;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
@@ -675,8 +676,10 @@ namespace Grade_Calculator_3
 
         private void ButtonCurve_Click(object sender, EventArgs e)
         {
-            CurveForm CF = new CurveForm();
-            CF.Show();
+            _currentClass.curves = new Curve[1];
+            _currentClass.curves[0] = new Curve("BigXD");
+            _currentClass.curves[0].kept = 2;
+            _currentClass.curves[0].ApplyAll(_currentClass.assignments);
         }
 
         private void refreshClassListToolStripMenuItem_Click(object sender, EventArgs e)
@@ -809,6 +812,7 @@ namespace Grade_Calculator_3
 
         public void LoadAllAssignments()
         {
+            if (XMLHandler.Data is null) return;
             foreach (SchoolClass schoolClass in XMLHandler.Data)
             {
                 schoolClass.LoadAssignments();
@@ -847,11 +851,13 @@ namespace Grade_Calculator_3
     public class SchoolClass
     {
         public string className, professor, termSeason;
-        public int termYear, credits, gradeScaleFormat;
+        public int termYear, credits, gradeScaleFormat, enrolled;
         public Double[] gradeScale;
         public string[] catNames;
         public Double[] catWorths;
         public Assignment[] assignments;
+        public Curve[] curves;
+
 
         public void LoadAssignments()
         {
@@ -945,7 +951,8 @@ namespace Grade_Calculator_3
                     new XElement("Credits", credits),
                     new XElement("GradeScaleFormat", gradeScaleFormat),
                     new XElement("GradeScale", gradeScale),
-                    new XElement("Categories", catNames));
+                    new XElement("Categories", catNames),
+                    new XElement("Enrolled", enrolled));
                 var xDoc = new XDocument(temp);
                 return true;
             }
@@ -1053,6 +1060,35 @@ namespace Grade_Calculator_3
             retVal[1] = meanPercent.ToString();
             return (retVal[0], retVal[1], zero);
         }
+
+        public int AssignmentExists(string assgnName)
+        {
+            int c = 0;
+            foreach (Assignment assgn in assignments)
+            {
+                if (assgn.name.Equals(assgnName))
+                {
+                    return c;
+                }
+                c++;
+            }
+            return -1;
+        }
+
+        public int CurveExists(string curveName)
+        {
+            int c = 0;
+            foreach (Curve curve in curves)
+            {
+                if (curve.name.Equals(curveName))
+                {
+                    return c;
+                }
+                c++;
+            }
+            return -1;
+        }
+
     }
 
     public class Assignment
@@ -1070,6 +1106,256 @@ namespace Grade_Calculator_3
             Object[] retVal = {active, name, schoolClass.catNames[catIndex], points, outOf, percent, real};
             return retVal;
         }
+    }
+
+    public class Curve
+    {
+        //universal (required)
+        public string name;
+        public bool active = false;
+
+        //applies to: (if both are 0, then all assgns will be effected)
+        public int[] appliedCatIndexes = new int[0];
+        public string[] appliedAssgnNames = new string[0]; //applied to all assgns in the parent SchoolClass
+
+        //dropped assignments (10)
+        public int kept = 0; //(11)pos val = assignments to count, neg val = assgns to drop. ex: kept = 1, count only 1. kept = -1, drop 1
+        public double conDropPercent = 0D; //(12)pos val = drop assgns below percent (0-100), neg val = drop assgns above -1*val
+        public double conDropPoints = 0D; //(13)same as above but with raw points
+        //point changes (20)
+        public double additive = 0D; //(21) add these points to the assgn 
+        public double multiplicative = 0D; //(22) mul the points by this val
+        //percentage changes (30)
+        public double additivePercent = 0D; //(31) this value will be combined with additive when being calculated
+
+        //mean based (40)
+        public double goalMeanPercent = 0D; //(41)the professor's intended mean percentage for the assigns. ex: pre-curve mean is 68% but 70% is goal
+            public int goalMeanPercentMethod = 30; //defaults to 30 as it is the most fair. can be changed if the professor is a madman
+
+        //special (100)
+        public double goalMeanClassPercent = 0D; //(101) same as 41 but for the whole class
+            public int goalMeanClassPercentMethod = 30; //same as 41
+
+        //calculated
+        public Assignment[] effAppliedAssgns = new Assignment[0]; //NOT saved to file
+        private Dictionary<int, int> _OldNew = new Dictionary<int, int>(); //<SchoolClass.assignments, effAppliedAssgns>
+        private Dictionary<int, int> _NewOld = new Dictionary<int, int>();
+
+        public Curve(string name)
+        {
+            this.name = name;
+        }
+
+        public Assignment[] ApplyAll(Assignment[] assgns, bool warning = true)
+        {
+            //initial setup
+            SetInitialAppliedAssgns(assgns);
+
+            if (effAppliedAssgns.Length == 0)
+            {
+                return effAppliedAssgns;
+            }
+
+            //actual calculations
+            if (kept != 0)
+            {
+                double avgPercent, totalPoints = 0, totalPossible = 0;
+                double[] changesInPercent = new double[effAppliedAssgns.Length];
+                foreach (Assignment assgn in effAppliedAssgns)
+                {
+                    totalPoints += assgn.points;
+                    totalPossible += assgn.outOf;
+                }
+                if (totalPossible == 0)
+                {
+                    if(warning) MessageBox.Show("Total possible points equals 0.", "Error!", MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                    return null;
+                }
+                avgPercent = totalPoints / totalPossible;
+                int c = 0;
+                foreach (Assignment assgn in effAppliedAssgns)
+                {
+                    double tempPoints = totalPoints - assgn.points;
+                    double tempPossible = totalPossible - assgn.outOf;
+                    if (tempPossible != 0)
+                    {
+                        changesInPercent[c] = avgPercent - tempPoints / tempPossible;
+                    }
+                    else
+                    {
+                        changesInPercent[c] = 1;
+                    }
+                    c++;
+                }
+
+                int amountToReturn;
+                if (kept < 0)
+                {
+                    amountToReturn = kept;
+                }
+                else
+                {
+                    amountToReturn = effAppliedAssgns.Length - kept;
+                }
+
+                if (amountToReturn >= effAppliedAssgns.Length)
+                {
+                    return effAppliedAssgns;
+                }
+
+                foreach (Assignment assgn in effAppliedAssgns)
+                {
+                    assgn.active = false;
+                }
+
+                Assignment[] workingArray = new Assignment[effAppliedAssgns.Length];
+                Array.Copy(effAppliedAssgns, workingArray, effAppliedAssgns.Length);
+
+                while (workingArray.Length > amountToReturn)
+                {
+                    double high = -1;
+                    c = 0;
+                    int index = 0;
+                    foreach (Assignment assgn in workingArray)
+                    {
+                        if (changesInPercent[c] >= high)
+                        {
+                            high = changesInPercent[c];
+                            index = c;
+                        }
+                        c++;
+                    }
+
+                    int tempIndex = AssignmentExists(workingArray[index].name, effAppliedAssgns);
+                    effAppliedAssgns[tempIndex].active = true;
+                    Assignment[] workingArrayTemp = PopAssignment(index, workingArray);
+                    workingArray = workingArrayTemp;
+                    changesInPercent = PopDouble(index, changesInPercent);
+                }
+            }
+            return effAppliedAssgns;
+        }
+
+        //applies appliedCatIndexes and appliedAssgnIndexes, as well as checks for active
+        private void SetInitialAppliedAssgns(Assignment[] assgns)
+        {
+            //only counting assignments that are set as active and are in appliedCatIndexes (if aCI != 0)
+            int i = 0;
+            foreach (Assignment assgn in assgns)
+            {
+                if (assgn.active)
+                {
+                    if (appliedCatIndexes.Length != 0)
+                    {
+                        bool found = false;
+                        foreach (int index in appliedCatIndexes)
+                        {
+                            if (index == assgn.catIndex)
+                            {
+                                found = true;
+                                break;
+                            }
+                        }
+                        if (found)
+                        {
+                            Array.Resize(ref effAppliedAssgns, effAppliedAssgns.Length + 1);
+                            effAppliedAssgns[i] = assgn;
+                            i++;
+                        }
+                        continue;
+                    }
+                    else
+                    {
+                        Array.Resize(ref effAppliedAssgns, effAppliedAssgns.Length + 1);
+                        effAppliedAssgns[i] = assgn;
+                        i++;
+                    }
+                }
+            }
+            if (appliedAssgnNames.Length != 0)
+            {
+                Assignment[] temp = new Assignment[0];
+                foreach (string name in appliedAssgnNames)
+                {
+                    int index = AssignmentExists(name, effAppliedAssgns);
+                    if (index != -1)
+                    {
+                        Array.Resize(ref temp, temp.Length + 1);
+                        temp[temp.Length - 1] = effAppliedAssgns[index];
+                    }
+                }
+                effAppliedAssgns = temp;
+            }
+            SetMaps(assgns);
+        }
+
+        private void SetMaps(Assignment[] old)
+        {
+            _OldNew?.Clear();
+            _NewOld?.Clear();
+            int c = 0;
+            foreach(Assignment assgn in effAppliedAssgns)
+            {
+                int temp = AssignmentExists(assgn.name, old);
+                if (temp == -1)
+                {
+                    //this should never happen
+                    c++;
+                    continue;
+                }
+                _OldNew.Add(temp, c);
+                _NewOld.Add(c, temp);
+                c++;
+            }
+        }
+
+        public int AssignmentExists(string assgnName, Assignment[] assignments)
+        {
+            int c = 0;
+            foreach (Assignment assgn in assignments)
+            {
+                if (assgn.name.Equals(assgnName))
+                {
+                    return c;
+                }
+                c++;
+            }
+            return -1;
+        }
+
+        private Assignment[] PopAssignment(int index, Assignment[] input)
+        {
+            Assignment[] retVal = new Assignment[input.Length - 1];
+            int c = 0, i = 0;
+            foreach (Assignment assgn in input)
+            {
+                if (c != index)
+                {
+                    retVal[i] = assgn;
+                    i++;
+                }
+                c++;
+            }
+            return retVal;
+        }
+
+        private double[] PopDouble(int index, double[] doubles)
+        {
+            double[] retVal = new double[doubles.Length - 1];
+            int c = 0, i = 0;
+            foreach (double val in doubles)
+            {
+                if (c != index)
+                {
+                    retVal[i] = val;
+                    i++;
+                }
+                c++;
+            }
+            return retVal;
+        }
+
     }
 
     public static class ErrorChecking

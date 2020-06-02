@@ -102,12 +102,15 @@
             this.label5 = new System.Windows.Forms.Label();
             this.textBoxClassName = new System.Windows.Forms.TextBox();
             this.buttonSave = new System.Windows.Forms.Button();
+            this.label16 = new System.Windows.Forms.Label();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCategories)).BeginInit();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCredits)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTermYear)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -742,6 +745,8 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.label16);
+            this.groupBox3.Controls.Add(this.numericUpDown1);
             this.groupBox3.Controls.Add(this.label26);
             this.groupBox3.Controls.Add(this.numericUpDownCredits);
             this.groupBox3.Controls.Add(this.label25);
@@ -761,7 +766,7 @@
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(195, 73);
+            this.label26.Location = new System.Drawing.Point(185, 55);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(39, 13);
             this.label26.TabIndex = 29;
@@ -769,7 +774,7 @@
             // 
             // numericUpDownCredits
             // 
-            this.numericUpDownCredits.Location = new System.Drawing.Point(240, 71);
+            this.numericUpDownCredits.Location = new System.Drawing.Point(188, 70);
             this.numericUpDownCredits.Maximum = new decimal(new int[] {
             20,
             0,
@@ -827,9 +832,9 @@
             this.label24.AutoSize = true;
             this.label24.Location = new System.Drawing.Point(6, 55);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(99, 13);
+            this.label24.Size = new System.Drawing.Size(51, 13);
             this.label24.TabIndex = 24;
-            this.label24.Text = "Professor (Optional)";
+            this.label24.Text = "Professor";
             // 
             // textBoxProfessor
             // 
@@ -843,9 +848,9 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(6, 15);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(141, 13);
+            this.label5.Size = new System.Drawing.Size(115, 13);
             this.label5.TabIndex = 22;
-            this.label5.Text = "Class Name (Ex. CSCI 1001)";
+            this.label5.Text = "Class Name (Required)";
             // 
             // textBoxClassName
             // 
@@ -863,6 +868,27 @@
             this.buttonSave.Text = "Save";
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(241, 55);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(49, 13);
+            this.label16.TabIndex = 31;
+            this.label16.Text = "Students";
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(244, 70);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(40, 20);
+            this.numericUpDown1.TabIndex = 30;
             // 
             // AddClass
             // 
@@ -889,6 +915,7 @@
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCredits)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTermYear)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -967,5 +994,7 @@
         internal System.Windows.Forms.TextBox textBoxClassName;
         private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.Label LabelPage;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
     }
 }

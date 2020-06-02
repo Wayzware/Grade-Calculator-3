@@ -53,25 +53,35 @@ namespace Grade_Calculator_3
             DataGridView.Rows.Clear();
             _schoolClass.LoadAssignments();
             _assignments = _schoolClass.assignments;
-            if (_assignments is null) return;
-            foreach (Main.DataRow dataRow in _main.DataRows)
-            {
-                dataRow.SetDataToEmpty();
-            }
-            foreach (Assignment assgn in _assignments)
-            {
-                DataGridView.Rows.Add(assgn.ToDataView(_schoolClass));
-                if (sendToMain)
-                {
-                    _main.AssgnToDataRow(assgn);
-                }
-            }
 
-            string arg1, arg2;
-            bool arg3;
-            (arg1, arg2, arg3) = _schoolClass.GetMeanGrade(_main.DataRows);
-            _main.DisplayMean(arg1, arg2, arg3);
-            _main.CalculateGrade();
+            //spaghetti code incoming
+            if (_schoolClass.curves is null)
+            {
+                if (_assignments is null) return;
+                foreach (Main.DataRow dataRow in _main.DataRows)
+                {
+                    dataRow.SetDataToEmpty();
+                }
+                foreach (Assignment assgn in _assignments)
+                {
+                    DataGridView.Rows.Add(assgn.ToDataView(_schoolClass));
+                    if (sendToMain)
+                    {
+                        _main.AssgnToDataRow(assgn);
+                    }
+                }
+
+                string arg1, arg2;
+                bool arg3;
+                (arg1, arg2, arg3) = _schoolClass.GetMeanGrade(_main.DataRows);
+                _main.DisplayMean(arg1, arg2, arg3);
+                _main.CalculateGrade();
+            }
+            else
+            {
+                Assignment[] curvedAssignments;
+
+            }
         }
 
         private void FillCatComboBox()
@@ -284,6 +294,47 @@ namespace Grade_Calculator_3
         }
         private void Assignments_Load(object sender, EventArgs e)
         {
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var _currentClass = _schoolClass;
+            _currentClass.curves = new Curve[1];
+            _currentClass.curves[0] = new Curve("BigXD");
+            _currentClass.curves[0].kept = 1;
+            _currentClass.curves[0].appliedCatIndexes = new int[1];
+            _currentClass.curves[0].appliedCatIndexes[0] = 1;
+            _assignments = _currentClass.curves[0].ApplyAll(_assignments);
+
+            DataGridView.Rows.Clear();
+
+            //spaghetti code incoming
+            if (!(_schoolClass.curves is null))
+            {
+                if (_assignments is null) return;
+                foreach (Main.DataRow dataRow in _main.DataRows)
+                {
+                    dataRow.SetDataToEmpty();
+                }
+                foreach (Assignment assgn in _assignments)
+                {
+                    DataGridView.Rows.Add(assgn.ToDataView(_schoolClass));
+                    if (true)
+                    {
+                        _main.AssgnToDataRow(assgn);
+                    }
+                }
+
+                string arg1, arg2;
+                bool arg3;
+                (arg1, arg2, arg3) = _schoolClass.GetMeanGrade(_main.DataRows);
+                _main.DisplayMean(arg1, arg2, arg3);
+                _main.CalculateGrade();
+            }
+            else
+            {
+                Assignment[] curvedAssignments;
+            }
         }
     }
 }

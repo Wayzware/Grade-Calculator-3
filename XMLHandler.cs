@@ -19,16 +19,20 @@ namespace Grade_Calculator_3
         public static string DIRECTORY;
         private static readonly string CLASS_DIR = "Classes/";
         private static readonly string D_FILE_EXT = ".gcdx";
-        public static readonly int D_SCHEMA_VER = 1;
+        public static readonly int D_SCHEMA_VER = 2;
         private static readonly string ASSGN_DIR = "Assignments/";
         private static readonly string A_FILE_EXT = ".gcax";
         public static readonly int A_SCHEMA_VER = 1;
+        private static readonly string CURVE_DIR = "Curves/";
+        private static readonly string C_FILE_EXT = ".gccx";
+        private static readonly int C_SCHEMA_VER = 1;
 
         public static SchoolClass[] Data;
 
         /* Schema version history:
          *      D_SCHEMA_VER:
-         *          1 : v0.1-Present
+         *          1 : v0.1-v0.3.2
+         *          2 : v0.4-Present
          *      A_SCHEMA_VER:
          *          1 : v0.3-Present */
 
@@ -78,7 +82,7 @@ namespace Grade_Calculator_3
                 else if(fileSchemaVer < D_SCHEMA_VER)
                 {
                     //the following line should be used for non-backwards compatible schema changes
-                    //updated += UpdateSchema(fileSchemaVer, file);
+                    updated += UpdateSchema(fileSchemaVer, file);
                 }
 
                 //the file is good, add it to the list to be imported
@@ -192,18 +196,43 @@ namespace Grade_Calculator_3
                 }
             }
 
+            XElement xSchoolClass = null;
 
-            XElement xSchoolClass = new XElement("GC3_Data", new XElement("SCHEMA_VER", schemaVer), 
-                new XElement("ClassData",
-                    new XElement("ClassName", schoolClass.className),
-                    new XElement("Professor", schoolClass.professor),
-                    new XElement("Term",
-                        new XElement("Year", schoolClass.termYear),
-                        new XElement("Season", schoolClass.termSeason)),
-                    new XElement("Credits", schoolClass.credits),
-                    new XElement("GradeScaleFormat", schoolClass.gradeScaleFormat),
-                    GradeScaleToXElement(schoolClass.gradeScaleFormat, schoolClass.gradeScale),
-                    CatToXElement(schoolClass.catNames, schoolClass.catWorths)));
+            if (schemaVer == 1)
+            {
+                xSchoolClass = new XElement("GC3_Data",
+                    new XElement("SCHEMA_VER", schemaVer),
+                    new XElement("ClassData",
+                        new XElement("ClassName", schoolClass.className),
+                        new XElement("Professor", schoolClass.professor),
+                        new XElement("Term",
+                            new XElement("Year", schoolClass.termYear),
+                            new XElement("Season", schoolClass.termSeason)),
+                        new XElement("Credits", schoolClass.credits),
+                        new XElement("GradeScaleFormat", schoolClass.gradeScaleFormat),
+                        GradeScaleToXElement(schoolClass.gradeScaleFormat, schoolClass.gradeScale),
+                        CatToXElement(schoolClass.catNames, schoolClass.catWorths)
+                    )
+                );
+            }
+            else if (schemaVer == 2)
+            {
+                xSchoolClass = new XElement("GC3_Data",
+                    new XElement("SCHEMA_VER", schemaVer),
+                    new XElement("ClassData",
+                        new XElement("ClassName", schoolClass.className),
+                        new XElement("Professor", schoolClass.professor),
+                        new XElement("Term",
+                            new XElement("Year", schoolClass.termYear),
+                            new XElement("Season", schoolClass.termSeason)),
+                        new XElement("Credits", schoolClass.credits),
+                        new XElement("GradeScaleFormat", schoolClass.gradeScaleFormat),
+                        GradeScaleToXElement(schoolClass.gradeScaleFormat, schoolClass.gradeScale),
+                        CatToXElement(schoolClass.catNames, schoolClass.catWorths),
+                        new XElement("Enrolled", schoolClass.enrolled)
+                    )
+                );
+            }
 
 
             XDocument xDocument = new XDocument(xSchoolClass);
@@ -290,8 +319,7 @@ namespace Grade_Calculator_3
                     CC.gradeScale = XGradeScaleToDouble(CC.gradeScaleFormat, XE.Element("GradeScale"));
                     (CC.catNames, CC.catWorths) = XCatsToArray(XE.Element("Categories"));
                     //end schema v1 loading, being adding v2 elements
-
-
+                    CC.enrolled = 0;
                     //end adding v2 elements, write to file and start over
                     SaveSchoolClassToFile(CC, 2, warning:false);
                     return 1;
