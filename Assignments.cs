@@ -301,9 +301,10 @@ namespace Grade_Calculator_3
             var _currentClass = _schoolClass;
             _currentClass.curves = new Curve[1];
             _currentClass.curves[0] = new Curve("BigXD");
-            _currentClass.curves[0].kept = 1;
-            _currentClass.curves[0].appliedCatIndexes = new int[1];
-            _currentClass.curves[0].appliedCatIndexes[0] = 1;
+            _currentClass.curves[0].additivePercent = 5D;
+            //_currentClass.curves[0].kept = 1;
+            /*_currentClass.curves[0].appliedCatIndexes = new int[1];
+            _currentClass.curves[0].appliedCatIndexes[0] = 1;*/
             _assignments = _currentClass.curves[0].ApplyAll(_assignments);
 
             DataGridView.Rows.Clear();

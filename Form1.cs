@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing.Text;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
@@ -18,6 +19,7 @@ namespace Grade_Calculator_3
         private SchoolClass _currentClass;
         private AddPoints[] _addPoints;
         private Assignments _assignments;
+        private CurveForm _curveForm;
         public bool blank = true;
 
 
@@ -676,10 +678,7 @@ namespace Grade_Calculator_3
 
         private void ButtonCurve_Click(object sender, EventArgs e)
         {
-            _currentClass.curves = new Curve[1];
-            _currentClass.curves[0] = new Curve("BigXD");
-            _currentClass.curves[0].kept = 2;
-            _currentClass.curves[0].ApplyAll(_currentClass.assignments);
+            
         }
 
         private void refreshClassListToolStripMenuItem_Click(object sender, EventArgs e)
@@ -857,6 +856,7 @@ namespace Grade_Calculator_3
         public Double[] catWorths;
         public Assignment[] assignments;
         public Curve[] curves;
+        public Assignment[] curvedAssignments;
 
 
         public void LoadAssignments()
@@ -1002,9 +1002,8 @@ namespace Grade_Calculator_3
                 {
                     meanPoints[a.catIndex] += a.meanPoints;
                     outOf[a.catIndex] += a.outOf;
+                    if (a.meanPoints == 0) zero = true;
                 }
-
-                if (a.meanPoints == 0) zero = true;
             }
 
             double meanPercent = 0.0;
@@ -1089,6 +1088,30 @@ namespace Grade_Calculator_3
             return -1;
         }
 
+        private Assignment[] MergeAssignments(Assignment[] overrides)
+        {
+            Assignment[] temp = new Assignment[assignments.Length];
+            Array.Copy(assignments, temp, assignments.Length);
+            foreach (Assignment assgn in overrides)
+            {
+                int index = AssignmentExists(assgn.name);
+                temp[index] = assgn;
+            }
+            return temp;
+        }
+
+        public void ApplyCurves()
+        {
+            curvedAssignments = new Assignment[assignments.Length];
+            Array.Copy(assignments, curvedAssignments, assignments.Length);
+            foreach (Curve curve in curves)
+            {
+                if (curve.active)
+                {
+                    curvedAssignments = MergeAssignments(curve.ApplyAll(curvedAssignments));
+                }
+            }
+        }
     }
 
     public class Assignment
@@ -1113,8 +1136,10 @@ namespace Grade_Calculator_3
         //universal (required)
         public string name;
         public bool active = false;
+        public bool ignoreUserInactives = false;
 
         //applies to: (if both are 0, then all assgns will be effected)
+        //note: if both are != 0, then first the cat filter will be applied, with assgn filtered from the already filtered array
         public int[] appliedCatIndexes = new int[0];
         public string[] appliedAssgnNames = new string[0]; //applied to all assgns in the parent SchoolClass
 
@@ -1126,16 +1151,10 @@ namespace Grade_Calculator_3
         public double additive = 0D; //(21) add these points to the assgn 
         public double multiplicative = 0D; //(22) mul the points by this val
         //percentage changes (30)
-        public double additivePercent = 0D; //(31) this value will be combined with additive when being calculated
-
+        public double additivePercent = 0D; //(31) (0-100) this value will be combined with additive when being calculated
         //mean based (40)
         public double goalMeanPercent = 0D; //(41)the professor's intended mean percentage for the assigns. ex: pre-curve mean is 68% but 70% is goal
-            public int goalMeanPercentMethod = 30; //defaults to 30 as it is the most fair. can be changed if the professor is a madman
-
-        //special (100)
-        public double goalMeanClassPercent = 0D; //(101) same as 41 but for the whole class
-            public int goalMeanClassPercentMethod = 30; //same as 41
-
+            public int goalMeanPercentMethod = 31; //defaults to 31 as it is the most fair. can be changed if the professor is a madman
         //calculated
         public Assignment[] effAppliedAssgns = new Assignment[0]; //NOT saved to file
         private Dictionary<int, int> _OldNew = new Dictionary<int, int>(); //<SchoolClass.assignments, effAppliedAssgns>
@@ -1156,7 +1175,7 @@ namespace Grade_Calculator_3
                 return effAppliedAssgns;
             }
 
-            //actual calculations
+            //actual calculations, also kinda long for an if statement but eh it works
             if (kept != 0)
             {
                 double avgPercent, totalPoints = 0, totalPossible = 0;
@@ -1234,6 +1253,115 @@ namespace Grade_Calculator_3
                     changesInPercent = PopDouble(index, changesInPercent);
                 }
             }
+            else if (conDropPercent != 0)
+            {
+                if (conDropPercent > 0)
+                {
+                    foreach (Assignment assgn in effAppliedAssgns)
+                    {
+                        double percent = 100D;
+                        if (assgn.outOf != 0)
+                        {
+                            percent *= assgn.points / assgn.outOf;
+                        }
+                        assgn.active = percent >= conDropPercent;
+                    }
+                }
+                else
+                {
+                    foreach (Assignment assgn in effAppliedAssgns)
+                    {
+                        double percent = 100D;
+                        if (assgn.outOf != 0)
+                        {
+                            percent *= assgn.points / assgn.outOf;
+                        }
+                        assgn.active = percent < (-1 * conDropPercent);
+                    }
+                }
+            }
+            else if (conDropPoints != 0)
+            {
+                if (conDropPoints > 0)
+                {
+                    foreach (Assignment assgn in effAppliedAssgns)
+                    {
+                        assgn.active = conDropPoints >= assgn.points;
+                    }
+                }
+                else
+                {
+                    foreach (Assignment assgn in effAppliedAssgns)
+                    {
+                        assgn.active = (-1 * conDropPoints) < assgn.points;
+                    }
+                }
+            }
+            else if (additive != 0)
+            {
+                foreach(Assignment assgn in effAppliedAssgns)
+                {
+                    assgn.points += additive;
+                }
+            }
+            else if (multiplicative != 0)
+            {
+                foreach (Assignment assgn in effAppliedAssgns)
+                {
+                    assgn.points *= multiplicative;
+                }
+            }
+            else if (additivePercent != 0)
+            {
+                foreach (Assignment assgn in effAppliedAssgns)
+                {
+                    double pointsToAdd = additivePercent * assgn.outOf;
+                    assgn.points += pointsToAdd;
+                }
+            }
+            else if (goalMeanPercent != 0)
+            {
+                if (goalMeanPercentMethod == 31)
+                {
+                    //note: this should only be implemented in 1 category, as it does not take cat weights into account
+                    bool likelyError = false;
+                    int catIndex = -1;
+                    double meanPoints = 0, points = 0, outOf = 0;
+                    foreach (Assignment assgn in effAppliedAssgns)
+                    {
+                        if (catIndex == -1)
+                        {
+                            catIndex = assgn.catIndex;
+                        }
+                        else if (catIndex != assgn.catIndex)
+                        {
+                            likelyError = true;
+                        }
+                        meanPoints += assgn.meanPoints;
+                        points += assgn.points;
+                        outOf += assgn.outOf;
+                    }
+                    double meanPercent = 100, percent = 100;
+                    if (outOf != 0)
+                    {
+                        meanPercent *= meanPoints / outOf;
+                        percent *= points / outOf;
+                    }
+                    if (meanPercent < goalMeanPercent)
+                    {
+                        double diff = goalMeanPercent - meanPercent;
+                        foreach (Assignment assgn in effAppliedAssgns)
+                        {
+                            double pointsToAdd = diff * assgn.outOf;
+                            assgn.points += pointsToAdd;
+                        }
+                    }
+                }
+                else
+                {
+                    throw new NotImplementedException();
+                }
+            }
             return effAppliedAssgns;
         }
 
@@ -1244,7 +1372,7 @@ namespace Grade_Calculator_3
             int i = 0;
             foreach (Assignment assgn in assgns)
             {
-                if (assgn.active)
+                if (assgn.active || ignoreUserInactives)
                 {
                     if (appliedCatIndexes.Length != 0)
                     {
@@ -1290,6 +1418,7 @@ namespace Grade_Calculator_3
             SetMaps(assgns);
         }
 
+        //uses effAppliedAssgns as new
         private void SetMaps(Assignment[] old)
         {
             _OldNew?.Clear();
@@ -1300,7 +1429,7 @@ namespace Grade_Calculator_3
                 int temp = AssignmentExists(assgn.name, old);
                 if (temp == -1)
                 {
-                    //this should never happen
+                    //this should never happen, but if it does, ignore it and move on
                     c++;
                     continue;
                 }
@@ -1355,7 +1484,6 @@ namespace Grade_Calculator_3
             }
             return retVal;
         }
-
     }
 
     public static class ErrorChecking
