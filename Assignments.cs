@@ -15,7 +15,10 @@ namespace Grade_Calculator_3
         private readonly SchoolClass _schoolClass;
         private readonly Main _main;
         private Assignment[] _assignments;
+        private Assignment[] _curvedAssignments;
         private Assignment _currentAssignment;
+        private Curve _currentCurve;
+        private int _currentTab;
 
         public Assignments(Main main, SchoolClass schoolClass)
         {
@@ -23,6 +26,7 @@ namespace Grade_Calculator_3
             _schoolClass = schoolClass;
             _assignments = _schoolClass.assignments;
             _main = main;
+            _currentTab = 0;
             this.Closing += delegate
             {
                 _main.SetAssignmentsToNull();
@@ -33,6 +37,20 @@ namespace Grade_Calculator_3
             {
                 DisplayCellDataInEdit();
             };
+            TabsAssignments.SelectedIndexChanged += delegate
+            {
+                TabChanged();
+            };
+            CheckedListBoxCategories.ItemCheck += delegate
+            {
+                FillAssgnCheckedListBox(false);
+            };
+        }
+
+        private void InitializeUncurvedTab()
+        {
+            FillDataView();
+            Clear();
         }
 
         public void Clear()
@@ -48,40 +66,52 @@ namespace Grade_Calculator_3
             CheckBoxActive.Checked = true;
         }
 
-        public void FillDataView(bool sendToMain = true)
+        public void FillDataView(Assignment[] assgns = null, DataGridView dgv = null, bool sendToMain = true)
         {
-            DataGridView.Rows.Clear();
-            _schoolClass.LoadAssignments();
-            _assignments = _schoolClass.assignments;
-
-            //spaghetti code incoming
-            if (_schoolClass.curves is null)
+            Assignment[] assignmentsToUse;
+            DataGridView relevantDataGridView;
+            if (dgv is null)
             {
-                if (_assignments is null) return;
-                foreach (Main.DataRow dataRow in _main.DataRows)
-                {
-                    dataRow.SetDataToEmpty();
-                }
-                foreach (Assignment assgn in _assignments)
-                {
-                    DataGridView.Rows.Add(assgn.ToDataView(_schoolClass));
-                    if (sendToMain)
-                    {
-                        _main.AssgnToDataRow(assgn);
-                    }
-                }
-
-                string arg1, arg2;
-                bool arg3;
-                (arg1, arg2, arg3) = _schoolClass.GetMeanGrade(_main.DataRows);
-                _main.DisplayMean(arg1, arg2, arg3);
-                _main.CalculateGrade();
+                relevantDataGridView = DataGridView;
             }
             else
             {
-                Assignment[] curvedAssignments;
-
+                relevantDataGridView = DataGridViewCurved;
             }
+            relevantDataGridView.Rows.Clear();
+            if (assgns is null)
+            {
+                _schoolClass.LoadAssignments();
+                _assignments = _schoolClass.assignments;
+                assignmentsToUse = _assignments;
+            }
+            else
+            {
+                _schoolClass.ApplyCurves();
+                _curvedAssignments = _schoolClass.curvedAssignments;
+                assignmentsToUse = _curvedAssignments;
+            }
+
+            //code has been unspaghettied
+            if (assignmentsToUse is null) return;
+            foreach (Main.DataRow dataRow in _main.DataRows)
+            {
+                dataRow.SetDataToEmpty();
+            }
+            foreach (Assignment assgn in assignmentsToUse)
+            {
+                relevantDataGridView.Rows.Add(assgn.ToDataView(_schoolClass));
+                if (sendToMain)
+                {
+                    _main.AssgnToDataRow(assgn);
+                }
+            }
+
+            string arg1, arg2;
+            bool arg3;
+            (arg1, arg2, arg3) = _schoolClass.GetMeanGrade(_main.DataRows);
+            _main.DisplayMean(arg1, arg2, arg3);
+            _main.CalculateGrade();
         }
 
         private void FillCatComboBox()
@@ -296,46 +326,136 @@ namespace Grade_Calculator_3
         {
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void TabChanged()
         {
-            var _currentClass = _schoolClass;
-            _currentClass.curves = new Curve[1];
-            _currentClass.curves[0] = new Curve("BigXD");
-            _currentClass.curves[0].additivePercent = 5D;
-            //_currentClass.curves[0].kept = 1;
-            /*_currentClass.curves[0].appliedCatIndexes = new int[1];
-            _currentClass.curves[0].appliedCatIndexes[0] = 1;*/
-            _assignments = _currentClass.curves[0].ApplyAll(_assignments);
-
-            DataGridView.Rows.Clear();
-
-            //spaghetti code incoming
-            if (!(_schoolClass.curves is null))
+            switch (_currentTab)
             {
-                if (_assignments is null) return;
-                foreach (Main.DataRow dataRow in _main.DataRows)
-                {
-                    dataRow.SetDataToEmpty();
-                }
-                foreach (Assignment assgn in _assignments)
-                {
-                    DataGridView.Rows.Add(assgn.ToDataView(_schoolClass));
-                    if (true)
-                    {
-                        _main.AssgnToDataRow(assgn);
-                    }
-                }
+                case 1 when TabsAssignments.SelectedTab == TabUncurved:
+                case 2 when TabsAssignments.SelectedTab == TabCurved:
+                    return;
+            }
 
-                string arg1, arg2;
-                bool arg3;
-                (arg1, arg2, arg3) = _schoolClass.GetMeanGrade(_main.DataRows);
-                _main.DisplayMean(arg1, arg2, arg3);
-                _main.CalculateGrade();
+            if (TabsAssignments.SelectedTab == TabCurved)
+            {
+                _currentTab = 2;
+                InitializeCurvedTab(true);
             }
             else
             {
-                Assignment[] curvedAssignments;
+                _currentTab = 1;
+                InitializeUncurvedTab();
             }
+        }
+
+        private void InitializeCurvedTab(bool init = false)
+        {
+            FillCatCheckedListBox();
+            DisplayCurvedData();
+        }
+
+        private void DisplayCurvedData()
+        {
+            _schoolClass.ApplyCurves();
+            _curvedAssignments = _schoolClass.curvedAssignments;
+            FillDataView(_curvedAssignments, dgv: DataGridViewCurved, sendToMain: true);
+        }
+
+        private void FillCatCheckedListBox(bool fillAssgns = true, bool init = false)
+        {
+            CheckedListBoxCategories.Items.Clear();
+            foreach (string catName in _schoolClass.catNames)
+            {
+                CheckedListBoxCategories.Items.Add(catName);
+            }
+            if(fillAssgns) FillAssgnCheckedListBox(init);
+        }
+
+        private void FillAssgnCheckedListBox(bool init)
+        {
+
+            string[] prevUnchecked = new string[0];
+            foreach (var item in CheckedListBoxAssignments.Items)
+            {
+                if (!CheckedListBoxAssignments.CheckedItems.Contains(item))
+                {
+                    Array.Resize(ref prevUnchecked, prevUnchecked.Length + 1);
+                    prevUnchecked[prevUnchecked.Length - 1] = item.ToString();
+                }
+            }
+            CheckedListBoxAssignments.Items.Clear();
+            string[] assgnsInCats = new string[0];
+
+
+
+            foreach (var item in CheckedListBoxCategories.CheckedIndices)
+            {
+                int index = Convert.ToInt32(item);
+                Assignment[] tempAssgns = _schoolClass.GetAssgnsInCat(index);
+                foreach (Assignment assgn in tempAssgns)
+                {
+                    Array.Resize(ref assgnsInCats, assgnsInCats.Length + 1);
+                    assgnsInCats[assgnsInCats.Length - 1] = assgn.name;
+                }
+            }
+            foreach (string assgnName in assgnsInCats)
+            {
+                CheckedListBoxAssignments.Items.Add(assgnName);
+                CheckedListBoxAssignments.SetItemChecked(CheckedListBoxAssignments.Items.Count - 1,
+                    !prevUnchecked.Contains(assgnName));
+            }
+        }
+
+        internal class ErrorDisplay
+        {
+
+        }
+
+        private void label18_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void textBox6_TextChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void radioButton5_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void radioButton4_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox5_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label17_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label16_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ButtonCurveSave_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -7,12 +7,11 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.IO;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using System.Xml.Linq;
 
 namespace Grade_Calculator_3
 {
-    /*NOTE: An exception will be thrown if an invalid XML string is passed into this class
-    This may be fixed in future versions */
     static class XMLHandler
     {
         public static readonly string[] GradesAF = { "A", "AM", "BP", "B", "BM", "CP", "C", "CM", "DP", "D", "DM", "F" };
@@ -29,14 +28,16 @@ namespace Grade_Calculator_3
 
         public static SchoolClass[] Data;
 
-        /* Schema version history:
+        /*
+         *  Schema version history:
          *      D_SCHEMA_VER:
          *          1 : v0.1-v0.3.2
          *          2 : v0.4-Present
          *      A_SCHEMA_VER:
-         *          1 : v0.3-Present */
-
-
+         *          1 : v0.3-Present
+         *      C_SCHEMA_VER:
+         *          1 : v0.4-Present
+         */
 
         public static SchoolClass[] ReadSchoolClasses()
         {
@@ -126,6 +127,7 @@ namespace Grade_Calculator_3
                     CC.gradeScaleFormat = Convert.ToInt32(XE.Element("GradeScaleFormat").Value);
                     CC.gradeScale = XGradeScaleToDouble(CC.gradeScaleFormat, XE.Element("GradeScale"));
                     (CC.catNames, CC.catWorths) = XCatsToArray(XE.Element("Categories"));
+                    CC.enrolled = Convert.ToInt32(XE.Element("Enrolled").Value);
                     Array.Resize(ref schoolClasses, schoolClasses.Length + 1);
                     schoolClasses[schoolClasses.Length - 1] = CC;
                 }
@@ -559,6 +561,250 @@ namespace Grade_Calculator_3
             string oldDir = DIRECTORY + ASSGN_DIR + oldClass.className + "/";
             string newDir = DIRECTORY + ASSGN_DIR + newClass.className + "/";
             Directory.Move(oldDir, newDir);
+        }
+
+        public static Curve[] ReadCurves(SchoolClass schoolClass)
+        {
+            if (!Directory.Exists(DIRECTORY + CURVE_DIR))
+            {
+                Directory.CreateDirectory(DIRECTORY + CURVE_DIR);
+            }
+            string fullDirPath = DIRECTORY + CURVE_DIR + schoolClass.className + "/";
+            if (!Directory.Exists(fullDirPath))
+            {
+                Directory.CreateDirectory(fullDirPath);
+            }
+
+            bool flag_needsUpdate = false;
+            bool flag_error = false;
+            int updated = 0;
+            Curve[] curves = new Curve[0];
+            string[] GC3Files = Directory.GetFiles(fullDirPath, "*" + C_FILE_EXT);
+            string[] useableFiles = new string[0];
+            foreach (string file in GC3Files)
+            {
+                XElement workingXE;
+                try
+                {
+                    workingXE = XElement.Load(file); //<GC3_Data>
+                }
+                catch
+                {
+                    flag_error = true;
+                    continue;
+                }
+                var temp = workingXE.Element("SCHEMA_VER").Value;
+                if (temp == null)
+                {
+                    continue;
+                }
+                if (!ErrorChecking.TextIsType("int", temp))
+                {
+                    flag_error = true;
+                    continue;
+                }
+                int fileSchemaVer = Convert.ToInt32(temp);
+                if (fileSchemaVer > C_SCHEMA_VER)
+                {
+                    flag_needsUpdate = true;
+                    continue;
+                }
+                else if (fileSchemaVer < C_SCHEMA_VER)
+                {
+                    //implement a way to update curve schema versions
+                }
+
+                //the file is good, add it to the list to be imported
+                Array.Resize(ref useableFiles, useableFiles.Length + 1);
+                useableFiles[useableFiles.Length - 1] = file;
+            }
+            if (updated > 0)
+            {
+                curves = ReadCurves(schoolClass);
+            }
+
+            //error notifications
+            if (flag_error)
+            {
+                MessageBox.Show("At least one " + C_FILE_EXT + " file was not in a readable format!", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            if (flag_needsUpdate)
+            {
+                MessageBox.Show("At least one " + C_FILE_EXT + " file was made for a newer version of Grade Calculator 3 than is installed. There may be an update.", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            if (useableFiles.Length == 0)
+            {
+                return null;
+            }
+
+            //continue on to converting the XML to <Assignment> type
+            bool flag_invalidEntryInFile = false;
+            foreach (string file in useableFiles)
+            {
+                try
+                {
+                    XElement XE = XElement.Load(file);
+                    XE = XE.Element("AssignmentData");
+                    Curve curve = new Curve(XE.Element("Name").Value);
+                    curve.active = Convert.ToBoolean(XE.Element("Active").Value);
+                    curve.ignoreUserInactives = Convert.ToBoolean(XE.Element("IgnoreUserActives").Value);
+                    curve.appliedCatIndexes = XCurveCatIndexesToInt(XE.Element("CatIndexes"));
+                    curve.appliedAssgnNames = XCurveAssgnNamesToString(XE.Element("AssgnNames"));
+                    curve.kept = Convert.ToInt32(XE.Element("Kept"));
+                    curve.conDropPercent = Convert.ToDouble(XE.Element("ConDropPercent"));
+                    curve.conDropPoints = Convert.ToDouble(XE.Element("ConDropPoints"));
+                    curve.additive = Convert.ToDouble(XE.Element("Additive"));
+                    curve.multiplicative = Convert.ToDouble(XE.Element("Multiplicative"));
+                    curve.additivePercent = Convert.ToDouble(XE.Element("AdditivePercent"));
+                    curve.goalMeanPercent = Convert.ToDouble(XE.Element("GoalMeanPercent"));
+                    curve.goalMeanPercentMethod = Convert.ToInt32(XE.Element("GoalMeanPercentMethod"));
+
+                    Array.Resize(ref curves, curves.Length + 1);
+                    curves[curves.Length - 1] = curve;
+                }
+                catch
+                {
+                    flag_invalidEntryInFile = true;
+                    continue;
+                }
+            }
+            if (flag_invalidEntryInFile)
+            {
+                MessageBox.Show(@"At least one " + C_FILE_EXT + @" file had an invalid entry!", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+            if (Settings.DebugMsg)
+            {
+                MessageBox.Show(@"Loaded " + Convert.ToString(curves.Length) + @" curves successfully!",
+                    @"Success!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            return curves;
+        }
+
+        public static void SaveCurveToFile(SchoolClass schoolClass, Curve curve, bool warning = true)
+        {
+            //checks to make sure DirectoryNotFoundException does not occur
+            if (!Directory.Exists(DIRECTORY + CURVE_DIR))
+            {
+                Directory.CreateDirectory(DIRECTORY + CURVE_DIR);
+            }
+            string fullFilePath = DIRECTORY + CURVE_DIR + schoolClass.className + "/";
+            if (!Directory.Exists(fullFilePath))
+            {
+                Directory.CreateDirectory(fullFilePath);
+            }
+
+            fullFilePath += curve.name + C_FILE_EXT;
+
+            if (File.Exists(fullFilePath) && warning)
+            {
+                var result = MessageBox.Show("Data already exists for " + curve.name + ". Overwrite the file?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (result == DialogResult.No)
+                {
+                    return;
+                }
+            }
+
+            XElement xCurve =
+                new XElement("GC3_Curve",
+                    new XElement("SCHEMA_VER", C_SCHEMA_VER),
+                    new XElement("CurveData",
+                        new XElement("Name", curve.name),
+                        new XElement("Active", curve.active),
+                        new XElement("IgnoreUserActives", curve.ignoreUserInactives),
+                        new XElement("CatIndexes", CurveCatIndexesToXElement(curve.appliedCatIndexes)),
+                        new XElement("AssgnNames", CurveAssgnNamesToXElement(curve.appliedAssgnNames)),
+                        new XElement("Kept", curve.kept),
+                        new XElement("ConDropPercent", curve.conDropPercent),
+                        new XElement("ConDropPoints", curve.conDropPoints),
+                        new XElement("Additive", curve.additive),
+                        new XElement("Multiplicative", curve.multiplicative),
+                        new XElement("AdditivePercent", curve.additivePercent),
+                        new XElement("GoalMeanPercent", curve.goalMeanPercent),
+                        new XElement("GoalMeanPercentMethod", curve.goalMeanPercentMethod)
+                    )
+                );
+            XDocument xDocument = new XDocument(xCurve);
+            try
+            {
+                xDocument.Save(fullFilePath);
+            }
+            catch
+            {
+                MessageBox.Show(@"Name is invalid", @"Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (warning)
+            {
+                MessageBox.Show("File saved successfully!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private static XElement CurveCatIndexesToXElement(int[] indexes)
+        {
+            XElement[] nestedXE = new XElement[indexes.Length];
+            int c = 0;
+            foreach (int val in indexes)
+            {
+                nestedXE[c] = new XElement("CatIndex", val);
+                c++;
+            }
+            XElement retVal = new XElement("CatIndexes", nestedXE);
+            return retVal;
+        }
+
+        private static XElement CurveAssgnNamesToXElement(string[] names)
+        {
+            XElement[] nestedXE = new XElement[names.Length];
+            int c = 0;
+            foreach (string val in names)
+            {
+                nestedXE[c] = new XElement("Name", val);
+                c++;
+            }
+            XElement retVal = new XElement("AssgnNames", nestedXE);
+            return retVal;
+        }
+
+        private static int[] XCurveCatIndexesToInt(XElement catIndexes)
+        {
+            int[] indexes = new int[0];
+            int c = 0;
+            foreach (XElement XIndex in catIndexes.Elements())
+            {
+                //error checking is handled by parent thread
+                Array.Resize(ref indexes, c + 1);
+                indexes[c] = Convert.ToInt32(XIndex.Value);
+                c++;
+            }
+            return indexes;
+        }
+
+        private static string[] XCurveAssgnNamesToString(XElement assgnNames)
+        {
+            string[] names = new string[0];
+            int c = 0;
+            foreach (XElement XIndex in assgnNames.Elements())
+            {
+                //error checking is handled by parent thread
+                Array.Resize(ref names, c + 1);
+                names[c] = XIndex.Value;
+                c++;
+            }
+            return names;
+        }
+
+        public static bool CurveFileExists(SchoolClass schoolClass, Curve curve)
+        {
+            string fullFilePath = DIRECTORY + CURVE_DIR + schoolClass.className + "/" + curve.name + C_FILE_EXT;
+            return File.Exists(fullFilePath);
+        }
+
+        public static void DeleteCurve(SchoolClass schoolClass, Curve curve, bool warning = true)
+        {
+            string fullFilePath = DIRECTORY + CURVE_DIR + schoolClass.className + "/" + curve.name + C_FILE_EXT;
+            File.Delete(fullFilePath);
         }
     }
 

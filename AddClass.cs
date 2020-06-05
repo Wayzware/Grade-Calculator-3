@@ -12,7 +12,7 @@ namespace Grade_Calculator_3
 {
     public partial class AddClass : Form
     {
-        Main main;
+        private readonly Main main;
 
         string[] categoryNames;
         string[] categoryWorthsS;
@@ -117,6 +117,7 @@ namespace Grade_Calculator_3
             }
             DisplayPage(1);
             numericUpDownCategories.Value = categoryNames.Length;
+            numericUpDownEnrolled.Value = schoolClass.enrolled;
         }
 
         private void AddClass_Load(object sender, EventArgs e)
@@ -169,7 +170,10 @@ namespace Grade_Calculator_3
             }
 
             //Credits
-            schoolClass.credits = (int)numericUpDownCredits.Value;
+            schoolClass.credits = (int) numericUpDownCredits.Value;
+
+            //Students
+            schoolClass.enrolled = (int) numericUpDownEnrolled.Value;
 
             //Grade Scale
             //Grade Scale Format

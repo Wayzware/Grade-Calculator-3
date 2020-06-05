@@ -38,9 +38,6 @@
             this.cOutOf = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cPercent = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cReal = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -63,33 +60,100 @@
             this.ButtonNew = new System.Windows.Forms.Button();
             this.ButtonClear = new System.Windows.Forms.Button();
             this.ButtonSave = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.TabsAssignments = new System.Windows.Forms.TabControl();
+            this.TabUncurved = new System.Windows.Forms.TabPage();
+            this.TabCurved = new System.Windows.Forms.TabPage();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.DataGridViewCurved = new System.Windows.Forms.DataGridView();
+            this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewCheckBoxColumn2 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.ButtonCurveHelp = new System.Windows.Forms.Button();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.ButtonDown = new System.Windows.Forms.Button();
+            this.Label8 = new System.Windows.Forms.Label();
+            this.ButtonUp = new System.Windows.Forms.Button();
+            this.CheckedListBoxCurves = new System.Windows.Forms.CheckedListBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.TextBoxAdditivePoints = new System.Windows.Forms.TextBox();
+            this.RadioButtonAdditivePercent = new System.Windows.Forms.RadioButton();
+            this.label18 = new System.Windows.Forms.Label();
+            this.TextBoxMultiplicative = new System.Windows.Forms.TextBox();
+            this.TextBoxCurveToMean = new System.Windows.Forms.TextBox();
+            this.TextBoxAdditivePercent = new System.Windows.Forms.TextBox();
+            this.RadioButtonCurveToMean = new System.Windows.Forms.RadioButton();
+            this.RadioButtonMultiplicative = new System.Windows.Forms.RadioButton();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.TextBoxConDropPoints = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.RadioButtonConDropPoints = new System.Windows.Forms.RadioButton();
+            this.RadioButtonAdditivePoints = new System.Windows.Forms.RadioButton();
+            this.label14 = new System.Windows.Forms.Label();
+            this.TextBoxConDropPercent = new System.Windows.Forms.TextBox();
+            this.RadioButtonConDropPercent = new System.Windows.Forms.RadioButton();
+            this.label13 = new System.Windows.Forms.Label();
+            this.NumericUpDownKeep = new System.Windows.Forms.NumericUpDown();
+            this.RadioButtonKeep = new System.Windows.Forms.RadioButton();
+            this.label9 = new System.Windows.Forms.Label();
+            this.NumericUpDownDrop = new System.Windows.Forms.NumericUpDown();
+            this.RadioButtonDrop = new System.Windows.Forms.RadioButton();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.CheckedListBoxAssignments = new System.Windows.Forms.CheckedListBox();
+            this.CheckedListBoxCategories = new System.Windows.Forms.CheckedListBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.ButtonCurveDelete = new System.Windows.Forms.Button();
+            this.ButtonCurveNew = new System.Windows.Forms.Button();
+            this.ButtonCurveClear = new System.Windows.Forms.Button();
+            this.ButtonCurveSave = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView)).BeginInit();
-            this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.TabsAssignments.SuspendLayout();
+            this.TabUncurved.SuspendLayout();
+            this.TabCurved.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.Panel2.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DataGridViewCurved)).BeginInit();
+            this.groupBox4.SuspendLayout();
+            this.groupBox7.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownKeep)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownDrop)).BeginInit();
+            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Location = new System.Drawing.Point(3, 3);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.Controls.Add(this.DataGridView);
-            this.splitContainer1.Panel1.Controls.Add(this.menuStrip1);
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.groupBox1);
-            this.splitContainer1.Size = new System.Drawing.Size(766, 418);
+            this.splitContainer1.Size = new System.Drawing.Size(796, 408);
             this.splitContainer1.SplitterDistance = 458;
             this.splitContainer1.TabIndex = 1;
             // 
@@ -109,10 +173,10 @@
             this.cPercent,
             this.cReal});
             this.DataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.DataGridView.Location = new System.Drawing.Point(0, 24);
+            this.DataGridView.Location = new System.Drawing.Point(0, 0);
             this.DataGridView.Name = "DataGridView";
             this.DataGridView.RowHeadersVisible = false;
-            this.DataGridView.Size = new System.Drawing.Size(458, 394);
+            this.DataGridView.Size = new System.Drawing.Size(458, 408);
             this.DataGridView.TabIndex = 1;
             this.DataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView_CellContentClick);
             // 
@@ -169,34 +233,8 @@
             this.cReal.ReadOnly = true;
             this.cReal.Width = 45;
             // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(458, 24);
-            this.menuStrip1.TabIndex = 2;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
-            // fileToolStripMenuItem
-            // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.refreshToolStripMenuItem});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "File";
-            // 
-            // refreshToolStripMenuItem
-            // 
-            this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
-            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
-            this.refreshToolStripMenuItem.Text = "Refresh";
-            this.refreshToolStripMenuItem.Click += new System.EventHandler(this.refreshToolStripMenuItem_Click);
-            // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.groupBox3);
             this.groupBox1.Controls.Add(this.groupBox2);
@@ -206,15 +244,15 @@
             this.groupBox1.Controls.Add(this.ButtonSave);
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(296, 412);
+            this.groupBox1.Size = new System.Drawing.Size(328, 402);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Add/Edit";
+            this.groupBox1.Text = "Add/Edit Assignments";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(84, 317);
+            this.label7.Location = new System.Drawing.Point(101, 315);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(143, 26);
             this.label7.TabIndex = 15;
@@ -225,7 +263,7 @@
             // 
             this.groupBox3.Controls.Add(this.label6);
             this.groupBox3.Controls.Add(this.TextBoxMeanPoints);
-            this.groupBox3.Location = new System.Drawing.Point(87, 212);
+            this.groupBox3.Location = new System.Drawing.Point(113, 212);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(209, 50);
             this.groupBox3.TabIndex = 60;
@@ -262,7 +300,7 @@
             this.groupBox2.Controls.Add(this.ComboBoxCats);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Location = new System.Drawing.Point(87, 9);
+            this.groupBox2.Location = new System.Drawing.Point(113, 9);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(209, 197);
             this.groupBox2.TabIndex = 50;
@@ -381,7 +419,7 @@
             // 
             this.ButtonDelete.Location = new System.Drawing.Point(6, 106);
             this.ButtonDelete.Name = "ButtonDelete";
-            this.ButtonDelete.Size = new System.Drawing.Size(75, 23);
+            this.ButtonDelete.Size = new System.Drawing.Size(101, 23);
             this.ButtonDelete.TabIndex = 30;
             this.ButtonDelete.Text = "Delete";
             this.ButtonDelete.UseVisualStyleBackColor = true;
@@ -391,7 +429,7 @@
             // 
             this.ButtonNew.Location = new System.Drawing.Point(6, 48);
             this.ButtonNew.Name = "ButtonNew";
-            this.ButtonNew.Size = new System.Drawing.Size(75, 23);
+            this.ButtonNew.Size = new System.Drawing.Size(101, 23);
             this.ButtonNew.TabIndex = 10;
             this.ButtonNew.Text = "New";
             this.ButtonNew.UseVisualStyleBackColor = true;
@@ -401,7 +439,7 @@
             // 
             this.ButtonClear.Location = new System.Drawing.Point(6, 77);
             this.ButtonClear.Name = "ButtonClear";
-            this.ButtonClear.Size = new System.Drawing.Size(75, 23);
+            this.ButtonClear.Size = new System.Drawing.Size(101, 23);
             this.ButtonClear.TabIndex = 20;
             this.ButtonClear.Text = "Clear";
             this.ButtonClear.UseVisualStyleBackColor = true;
@@ -411,49 +449,632 @@
             // 
             this.ButtonSave.Location = new System.Drawing.Point(6, 19);
             this.ButtonSave.Name = "ButtonSave";
-            this.ButtonSave.Size = new System.Drawing.Size(75, 23);
+            this.ButtonSave.Size = new System.Drawing.Size(101, 23);
             this.ButtonSave.TabIndex = 0;
             this.ButtonSave.Text = "Save";
             this.ButtonSave.UseVisualStyleBackColor = true;
             this.ButtonSave.Click += new System.EventHandler(this.ButtonSave_Click);
             // 
-            // button1
+            // TabsAssignments
             // 
-            this.button1.Location = new System.Drawing.Point(6, 134);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 61;
-            this.button1.Text = "TempCurve";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.TabsAssignments.Controls.Add(this.TabUncurved);
+            this.TabsAssignments.Controls.Add(this.TabCurved);
+            this.TabsAssignments.Location = new System.Drawing.Point(3, 5);
+            this.TabsAssignments.Name = "TabsAssignments";
+            this.TabsAssignments.SelectedIndex = 0;
+            this.TabsAssignments.Size = new System.Drawing.Size(810, 440);
+            this.TabsAssignments.TabIndex = 2;
+            // 
+            // TabUncurved
+            // 
+            this.TabUncurved.Controls.Add(this.splitContainer1);
+            this.TabUncurved.Location = new System.Drawing.Point(4, 22);
+            this.TabUncurved.Name = "TabUncurved";
+            this.TabUncurved.Padding = new System.Windows.Forms.Padding(3);
+            this.TabUncurved.Size = new System.Drawing.Size(802, 414);
+            this.TabUncurved.TabIndex = 0;
+            this.TabUncurved.Text = "Uncurved";
+            this.TabUncurved.UseVisualStyleBackColor = true;
+            // 
+            // TabCurved
+            // 
+            this.TabCurved.Controls.Add(this.splitContainer2);
+            this.TabCurved.Location = new System.Drawing.Point(4, 22);
+            this.TabCurved.Name = "TabCurved";
+            this.TabCurved.Padding = new System.Windows.Forms.Padding(3);
+            this.TabCurved.Size = new System.Drawing.Size(802, 414);
+            this.TabCurved.TabIndex = 2;
+            this.TabCurved.Text = "Curved";
+            this.TabCurved.UseVisualStyleBackColor = true;
+            // 
+            // splitContainer2
+            // 
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer2.Name = "splitContainer2";
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.DataGridViewCurved);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.groupBox4);
+            this.splitContainer2.Size = new System.Drawing.Size(796, 408);
+            this.splitContainer2.SplitterDistance = 458;
+            this.splitContainer2.TabIndex = 1;
+            // 
+            // DataGridViewCurved
+            // 
+            this.DataGridViewCurved.AllowUserToAddRows = false;
+            this.DataGridViewCurved.AllowUserToDeleteRows = false;
+            this.DataGridViewCurved.AllowUserToResizeRows = false;
+            this.DataGridViewCurved.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.DataGridViewCurved.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DataGridViewCurved.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewCheckBoxColumn1,
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn2,
+            this.dataGridViewTextBoxColumn3,
+            this.dataGridViewTextBoxColumn4,
+            this.dataGridViewTextBoxColumn5,
+            this.dataGridViewCheckBoxColumn2});
+            this.DataGridViewCurved.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DataGridViewCurved.Location = new System.Drawing.Point(0, 0);
+            this.DataGridViewCurved.Name = "DataGridViewCurved";
+            this.DataGridViewCurved.RowHeadersVisible = false;
+            this.DataGridViewCurved.Size = new System.Drawing.Size(458, 408);
+            this.DataGridViewCurved.TabIndex = 1;
+            // 
+            // dataGridViewCheckBoxColumn1
+            // 
+            this.dataGridViewCheckBoxColumn1.HeaderText = "Active";
+            this.dataGridViewCheckBoxColumn1.Name = "dataGridViewCheckBoxColumn1";
+            this.dataGridViewCheckBoxColumn1.ReadOnly = true;
+            this.dataGridViewCheckBoxColumn1.Width = 45;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.HeaderText = "Name";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.dataGridViewTextBoxColumn1.Width = 85;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.HeaderText = "Category";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            this.dataGridViewTextBoxColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewTextBoxColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.dataGridViewTextBoxColumn2.Width = 85;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.HeaderText = "Points";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.ReadOnly = true;
+            this.dataGridViewTextBoxColumn3.Width = 65;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.HeaderText = "Out Of";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            this.dataGridViewTextBoxColumn4.ReadOnly = true;
+            this.dataGridViewTextBoxColumn4.Width = 65;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.HeaderText = "Percent";
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            this.dataGridViewTextBoxColumn5.ReadOnly = true;
+            this.dataGridViewTextBoxColumn5.Width = 65;
+            // 
+            // dataGridViewCheckBoxColumn2
+            // 
+            this.dataGridViewCheckBoxColumn2.HeaderText = "Real";
+            this.dataGridViewCheckBoxColumn2.Name = "dataGridViewCheckBoxColumn2";
+            this.dataGridViewCheckBoxColumn2.ReadOnly = true;
+            this.dataGridViewCheckBoxColumn2.Width = 45;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.ButtonCurveHelp);
+            this.groupBox4.Controls.Add(this.groupBox7);
+            this.groupBox4.Controls.Add(this.groupBox5);
+            this.groupBox4.Controls.Add(this.groupBox6);
+            this.groupBox4.Controls.Add(this.ButtonCurveDelete);
+            this.groupBox4.Controls.Add(this.ButtonCurveNew);
+            this.groupBox4.Controls.Add(this.ButtonCurveClear);
+            this.groupBox4.Controls.Add(this.ButtonCurveSave);
+            this.groupBox4.Location = new System.Drawing.Point(3, 3);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(328, 402);
+            this.groupBox4.TabIndex = 0;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Edit Curves";
+            // 
+            // ButtonCurveHelp
+            // 
+            this.ButtonCurveHelp.Location = new System.Drawing.Point(6, 135);
+            this.ButtonCurveHelp.Name = "ButtonCurveHelp";
+            this.ButtonCurveHelp.Size = new System.Drawing.Size(52, 23);
+            this.ButtonCurveHelp.TabIndex = 64;
+            this.ButtonCurveHelp.Text = "Help";
+            this.ButtonCurveHelp.UseVisualStyleBackColor = true;
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.ButtonDown);
+            this.groupBox7.Controls.Add(this.Label8);
+            this.groupBox7.Controls.Add(this.ButtonUp);
+            this.groupBox7.Controls.Add(this.CheckedListBoxCurves);
+            this.groupBox7.Location = new System.Drawing.Point(6, 284);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(316, 112);
+            this.groupBox7.TabIndex = 63;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Enabling/Selecting";
+            // 
+            // ButtonDown
+            // 
+            this.ButtonDown.Location = new System.Drawing.Point(230, 69);
+            this.ButtonDown.Name = "ButtonDown";
+            this.ButtonDown.Size = new System.Drawing.Size(79, 37);
+            this.ButtonDown.TabIndex = 65;
+            this.ButtonDown.Text = "V";
+            this.ButtonDown.UseVisualStyleBackColor = true;
+            // 
+            // Label8
+            // 
+            this.Label8.AutoSize = true;
+            this.Label8.Location = new System.Drawing.Point(226, 11);
+            this.Label8.Name = "Label8";
+            this.Label8.Size = new System.Drawing.Size(88, 13);
+            this.Label8.TabIndex = 64;
+            this.Label8.Text = "Calculation Order";
+            // 
+            // ButtonUp
+            // 
+            this.ButtonUp.Location = new System.Drawing.Point(230, 27);
+            this.ButtonUp.Name = "ButtonUp";
+            this.ButtonUp.Size = new System.Drawing.Size(79, 37);
+            this.ButtonUp.TabIndex = 63;
+            this.ButtonUp.Text = "Λ";
+            this.ButtonUp.UseVisualStyleBackColor = true;
+            // 
+            // CheckedListBoxCurves
+            // 
+            this.CheckedListBoxCurves.FormattingEnabled = true;
+            this.CheckedListBoxCurves.Location = new System.Drawing.Point(4, 14);
+            this.CheckedListBoxCurves.Name = "CheckedListBoxCurves";
+            this.CheckedListBoxCurves.Size = new System.Drawing.Size(218, 94);
+            this.CheckedListBoxCurves.TabIndex = 62;
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.label19);
+            this.groupBox5.Controls.Add(this.TextBoxAdditivePoints);
+            this.groupBox5.Controls.Add(this.RadioButtonAdditivePercent);
+            this.groupBox5.Controls.Add(this.label18);
+            this.groupBox5.Controls.Add(this.TextBoxMultiplicative);
+            this.groupBox5.Controls.Add(this.TextBoxCurveToMean);
+            this.groupBox5.Controls.Add(this.TextBoxAdditivePercent);
+            this.groupBox5.Controls.Add(this.RadioButtonCurveToMean);
+            this.groupBox5.Controls.Add(this.RadioButtonMultiplicative);
+            this.groupBox5.Controls.Add(this.label15);
+            this.groupBox5.Controls.Add(this.label16);
+            this.groupBox5.Controls.Add(this.TextBoxConDropPoints);
+            this.groupBox5.Controls.Add(this.label17);
+            this.groupBox5.Controls.Add(this.RadioButtonConDropPoints);
+            this.groupBox5.Controls.Add(this.RadioButtonAdditivePoints);
+            this.groupBox5.Controls.Add(this.label14);
+            this.groupBox5.Controls.Add(this.TextBoxConDropPercent);
+            this.groupBox5.Controls.Add(this.RadioButtonConDropPercent);
+            this.groupBox5.Controls.Add(this.label13);
+            this.groupBox5.Controls.Add(this.NumericUpDownKeep);
+            this.groupBox5.Controls.Add(this.RadioButtonKeep);
+            this.groupBox5.Controls.Add(this.label9);
+            this.groupBox5.Controls.Add(this.NumericUpDownDrop);
+            this.groupBox5.Controls.Add(this.RadioButtonDrop);
+            this.groupBox5.Location = new System.Drawing.Point(6, 171);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(316, 114);
+            this.groupBox5.TabIndex = 60;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Types";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(290, 94);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(12, 13);
+            this.label19.TabIndex = 24;
+            this.label19.Text = "x";
+            // 
+            // TextBoxAdditivePoints
+            // 
+            this.TextBoxAdditivePoints.Location = new System.Drawing.Point(225, 66);
+            this.TextBoxAdditivePoints.Name = "TextBoxAdditivePoints";
+            this.TextBoxAdditivePoints.Size = new System.Drawing.Size(42, 20);
+            this.TextBoxAdditivePoints.TabIndex = 17;
+            this.TextBoxAdditivePoints.TextChanged += new System.EventHandler(this.textBox5_TextChanged);
+            // 
+            // RadioButtonAdditivePercent
+            // 
+            this.RadioButtonAdditivePercent.AutoSize = true;
+            this.RadioButtonAdditivePercent.Location = new System.Drawing.Point(175, 44);
+            this.RadioButtonAdditivePercent.Name = "RadioButtonAdditivePercent";
+            this.RadioButtonAdditivePercent.Size = new System.Drawing.Size(44, 17);
+            this.RadioButtonAdditivePercent.TabIndex = 13;
+            this.RadioButtonAdditivePercent.TabStop = true;
+            this.RadioButtonAdditivePercent.Text = "Add";
+            this.RadioButtonAdditivePercent.UseVisualStyleBackColor = true;
+            this.RadioButtonAdditivePercent.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(268, 20);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(45, 13);
+            this.label18.TabIndex = 23;
+            this.label18.Text = "Mean %";
+            this.label18.Click += new System.EventHandler(this.label18_Click);
+            // 
+            // TextBoxMultiplicative
+            // 
+            this.TextBoxMultiplicative.Location = new System.Drawing.Point(246, 89);
+            this.TextBoxMultiplicative.Name = "TextBoxMultiplicative";
+            this.TextBoxMultiplicative.Size = new System.Drawing.Size(42, 20);
+            this.TextBoxMultiplicative.TabIndex = 20;
+            this.TextBoxMultiplicative.TextChanged += new System.EventHandler(this.textBox6_TextChanged);
+            // 
+            // TextBoxCurveToMean
+            // 
+            this.TextBoxCurveToMean.Location = new System.Drawing.Point(225, 17);
+            this.TextBoxCurveToMean.Name = "TextBoxCurveToMean";
+            this.TextBoxCurveToMean.Size = new System.Drawing.Size(42, 20);
+            this.TextBoxCurveToMean.TabIndex = 22;
+            // 
+            // TextBoxAdditivePercent
+            // 
+            this.TextBoxAdditivePercent.Location = new System.Drawing.Point(225, 43);
+            this.TextBoxAdditivePercent.Name = "TextBoxAdditivePercent";
+            this.TextBoxAdditivePercent.Size = new System.Drawing.Size(42, 20);
+            this.TextBoxAdditivePercent.TabIndex = 14;
+            this.TextBoxAdditivePercent.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
+            // 
+            // RadioButtonCurveToMean
+            // 
+            this.RadioButtonCurveToMean.AutoSize = true;
+            this.RadioButtonCurveToMean.Location = new System.Drawing.Point(161, 18);
+            this.RadioButtonCurveToMean.Name = "RadioButtonCurveToMean";
+            this.RadioButtonCurveToMean.Size = new System.Drawing.Size(65, 17);
+            this.RadioButtonCurveToMean.TabIndex = 21;
+            this.RadioButtonCurveToMean.TabStop = true;
+            this.RadioButtonCurveToMean.Text = "Curve to";
+            this.RadioButtonCurveToMean.UseVisualStyleBackColor = true;
+            // 
+            // RadioButtonMultiplicative
+            // 
+            this.RadioButtonMultiplicative.AutoSize = true;
+            this.RadioButtonMultiplicative.Location = new System.Drawing.Point(175, 90);
+            this.RadioButtonMultiplicative.Name = "RadioButtonMultiplicative";
+            this.RadioButtonMultiplicative.Size = new System.Drawing.Size(74, 17);
+            this.RadioButtonMultiplicative.TabIndex = 19;
+            this.RadioButtonMultiplicative.TabStop = true;
+            this.RadioButtonMultiplicative.Text = "Multiply by";
+            this.RadioButtonMultiplicative.UseVisualStyleBackColor = true;
+            this.RadioButtonMultiplicative.CheckedChanged += new System.EventHandler(this.radioButton5_CheckedChanged);
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(134, 89);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(35, 13);
+            this.label15.TabIndex = 12;
+            this.label15.Text = "points";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(273, 46);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(15, 13);
+            this.label16.TabIndex = 15;
+            this.label16.Text = "%";
+            this.label16.Click += new System.EventHandler(this.label16_Click);
+            // 
+            // TextBoxConDropPoints
+            // 
+            this.TextBoxConDropPoints.Location = new System.Drawing.Point(91, 86);
+            this.TextBoxConDropPoints.Name = "TextBoxConDropPoints";
+            this.TextBoxConDropPoints.Size = new System.Drawing.Size(42, 20);
+            this.TextBoxConDropPoints.TabIndex = 11;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(273, 69);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(35, 13);
+            this.label17.TabIndex = 18;
+            this.label17.Text = "points";
+            this.label17.Click += new System.EventHandler(this.label17_Click);
+            // 
+            // RadioButtonConDropPoints
+            // 
+            this.RadioButtonConDropPoints.AutoSize = true;
+            this.RadioButtonConDropPoints.Location = new System.Drawing.Point(7, 87);
+            this.RadioButtonConDropPoints.Name = "RadioButtonConDropPoints";
+            this.RadioButtonConDropPoints.Size = new System.Drawing.Size(87, 17);
+            this.RadioButtonConDropPoints.TabIndex = 10;
+            this.RadioButtonConDropPoints.TabStop = true;
+            this.RadioButtonConDropPoints.Text = "Drop if below";
+            this.RadioButtonConDropPoints.UseVisualStyleBackColor = true;
+            // 
+            // RadioButtonAdditivePoints
+            // 
+            this.RadioButtonAdditivePoints.AutoSize = true;
+            this.RadioButtonAdditivePoints.Location = new System.Drawing.Point(175, 67);
+            this.RadioButtonAdditivePoints.Name = "RadioButtonAdditivePoints";
+            this.RadioButtonAdditivePoints.Size = new System.Drawing.Size(44, 17);
+            this.RadioButtonAdditivePoints.TabIndex = 16;
+            this.RadioButtonAdditivePoints.TabStop = true;
+            this.RadioButtonAdditivePoints.Text = "Add";
+            this.RadioButtonAdditivePoints.UseVisualStyleBackColor = true;
+            this.RadioButtonAdditivePoints.CheckedChanged += new System.EventHandler(this.radioButton4_CheckedChanged);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(134, 66);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(15, 13);
+            this.label14.TabIndex = 9;
+            this.label14.Text = "%";
+            // 
+            // TextBoxConDropPercent
+            // 
+            this.TextBoxConDropPercent.Location = new System.Drawing.Point(91, 63);
+            this.TextBoxConDropPercent.Name = "TextBoxConDropPercent";
+            this.TextBoxConDropPercent.Size = new System.Drawing.Size(42, 20);
+            this.TextBoxConDropPercent.TabIndex = 8;
+            // 
+            // RadioButtonConDropPercent
+            // 
+            this.RadioButtonConDropPercent.AutoSize = true;
+            this.RadioButtonConDropPercent.Location = new System.Drawing.Point(7, 64);
+            this.RadioButtonConDropPercent.Name = "RadioButtonConDropPercent";
+            this.RadioButtonConDropPercent.Size = new System.Drawing.Size(87, 17);
+            this.RadioButtonConDropPercent.TabIndex = 6;
+            this.RadioButtonConDropPercent.TabStop = true;
+            this.RadioButtonConDropPercent.Text = "Drop if below";
+            this.RadioButtonConDropPercent.UseVisualStyleBackColor = true;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(102, 43);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(41, 13);
+            this.label13.TabIndex = 5;
+            this.label13.Text = "Assgns";
+            // 
+            // NumericUpDownKeep
+            // 
+            this.NumericUpDownKeep.Location = new System.Drawing.Point(58, 41);
+            this.NumericUpDownKeep.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.NumericUpDownKeep.Name = "NumericUpDownKeep";
+            this.NumericUpDownKeep.Size = new System.Drawing.Size(41, 20);
+            this.NumericUpDownKeep.TabIndex = 4;
+            // 
+            // RadioButtonKeep
+            // 
+            this.RadioButtonKeep.AutoSize = true;
+            this.RadioButtonKeep.Location = new System.Drawing.Point(7, 41);
+            this.RadioButtonKeep.Name = "RadioButtonKeep";
+            this.RadioButtonKeep.Size = new System.Drawing.Size(50, 17);
+            this.RadioButtonKeep.TabIndex = 3;
+            this.RadioButtonKeep.TabStop = true;
+            this.RadioButtonKeep.Text = "Keep";
+            this.RadioButtonKeep.UseVisualStyleBackColor = true;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(102, 20);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(41, 13);
+            this.label9.TabIndex = 2;
+            this.label9.Text = "Assgns";
+            // 
+            // NumericUpDownDrop
+            // 
+            this.NumericUpDownDrop.Location = new System.Drawing.Point(58, 18);
+            this.NumericUpDownDrop.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.NumericUpDownDrop.Name = "NumericUpDownDrop";
+            this.NumericUpDownDrop.Size = new System.Drawing.Size(41, 20);
+            this.NumericUpDownDrop.TabIndex = 1;
+            // 
+            // RadioButtonDrop
+            // 
+            this.RadioButtonDrop.AutoSize = true;
+            this.RadioButtonDrop.Location = new System.Drawing.Point(7, 18);
+            this.RadioButtonDrop.Name = "RadioButtonDrop";
+            this.RadioButtonDrop.Size = new System.Drawing.Size(48, 17);
+            this.RadioButtonDrop.TabIndex = 0;
+            this.RadioButtonDrop.TabStop = true;
+            this.RadioButtonDrop.Text = "Drop";
+            this.RadioButtonDrop.UseVisualStyleBackColor = true;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.label12);
+            this.groupBox6.Controls.Add(this.CheckedListBoxAssignments);
+            this.groupBox6.Controls.Add(this.CheckedListBoxCategories);
+            this.groupBox6.Controls.Add(this.checkBox1);
+            this.groupBox6.Controls.Add(this.label10);
+            this.groupBox6.Controls.Add(this.label11);
+            this.groupBox6.Controls.Add(this.textBox4);
+            this.groupBox6.Location = new System.Drawing.Point(64, 9);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(258, 160);
+            this.groupBox6.TabIndex = 50;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Required";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(129, 44);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(116, 13);
+            this.label12.TabIndex = 72;
+            this.label12.Text = "Apply to (Assignments):";
+            // 
+            // CheckedListBoxAssignments
+            // 
+            this.CheckedListBoxAssignments.FormattingEnabled = true;
+            this.CheckedListBoxAssignments.Location = new System.Drawing.Point(132, 60);
+            this.CheckedListBoxAssignments.Name = "CheckedListBoxAssignments";
+            this.CheckedListBoxAssignments.Size = new System.Drawing.Size(120, 94);
+            this.CheckedListBoxAssignments.Sorted = true;
+            this.CheckedListBoxAssignments.TabIndex = 71;
+            // 
+            // CheckedListBoxCategories
+            // 
+            this.CheckedListBoxCategories.FormattingEnabled = true;
+            this.CheckedListBoxCategories.Location = new System.Drawing.Point(6, 60);
+            this.CheckedListBoxCategories.Name = "CheckedListBoxCategories";
+            this.CheckedListBoxCategories.Size = new System.Drawing.Size(120, 94);
+            this.CheckedListBoxCategories.TabIndex = 66;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(180, 18);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(56, 17);
+            this.checkBox1.TabIndex = 70;
+            this.checkBox1.Text = "Active";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(6, 19);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(35, 13);
+            this.label10.TabIndex = 11;
+            this.label10.Text = "Name";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(6, 44);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(107, 13);
+            this.label11.TabIndex = 12;
+            this.label11.Text = "Apply to (Categories):";
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(47, 16);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(119, 20);
+            this.textBox4.TabIndex = 1;
+            // 
+            // ButtonCurveDelete
+            // 
+            this.ButtonCurveDelete.Location = new System.Drawing.Point(6, 106);
+            this.ButtonCurveDelete.Name = "ButtonCurveDelete";
+            this.ButtonCurveDelete.Size = new System.Drawing.Size(52, 23);
+            this.ButtonCurveDelete.TabIndex = 30;
+            this.ButtonCurveDelete.Text = "Delete";
+            this.ButtonCurveDelete.UseVisualStyleBackColor = true;
+            // 
+            // ButtonCurveNew
+            // 
+            this.ButtonCurveNew.Location = new System.Drawing.Point(6, 48);
+            this.ButtonCurveNew.Name = "ButtonCurveNew";
+            this.ButtonCurveNew.Size = new System.Drawing.Size(52, 23);
+            this.ButtonCurveNew.TabIndex = 10;
+            this.ButtonCurveNew.Text = "New";
+            this.ButtonCurveNew.UseVisualStyleBackColor = true;
+            // 
+            // ButtonCurveClear
+            // 
+            this.ButtonCurveClear.Location = new System.Drawing.Point(6, 77);
+            this.ButtonCurveClear.Name = "ButtonCurveClear";
+            this.ButtonCurveClear.Size = new System.Drawing.Size(52, 23);
+            this.ButtonCurveClear.TabIndex = 20;
+            this.ButtonCurveClear.Text = "Clear";
+            this.ButtonCurveClear.UseVisualStyleBackColor = true;
+            // 
+            // ButtonCurveSave
+            // 
+            this.ButtonCurveSave.Location = new System.Drawing.Point(6, 19);
+            this.ButtonCurveSave.Name = "ButtonCurveSave";
+            this.ButtonCurveSave.Size = new System.Drawing.Size(52, 23);
+            this.ButtonCurveSave.TabIndex = 0;
+            this.ButtonCurveSave.Text = "Save";
+            this.ButtonCurveSave.UseVisualStyleBackColor = true;
+            this.ButtonCurveSave.Click += new System.EventHandler(this.ButtonCurveSave_Click);
             // 
             // Assignments
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(766, 418);
+            this.ClientSize = new System.Drawing.Size(816, 447);
             this.ControlBox = false;
-            this.Controls.Add(this.splitContainer1);
+            this.Controls.Add(this.TabsAssignments);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.menuStrip1;
             this.Name = "Assignments";
             this.Text = "Assignments";
             this.Load += new System.EventHandler(this.Assignments_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView)).EndInit();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.TabsAssignments.ResumeLayout(false);
+            this.TabUncurved.ResumeLayout(false);
+            this.TabCurved.ResumeLayout(false);
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+            this.splitContainer2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.DataGridViewCurved)).EndInit();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownKeep)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownDrop)).EndInit();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -483,8 +1104,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox TextBoxName;
         private System.Windows.Forms.DataGridView DataGridView;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Active;
         private System.Windows.Forms.DataGridViewTextBoxColumn cName;
         private System.Windows.Forms.DataGridViewTextBoxColumn cCat;
@@ -492,7 +1111,61 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn cOutOf;
         private System.Windows.Forms.DataGridViewTextBoxColumn cPercent;
         private System.Windows.Forms.DataGridViewCheckBoxColumn cReal;
-        private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TabControl TabsAssignments;
+        private System.Windows.Forms.TabPage TabUncurved;
+        private System.Windows.Forms.TabPage TabCurved;
+        private System.Windows.Forms.SplitContainer splitContainer2;
+        private System.Windows.Forms.DataGridView DataGridViewCurved;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn2;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.Button ButtonCurveDelete;
+        private System.Windows.Forms.Button ButtonCurveNew;
+        private System.Windows.Forms.Button ButtonCurveClear;
+        private System.Windows.Forms.Button ButtonCurveSave;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.Button ButtonDown;
+        private System.Windows.Forms.Label Label8;
+        private System.Windows.Forms.Button ButtonUp;
+        private System.Windows.Forms.CheckedListBox CheckedListBoxCurves;
+        private System.Windows.Forms.RadioButton RadioButtonDrop;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.CheckedListBox CheckedListBoxAssignments;
+        private System.Windows.Forms.CheckedListBox CheckedListBoxCategories;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.NumericUpDown NumericUpDownKeep;
+        private System.Windows.Forms.RadioButton RadioButtonKeep;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.NumericUpDown NumericUpDownDrop;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox TextBoxConDropPercent;
+        private System.Windows.Forms.RadioButton RadioButtonConDropPercent;
+        private System.Windows.Forms.TextBox TextBoxAdditivePoints;
+        private System.Windows.Forms.RadioButton RadioButtonAdditivePercent;
+        private System.Windows.Forms.TextBox TextBoxMultiplicative;
+        private System.Windows.Forms.TextBox TextBoxAdditivePercent;
+        private System.Windows.Forms.RadioButton RadioButtonMultiplicative;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.RadioButton RadioButtonAdditivePoints;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.TextBox TextBoxCurveToMean;
+        private System.Windows.Forms.RadioButton RadioButtonCurveToMean;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox TextBoxConDropPoints;
+        private System.Windows.Forms.RadioButton RadioButtonConDropPoints;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Button ButtonCurveHelp;
     }
 }
