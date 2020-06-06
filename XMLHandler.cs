@@ -644,20 +644,20 @@ namespace Grade_Calculator_3
                 try
                 {
                     XElement XE = XElement.Load(file);
-                    XE = XE.Element("AssignmentData");
+                    XE = XE.Element("CurveData");
                     Curve curve = new Curve(XE.Element("Name").Value);
                     curve.active = Convert.ToBoolean(XE.Element("Active").Value);
                     curve.ignoreUserInactives = Convert.ToBoolean(XE.Element("IgnoreUserActives").Value);
                     curve.appliedCatIndexes = XCurveCatIndexesToInt(XE.Element("CatIndexes"));
                     curve.appliedAssgnNames = XCurveAssgnNamesToString(XE.Element("AssgnNames"));
-                    curve.kept = Convert.ToInt32(XE.Element("Kept"));
-                    curve.conDropPercent = Convert.ToDouble(XE.Element("ConDropPercent"));
-                    curve.conDropPoints = Convert.ToDouble(XE.Element("ConDropPoints"));
-                    curve.additive = Convert.ToDouble(XE.Element("Additive"));
-                    curve.multiplicative = Convert.ToDouble(XE.Element("Multiplicative"));
-                    curve.additivePercent = Convert.ToDouble(XE.Element("AdditivePercent"));
-                    curve.goalMeanPercent = Convert.ToDouble(XE.Element("GoalMeanPercent"));
-                    curve.goalMeanPercentMethod = Convert.ToInt32(XE.Element("GoalMeanPercentMethod"));
+                    curve.kept = Convert.ToInt32(XE.Element("Kept").Value);
+                    curve.conDropPercent = Convert.ToDouble(XE.Element("ConDropPercent").Value);
+                    curve.conDropPoints = Convert.ToDouble(XE.Element("ConDropPoints").Value);
+                    curve.additive = Convert.ToDouble(XE.Element("Additive").Value);
+                    curve.multiplicative = Convert.ToDouble(XE.Element("Multiplicative").Value);
+                    curve.additivePercent = Convert.ToDouble(XE.Element("AdditivePercent").Value);
+                    curve.goalMeanPercent = Convert.ToDouble(XE.Element("GoalMeanPercent").Value);
+                    curve.goalMeanPercentMethod = Convert.ToInt32(XE.Element("GoalMeanPercentMethod").Value);
 
                     Array.Resize(ref curves, curves.Length + 1);
                     curves[curves.Length - 1] = curve;
@@ -713,8 +713,8 @@ namespace Grade_Calculator_3
                         new XElement("Name", curve.name),
                         new XElement("Active", curve.active),
                         new XElement("IgnoreUserActives", curve.ignoreUserInactives),
-                        new XElement("CatIndexes", CurveCatIndexesToXElement(curve.appliedCatIndexes)),
-                        new XElement("AssgnNames", CurveAssgnNamesToXElement(curve.appliedAssgnNames)),
+                        CurveCatIndexesToXElement(curve.appliedCatIndexes),
+                        CurveAssgnNamesToXElement(curve.appliedAssgnNames),
                         new XElement("Kept", curve.kept),
                         new XElement("ConDropPercent", curve.conDropPercent),
                         new XElement("ConDropPoints", curve.conDropPoints),

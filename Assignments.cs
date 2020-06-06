@@ -15,7 +15,6 @@ namespace Grade_Calculator_3
         private readonly SchoolClass _schoolClass;
         private readonly Main _main;
         private Assignment[] _assignments;
-        private Assignment[] _curvedAssignments;
         private Assignment _currentAssignment;
         private Curve _currentCurve;
         private int _currentTab;
@@ -41,9 +40,9 @@ namespace Grade_Calculator_3
             {
                 TabChanged();
             };
-            CheckedListBoxCategories.ItemCheck += delegate
+            CheckedListBoxCurves.SelectedIndexChanged += delegate
             {
-                FillAssgnCheckedListBox(false);
+
             };
         }
 
@@ -87,9 +86,7 @@ namespace Grade_Calculator_3
             }
             else
             {
-                _schoolClass.ApplyCurves();
-                _curvedAssignments = _schoolClass.curvedAssignments;
-                assignmentsToUse = _curvedAssignments;
+                assignmentsToUse = assgns;
             }
 
             //code has been unspaghettied
@@ -313,15 +310,7 @@ namespace Grade_Calculator_3
             CheckBoxActive.Checked = assgn.active;
             TextBoxMeanPoints.Text = assgn.meanPoints.ToString();
         }
-        
-        private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            FillDataView();
-        }
 
-        private void DataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-        }
         private void Assignments_Load(object sender, EventArgs e)
         {
         }
@@ -347,115 +336,395 @@ namespace Grade_Calculator_3
             }
         }
 
+        private void ClearCurvedForm(bool clearName = true, bool deselect = true)
+        {
+            TextBox[] textBoxes =
+            {
+                TextBoxConDropPercent, TextBoxConDropPoints, TextBoxCurveToMean, TextBoxAdditivePercent,
+                TextBoxAdditivePoints, TextBoxMultiplicative
+            };
+            RadioButton[] radioButtons =
+            {
+                RadioButtonDrop, RadioButtonKeep, RadioButtonConDropPercent, RadioButtonConDropPoints,
+                RadioButtonCurveToMean, RadioButtonAdditivePercent, RadioButtonAdditivePoints, RadioButtonMultiplicative
+            };
+            NumericUpDown[] numericUpDowns = { NumericUpDownDrop, NumericUpDownKeep };
+
+            foreach (TextBox tb in textBoxes)
+            {
+                tb.Text = "";
+            }
+            foreach (RadioButton rb in radioButtons)
+            {
+                rb.Checked = false;
+            }
+            foreach (NumericUpDown nUD in numericUpDowns)
+            {
+                nUD.Value = 0;
+            }
+            if (clearName)
+            {
+                TextBoxCurveName.Text = "";
+                _currentCurve = null;
+                CheckBoxCurveActive.Checked = true;
+            }
+            if(deselect) CheckedListBoxCurves.ClearSelected();
+        }
+
         private void InitializeCurvedTab(bool init = false)
         {
-            FillCatCheckedListBox();
+            ClearCurvedForm();
+            _schoolClass.LoadCurves();
             DisplayCurvedData();
+            FillCatCheckedListBox();
+            FillCurvesCheckedListBox();
+            CheckedListBoxAssignments.Items.Clear();
         }
 
         private void DisplayCurvedData()
         {
             _schoolClass.ApplyCurves();
-            _curvedAssignments = _schoolClass.curvedAssignments;
-            FillDataView(_curvedAssignments, dgv: DataGridViewCurved, sendToMain: true);
+            FillDataView(_schoolClass.curvedAssignments, dgv: DataGridViewCurved, sendToMain: true);
         }
 
-        private void FillCatCheckedListBox(bool fillAssgns = true, bool init = false)
+        private void FillCatCheckedListBox()
         {
             CheckedListBoxCategories.Items.Clear();
             foreach (string catName in _schoolClass.catNames)
             {
                 CheckedListBoxCategories.Items.Add(catName);
             }
-            if(fillAssgns) FillAssgnCheckedListBox(init);
         }
 
-        private void FillAssgnCheckedListBox(bool init)
+        private void FillAssgnCheckedListBox(IEnumerable<string> activeCats)
         {
-
-            string[] prevUnchecked = new string[0];
+            List<string> prevUnchecked = new List<string>();
+            List<string> prevExisted = new List<string>();
             foreach (var item in CheckedListBoxAssignments.Items)
             {
+                prevExisted.Add(item.ToString());
                 if (!CheckedListBoxAssignments.CheckedItems.Contains(item))
                 {
-                    Array.Resize(ref prevUnchecked, prevUnchecked.Length + 1);
-                    prevUnchecked[prevUnchecked.Length - 1] = item.ToString();
+                    prevUnchecked.Add(item.ToString());
                 }
             }
             CheckedListBoxAssignments.Items.Clear();
-            string[] assgnsInCats = new string[0];
 
+            List<string> assgnsInCats = new List<string>();
 
-
-            foreach (var item in CheckedListBoxCategories.CheckedIndices)
+            foreach (var item in activeCats)
             {
-                int index = Convert.ToInt32(item);
+                int index = _schoolClass.CatExists(item);
                 Assignment[] tempAssgns = _schoolClass.GetAssgnsInCat(index);
                 foreach (Assignment assgn in tempAssgns)
                 {
-                    Array.Resize(ref assgnsInCats, assgnsInCats.Length + 1);
-                    assgnsInCats[assgnsInCats.Length - 1] = assgn.name;
+                    assgnsInCats.Add(assgn.name);
                 }
             }
             foreach (string assgnName in assgnsInCats)
             {
                 CheckedListBoxAssignments.Items.Add(assgnName);
-                CheckedListBoxAssignments.SetItemChecked(CheckedListBoxAssignments.Items.Count - 1,
-                    !prevUnchecked.Contains(assgnName));
+                if (prevExisted.Contains(assgnName))
+                {
+                    CheckedListBoxAssignments.SetItemChecked(CheckedListBoxAssignments.Items.IndexOf(assgnName),
+                        !prevUnchecked.Contains(assgnName));
+                }
+                else
+                {
+                    CheckedListBoxAssignments.SetItemChecked(CheckedListBoxAssignments.Items.IndexOf(assgnName), true);
+                }
             }
         }
 
-        internal class ErrorDisplay
+        private void FillCurvesCheckedListBox()
         {
-
-        }
-
-        private void label18_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void textBox6_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void radioButton5_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void radioButton4_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox5_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label17_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label16_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox3_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void radioButton2_CheckedChanged(object sender, EventArgs e)
-        {
-
+            CheckedListBoxCurves.Items.Clear();
+            if (_schoolClass.curves is null) return;
+            foreach (Curve curve in _schoolClass.curves)
+            {
+                CheckedListBoxCurves.Items.Add(curve.name);
+                CheckedListBoxCurves.SetItemChecked(CheckedListBoxCurves.Items.IndexOf(curve.name), curve.active);
+            }
         }
 
         private void ButtonCurveSave_Click(object sender, EventArgs e)
         {
+            SaveCurve();
+        }
 
+        private void ButtonCurveHelp_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(CheckedListBoxCategories.GetItemChecked(CheckedListBoxCategories.SelectedIndex).ToString());
+        }
+
+        private void CheckedListBoxCategories_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FillCatComboBox();
+        }
+
+        private void CheckedListBoxCategories_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            List<string> checkedItems = new List<string>();
+            foreach (var item in CheckedListBoxCategories.CheckedItems)
+                checkedItems.Add(item.ToString());
+            if (e.NewValue == CheckState.Checked)
+                checkedItems.Add(CheckedListBoxCategories.Items[e.Index].ToString());
+            else
+                checkedItems.Remove(CheckedListBoxCategories.Items[e.Index].ToString());
+            FillAssgnCheckedListBox(checkedItems);
+        }
+
+        private void ButtonCurveNew_Click(object sender, EventArgs e)
+        {
+            ClearCurvedForm(true, true);
+            FillCatCheckedListBox();
+            FillAssgnCheckedListBox(new string[0]);
+        }
+
+        private void ButtonCurveClear_Click(object sender, EventArgs e)
+        {
+            ClearCurvedForm(false, false);
+            FillCatCheckedListBox();
+            FillAssgnCheckedListBox(new string[0]);
+        }
+
+        private void SaveCurve(bool warning = true)
+        {
+            //everything in the required group box
+            Curve newCurve = new Curve(TextBoxCurveName.Text);
+            newCurve.active = CheckBoxCurveActive.Checked;
+            List<int> enabledCatIndexes = new List<int>();
+            foreach (var item in CheckedListBoxCategories.CheckedIndices)
+            {
+                enabledCatIndexes.Add(Convert.ToInt32(item));
+            }
+            newCurve.appliedCatIndexes = enabledCatIndexes.ToArray();
+            List<string> enabledAssgns = new List<string>();
+            foreach (var item in CheckedListBoxAssignments.CheckedItems)
+            {
+                enabledAssgns.Add(item.ToString());
+            }
+            newCurve.appliedAssgnNames = enabledAssgns.ToArray();
+
+            //the actual curve method
+            if (RadioButtonDrop.Checked)
+            {
+                newCurve.kept = -1 * (int) NumericUpDownDrop.Value;
+            }
+            else if (RadioButtonKeep.Checked)
+            {
+                newCurve.kept = (int) NumericUpDownKeep.Value;
+            }
+            else if (RadioButtonConDropPercent.Checked)
+            {
+                double val;
+                if (Double.TryParse(TextBoxConDropPercent.Text, out val))
+                {
+                    newCurve.conDropPercent = val;
+                }
+                else
+                {
+                    MessageBox.Show("Value entered for drop if below % is invalid.", "Error!", MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                    return;
+                }
+            }
+            else if (RadioButtonConDropPoints.Checked)
+            {
+                double val;
+                if (double.TryParse(TextBoxConDropPoints.Text, out val))
+                {
+                    newCurve.conDropPoints = val;
+                }
+                else
+                {
+                    MessageBox.Show("Value entered for drop if below x points is invalid.", "Error!", MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                    return;
+                }
+            }
+            else if (RadioButtonCurveToMean.Checked)
+            {
+                double val;
+                if (double.TryParse(TextBoxCurveToMean.Text, out val))
+                {
+                    newCurve.goalMeanPercent = val;
+                }
+                else
+                {
+                    MessageBox.Show("Value entered for curve to mean % is invalid.", "Error!", MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                    return;
+                }
+            }
+            else if (RadioButtonAdditivePercent.Checked)
+            {
+                double val;
+                if (double.TryParse(TextBoxAdditivePercent.Text, out val))
+                {
+                    newCurve.additivePercent = val / 100;
+                }
+                else
+                {
+                    MessageBox.Show("Value entered for add x % is invalid.", "Error!", MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                    return;
+                }
+            }
+            else if (RadioButtonAdditivePoints.Checked)
+            {
+                double val;
+                if (double.TryParse(TextBoxAdditivePoints.Text, out val))
+                {
+                    newCurve.additive = val;
+                }
+                else
+                {
+                    MessageBox.Show("Value entered for add x points is invalid.", "Error!", MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                    return;
+                }
+            }
+            else if (RadioButtonMultiplicative.Checked)
+            {
+                double val;
+                if (double.TryParse(TextBoxMultiplicative.Text, out val))
+                {
+                    newCurve.multiplicative = val;
+                }
+                else
+                {
+                    MessageBox.Show("Value entered for multiply by x is invalid.", "Error!", MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                    return;
+                }
+            }
+            else
+            {
+                MessageBox.Show("No curve method selected. Cannot save.", "Error!", MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                return;
+            }
+
+            if ( _schoolClass.CurveExists(newCurve.name) != -1) //if the curve will be overwritten
+            {
+                var result = DialogResult.Yes;
+                if(warning) result = MessageBox.Show("Data already exists for " + newCurve.name + ". Overwrite the file?",
+                        "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (result == DialogResult.Yes)
+                {
+                    XMLHandler.DeleteCurve(_schoolClass, newCurve, false);
+                }
+                else
+                {
+                    return;
+                }
+            }
+            try
+            {
+                XMLHandler.SaveCurveToFile(_schoolClass, newCurve, true);
+            }
+            catch
+            {
+                if(warning) MessageBox.Show("Curve name is not valid.", "Error!", MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                return;
+            }
+            _schoolClass.LoadCurves();
+            DisplayCurvedData();
+            FillCurvesCheckedListBox();
+            CheckedListBoxCurves.SetSelected(CheckedListBoxCurves.Items.IndexOf(newCurve.name), true);
+        }
+
+        private void CheckedListBoxCurves_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(!(CheckedListBoxCurves.SelectedItem is null)) FillCurveForm(_schoolClass.curves[_schoolClass.CurveExists(CheckedListBoxCurves.SelectedItem.ToString())]);
+        }
+
+        private void FillCurveForm(Curve curve)
+        {
+            ClearCurvedForm();
+            TextBoxCurveName.Text = curve.name;
+            CheckBoxCurveActive.Checked = curve.active;
+            FillCatCheckedListBox();
+            List<string> appliedCatNames = new List<string>();
+            foreach (int x in curve.appliedCatIndexes)
+            {
+                appliedCatNames.Add(_schoolClass.catNames[x]);
+            }
+            FillAssgnCheckedListBox(appliedCatNames);
+            if (curve.kept > 0)
+            {
+                RadioButtonKeep.Checked = true;
+            }
+            else if (curve.kept < 0)
+            {
+                RadioButtonDrop.Checked = true;
+            }
+            else if (curve.conDropPercent != 0)
+            {
+                RadioButtonConDropPercent.Checked = true;
+            }
+            else if (curve.conDropPoints != 0)
+            {
+                RadioButtonConDropPoints.Checked = true;
+            }
+            else if (curve.goalMeanPercent != 0)
+            {
+                RadioButtonCurveToMean.Checked = true;
+            }
+            else if (curve.additivePercent != 0)
+            {
+                RadioButtonAdditivePercent.Checked = true;
+            }
+            else if (curve.additive != 0)
+            {
+                RadioButtonAdditivePercent.Checked = true;
+            }
+            else if (curve.multiplicative != 0)
+            {
+                RadioButtonMultiplicative.Checked = true;
+            }
+
+
+            if (RadioButtonDrop.Checked)
+            {
+                NumericUpDownDrop.Value = curve.kept * -1;
+            }
+            else if (RadioButtonKeep.Checked)
+            {
+                NumericUpDownKeep.Value = curve.kept;
+            }
+            else if (RadioButtonConDropPercent.Checked)
+            {
+                TextBoxConDropPercent.Text = curve.conDropPercent.ToString();
+            }
+            else if (RadioButtonConDropPoints.Checked)
+            {
+                TextBoxConDropPoints.Text = curve.conDropPoints.ToString();
+            }
+            else if (RadioButtonCurveToMean.Checked)
+            {
+                TextBoxCurveToMean.Text = curve.goalMeanPercent.ToString();
+            }
+            else if (RadioButtonAdditivePercent.Checked)
+            {
+                TextBoxAdditivePercent.Text = (100 * curve.additivePercent).ToString();
+            }
+            else if (RadioButtonAdditivePoints.Checked)
+            {
+                TextBoxAdditivePoints.Text = curve.additive.ToString();
+            }
+            else if (RadioButtonMultiplicative.Checked)
+            {
+                TextBoxMultiplicative.Text = curve.multiplicative.ToString();
+            }
+
+            foreach (int x in curve.appliedCatIndexes)
+            {
+                CheckedListBoxCategories.SetItemChecked(x, true);
+            }
         }
     }
+
 }

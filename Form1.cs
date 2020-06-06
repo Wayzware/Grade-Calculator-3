@@ -1108,6 +1108,7 @@ namespace Grade_Calculator_3
         public int CurveExists(string curveName)
         {
             int c = 0;
+            if (curves is null) return -1;
             foreach (Curve curve in curves)
             {
                 if (curve.name.Equals(curveName))
@@ -1126,21 +1127,27 @@ namespace Grade_Calculator_3
             foreach (Assignment assgn in overrides)
             {
                 int index = AssignmentExists(assgn.name);
-                temp[index] = assgn;
+                temp[index] = assgn.Copy();
             }
             return temp;
         }
 
         public void ApplyCurves()
         {
+            if (assignments is null) return;
             curvedAssignments = new Assignment[assignments.Length];
-            Array.Copy(assignments, curvedAssignments, assignments.Length);
+            int c = 0;
+            foreach (Assignment unCurvedAssgn in assignments)
+            {
+                curvedAssignments[c] = unCurvedAssgn.Copy();
+                c++;
+            }
             if (curves is null) return;
             foreach (Curve curve in curves)
             {
                 if (curve.active)
                 {
-                    curvedAssignments = MergeAssignments(curve.Apply(curvedAssignments));
+                    Array.Copy(MergeAssignments(curve.Apply(curvedAssignments)), curvedAssignments, curvedAssignments.Length);
                 }
             }
         }
@@ -1153,7 +1160,7 @@ namespace Grade_Calculator_3
                 if (catIndex == assgn.catIndex)
                 {
                     Array.Resize(ref assgnsInCat, assgnsInCat.Length + 1);
-                    assgnsInCat[assgnsInCat.Length - 1] = assgn;
+                    assgnsInCat[assgnsInCat.Length - 1] = assgn.Copy();
                 }
             }
             return assgnsInCat;
@@ -1226,6 +1233,19 @@ namespace Grade_Calculator_3
                  percent = points / outOf * 100.0;
             Object[] retVal = {active, name, schoolClass.catNames[catIndex], points, outOf, percent, real};
             return retVal;
+        }
+
+        public Assignment Copy()
+        {
+            Assignment a = new Assignment();
+            a.active = active;
+            a.real = real;
+            a.catIndex = catIndex;
+            a.name = name;
+            a.points = points;
+            a.outOf = outOf;
+            a.meanPoints = meanPoints;
+            return a;
         }
     }
 
@@ -1526,7 +1546,7 @@ namespace Grade_Calculator_3
             int c = 0;
             foreach (Assignment assgn in assignments)
             {
-                if (assgn.name.Equals(assgnName))
+                if (!(assgn is null) && assgn.name.Equals(assgnName))
                 {
                     return c;
                 }

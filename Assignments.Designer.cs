@@ -108,10 +108,10 @@
             this.label12 = new System.Windows.Forms.Label();
             this.CheckedListBoxAssignments = new System.Windows.Forms.CheckedListBox();
             this.CheckedListBoxCategories = new System.Windows.Forms.CheckedListBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.CheckBoxCurveActive = new System.Windows.Forms.CheckBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.TextBoxCurveName = new System.Windows.Forms.TextBox();
             this.ButtonCurveDelete = new System.Windows.Forms.Button();
             this.ButtonCurveNew = new System.Windows.Forms.Button();
             this.ButtonCurveClear = new System.Windows.Forms.Button();
@@ -178,7 +178,6 @@
             this.DataGridView.RowHeadersVisible = false;
             this.DataGridView.Size = new System.Drawing.Size(458, 408);
             this.DataGridView.TabIndex = 1;
-            this.DataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView_CellContentClick);
             // 
             // Active
             // 
@@ -604,6 +603,7 @@
             this.ButtonCurveHelp.TabIndex = 64;
             this.ButtonCurveHelp.Text = "Help";
             this.ButtonCurveHelp.UseVisualStyleBackColor = true;
+            this.ButtonCurveHelp.Click += new System.EventHandler(this.ButtonCurveHelp_Click);
             // 
             // groupBox7
             // 
@@ -652,6 +652,7 @@
             this.CheckedListBoxCurves.Name = "CheckedListBoxCurves";
             this.CheckedListBoxCurves.Size = new System.Drawing.Size(218, 94);
             this.CheckedListBoxCurves.TabIndex = 62;
+            this.CheckedListBoxCurves.SelectedIndexChanged += new System.EventHandler(this.CheckedListBoxCurves_SelectedIndexChanged);
             // 
             // groupBox5
             // 
@@ -701,7 +702,6 @@
             this.TextBoxAdditivePoints.Name = "TextBoxAdditivePoints";
             this.TextBoxAdditivePoints.Size = new System.Drawing.Size(42, 20);
             this.TextBoxAdditivePoints.TabIndex = 17;
-            this.TextBoxAdditivePoints.TextChanged += new System.EventHandler(this.textBox5_TextChanged);
             // 
             // RadioButtonAdditivePercent
             // 
@@ -713,7 +713,6 @@
             this.RadioButtonAdditivePercent.TabStop = true;
             this.RadioButtonAdditivePercent.Text = "Add";
             this.RadioButtonAdditivePercent.UseVisualStyleBackColor = true;
-            this.RadioButtonAdditivePercent.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
             // 
             // label18
             // 
@@ -723,7 +722,6 @@
             this.label18.Size = new System.Drawing.Size(45, 13);
             this.label18.TabIndex = 23;
             this.label18.Text = "Mean %";
-            this.label18.Click += new System.EventHandler(this.label18_Click);
             // 
             // TextBoxMultiplicative
             // 
@@ -731,11 +729,10 @@
             this.TextBoxMultiplicative.Name = "TextBoxMultiplicative";
             this.TextBoxMultiplicative.Size = new System.Drawing.Size(42, 20);
             this.TextBoxMultiplicative.TabIndex = 20;
-            this.TextBoxMultiplicative.TextChanged += new System.EventHandler(this.textBox6_TextChanged);
             // 
             // TextBoxCurveToMean
             // 
-            this.TextBoxCurveToMean.Location = new System.Drawing.Point(225, 17);
+            this.TextBoxCurveToMean.Location = new System.Drawing.Point(225, 18);
             this.TextBoxCurveToMean.Name = "TextBoxCurveToMean";
             this.TextBoxCurveToMean.Size = new System.Drawing.Size(42, 20);
             this.TextBoxCurveToMean.TabIndex = 22;
@@ -746,7 +743,6 @@
             this.TextBoxAdditivePercent.Name = "TextBoxAdditivePercent";
             this.TextBoxAdditivePercent.Size = new System.Drawing.Size(42, 20);
             this.TextBoxAdditivePercent.TabIndex = 14;
-            this.TextBoxAdditivePercent.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
             // RadioButtonCurveToMean
             // 
@@ -769,7 +765,6 @@
             this.RadioButtonMultiplicative.TabStop = true;
             this.RadioButtonMultiplicative.Text = "Multiply by";
             this.RadioButtonMultiplicative.UseVisualStyleBackColor = true;
-            this.RadioButtonMultiplicative.CheckedChanged += new System.EventHandler(this.radioButton5_CheckedChanged);
             // 
             // label15
             // 
@@ -788,7 +783,6 @@
             this.label16.Size = new System.Drawing.Size(15, 13);
             this.label16.TabIndex = 15;
             this.label16.Text = "%";
-            this.label16.Click += new System.EventHandler(this.label16_Click);
             // 
             // TextBoxConDropPoints
             // 
@@ -805,7 +799,6 @@
             this.label17.Size = new System.Drawing.Size(35, 13);
             this.label17.TabIndex = 18;
             this.label17.Text = "points";
-            this.label17.Click += new System.EventHandler(this.label17_Click);
             // 
             // RadioButtonConDropPoints
             // 
@@ -828,7 +821,6 @@
             this.RadioButtonAdditivePoints.TabStop = true;
             this.RadioButtonAdditivePoints.Text = "Add";
             this.RadioButtonAdditivePoints.UseVisualStyleBackColor = true;
-            this.RadioButtonAdditivePoints.CheckedChanged += new System.EventHandler(this.radioButton4_CheckedChanged);
             // 
             // label14
             // 
@@ -926,10 +918,10 @@
             this.groupBox6.Controls.Add(this.label12);
             this.groupBox6.Controls.Add(this.CheckedListBoxAssignments);
             this.groupBox6.Controls.Add(this.CheckedListBoxCategories);
-            this.groupBox6.Controls.Add(this.checkBox1);
+            this.groupBox6.Controls.Add(this.CheckBoxCurveActive);
             this.groupBox6.Controls.Add(this.label10);
             this.groupBox6.Controls.Add(this.label11);
-            this.groupBox6.Controls.Add(this.textBox4);
+            this.groupBox6.Controls.Add(this.TextBoxCurveName);
             this.groupBox6.Location = new System.Drawing.Point(64, 9);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(258, 160);
@@ -962,16 +954,18 @@
             this.CheckedListBoxCategories.Name = "CheckedListBoxCategories";
             this.CheckedListBoxCategories.Size = new System.Drawing.Size(120, 94);
             this.CheckedListBoxCategories.TabIndex = 66;
+            this.CheckedListBoxCategories.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.CheckedListBoxCategories_ItemCheck);
+            this.CheckedListBoxCategories.SelectedIndexChanged += new System.EventHandler(this.CheckedListBoxCategories_SelectedIndexChanged);
             // 
-            // checkBox1
+            // CheckBoxCurveActive
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(180, 18);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(56, 17);
-            this.checkBox1.TabIndex = 70;
-            this.checkBox1.Text = "Active";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.CheckBoxCurveActive.AutoSize = true;
+            this.CheckBoxCurveActive.Location = new System.Drawing.Point(180, 18);
+            this.CheckBoxCurveActive.Name = "CheckBoxCurveActive";
+            this.CheckBoxCurveActive.Size = new System.Drawing.Size(56, 17);
+            this.CheckBoxCurveActive.TabIndex = 70;
+            this.CheckBoxCurveActive.Text = "Active";
+            this.CheckBoxCurveActive.UseVisualStyleBackColor = true;
             // 
             // label10
             // 
@@ -991,12 +985,12 @@
             this.label11.TabIndex = 12;
             this.label11.Text = "Apply to (Categories):";
             // 
-            // textBox4
+            // TextBoxCurveName
             // 
-            this.textBox4.Location = new System.Drawing.Point(47, 16);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(119, 20);
-            this.textBox4.TabIndex = 1;
+            this.TextBoxCurveName.Location = new System.Drawing.Point(47, 16);
+            this.TextBoxCurveName.Name = "TextBoxCurveName";
+            this.TextBoxCurveName.Size = new System.Drawing.Size(119, 20);
+            this.TextBoxCurveName.TabIndex = 1;
             // 
             // ButtonCurveDelete
             // 
@@ -1015,6 +1009,7 @@
             this.ButtonCurveNew.TabIndex = 10;
             this.ButtonCurveNew.Text = "New";
             this.ButtonCurveNew.UseVisualStyleBackColor = true;
+            this.ButtonCurveNew.Click += new System.EventHandler(this.ButtonCurveNew_Click);
             // 
             // ButtonCurveClear
             // 
@@ -1024,6 +1019,7 @@
             this.ButtonCurveClear.TabIndex = 20;
             this.ButtonCurveClear.Text = "Clear";
             this.ButtonCurveClear.UseVisualStyleBackColor = true;
+            this.ButtonCurveClear.Click += new System.EventHandler(this.ButtonCurveClear_Click);
             // 
             // ButtonCurveSave
             // 
@@ -1044,6 +1040,8 @@
             this.ControlBox = false;
             this.Controls.Add(this.TabsAssignments);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximumSize = new System.Drawing.Size(832, 486);
+            this.MinimumSize = new System.Drawing.Size(832, 486);
             this.Name = "Assignments";
             this.Text = "Assignments";
             this.Load += new System.EventHandler(this.Assignments_Load);
@@ -1126,10 +1124,10 @@
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox CheckBoxCurveActive;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox TextBoxCurveName;
         private System.Windows.Forms.Button ButtonCurveDelete;
         private System.Windows.Forms.Button ButtonCurveNew;
         private System.Windows.Forms.Button ButtonCurveClear;
