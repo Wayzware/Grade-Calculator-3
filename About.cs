@@ -19,7 +19,7 @@ namespace Grade_Calculator_3
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start(@"https://github.com/wayzata20/Grade-Calculator-3/releases");
+            System.Diagnostics.Process.Start(@"https://github.com/wayzware/Grade-Calculator-3/releases");
         }
     }
 }

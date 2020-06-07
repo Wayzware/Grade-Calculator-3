@@ -87,7 +87,6 @@ namespace Grade_Calculator_3
             this.label8 = new System.Windows.Forms.Label();
             this.TextBoxMeanGrade = new System.Windows.Forms.TextBox();
             this.TextBoxMeanPercent = new System.Windows.Forms.TextBox();
-            this.ButtonCurve = new System.Windows.Forms.Button();
             this.ButtonCalculate = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.comboBoxClasses = new System.Windows.Forms.ComboBox();
@@ -558,7 +557,6 @@ namespace Grade_Calculator_3
             this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Controls.Add(this.TextBoxMeanGrade);
             this.groupBox2.Controls.Add(this.TextBoxMeanPercent);
-            this.groupBox2.Controls.Add(this.ButtonCurve);
             this.groupBox2.Controls.Add(this.ButtonCalculate);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.comboBoxClasses);
@@ -621,22 +619,11 @@ namespace Grade_Calculator_3
             this.TextBoxMeanPercent.TabIndex = 1000;
             this.TextBoxMeanPercent.TabStop = false;
             // 
-            // ButtonCurve
-            // 
-            this.ButtonCurve.Enabled = false;
-            this.ButtonCurve.Location = new System.Drawing.Point(10, 162);
-            this.ButtonCurve.Name = "ButtonCurve";
-            this.ButtonCurve.Size = new System.Drawing.Size(84, 38);
-            this.ButtonCurve.TabIndex = 10;
-            this.ButtonCurve.Text = "Curve";
-            this.ButtonCurve.UseVisualStyleBackColor = true;
-            this.ButtonCurve.Click += new System.EventHandler(this.ButtonCurve_Click);
-            // 
             // ButtonCalculate
             // 
-            this.ButtonCalculate.Location = new System.Drawing.Point(100, 162);
+            this.ButtonCalculate.Location = new System.Drawing.Point(10, 162);
             this.ButtonCalculate.Name = "ButtonCalculate";
-            this.ButtonCalculate.Size = new System.Drawing.Size(134, 38);
+            this.ButtonCalculate.Size = new System.Drawing.Size(224, 38);
             this.ButtonCalculate.TabIndex = 999;
             this.ButtonCalculate.Text = "Calculate";
             this.ButtonCalculate.UseVisualStyleBackColor = true;
@@ -792,11 +779,12 @@ namespace Grade_Calculator_3
             // LabelCurved
             // 
             this.LabelCurved.AutoSize = true;
-            this.LabelCurved.Location = new System.Drawing.Point(144, 23);
+            this.LabelCurved.ForeColor = System.Drawing.Color.Red;
+            this.LabelCurved.Location = new System.Drawing.Point(146, 21);
             this.LabelCurved.Name = "LabelCurved";
-            this.LabelCurved.Size = new System.Drawing.Size(47, 13);
+            this.LabelCurved.Size = new System.Drawing.Size(41, 13);
             this.LabelCurved.TabIndex = 1004;
-            this.LabelCurved.Text = "(Curved)";
+            this.LabelCurved.Text = "Curved";
             // 
             // Main
             // 
@@ -888,7 +876,6 @@ namespace Grade_Calculator_3
         private Label label7;
         private Button ButtonCalculate;
         private Button ButtonClear;
-        private Button ButtonCurve;
         private GroupBox groupBox3;
         private ToolStripMenuItem assignmentsToolStripMenuItem;
         private ToolStripMenuItem basicModeToolStripMenuItem;

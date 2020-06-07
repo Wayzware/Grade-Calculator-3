@@ -325,6 +325,7 @@ namespace Grade_Calculator_3
 
             //Data has been verified and is ready to be written to a file!
             _oldClass?.RemapAssignments(schoolClass, true);
+            _oldClass?.RemapCurves(schoolClass);
             if (_oldClass != null && !_oldClass.className.Equals(schoolClass.className))
             {
                 XMLHandler.ChangeAssignmentDirName(schoolClass, _oldClass);

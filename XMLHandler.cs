@@ -801,7 +801,7 @@ namespace Grade_Calculator_3
             return File.Exists(fullFilePath);
         }
 
-        public static void DeleteCurve(SchoolClass schoolClass, Curve curve, bool warning = true)
+        public static void DeleteCurve(SchoolClass schoolClass, Curve curve)
         {
             string fullFilePath = DIRECTORY + CURVE_DIR + schoolClass.className + "/" + curve.name + C_FILE_EXT;
             File.Delete(fullFilePath);
@@ -813,5 +813,6 @@ namespace Grade_Calculator_3
         public static bool DebugMsg = false;
         public static int WarningLevel = 0;
         public static bool AlwaysDeleteOldAssignment = false;
+        public static bool unrestrictedCurves = false;
     }
 }

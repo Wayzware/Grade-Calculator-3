@@ -75,9 +75,6 @@
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.ButtonCurveHelp = new System.Windows.Forms.Button();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.ButtonDown = new System.Windows.Forms.Button();
-            this.Label8 = new System.Windows.Forms.Label();
-            this.ButtonUp = new System.Windows.Forms.Button();
             this.CheckedListBoxCurves = new System.Windows.Forms.CheckedListBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.label19 = new System.Windows.Forms.Label();
@@ -597,6 +594,7 @@
             // 
             // ButtonCurveHelp
             // 
+            this.ButtonCurveHelp.Enabled = false;
             this.ButtonCurveHelp.Location = new System.Drawing.Point(6, 135);
             this.ButtonCurveHelp.Name = "ButtonCurveHelp";
             this.ButtonCurveHelp.Size = new System.Drawing.Size(52, 23);
@@ -607,9 +605,6 @@
             // 
             // groupBox7
             // 
-            this.groupBox7.Controls.Add(this.ButtonDown);
-            this.groupBox7.Controls.Add(this.Label8);
-            this.groupBox7.Controls.Add(this.ButtonUp);
             this.groupBox7.Controls.Add(this.CheckedListBoxCurves);
             this.groupBox7.Location = new System.Drawing.Point(6, 284);
             this.groupBox7.Name = "groupBox7";
@@ -618,39 +613,12 @@
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Enabling/Selecting";
             // 
-            // ButtonDown
-            // 
-            this.ButtonDown.Location = new System.Drawing.Point(230, 69);
-            this.ButtonDown.Name = "ButtonDown";
-            this.ButtonDown.Size = new System.Drawing.Size(79, 37);
-            this.ButtonDown.TabIndex = 65;
-            this.ButtonDown.Text = "V";
-            this.ButtonDown.UseVisualStyleBackColor = true;
-            // 
-            // Label8
-            // 
-            this.Label8.AutoSize = true;
-            this.Label8.Location = new System.Drawing.Point(226, 11);
-            this.Label8.Name = "Label8";
-            this.Label8.Size = new System.Drawing.Size(88, 13);
-            this.Label8.TabIndex = 64;
-            this.Label8.Text = "Calculation Order";
-            // 
-            // ButtonUp
-            // 
-            this.ButtonUp.Location = new System.Drawing.Point(230, 27);
-            this.ButtonUp.Name = "ButtonUp";
-            this.ButtonUp.Size = new System.Drawing.Size(79, 37);
-            this.ButtonUp.TabIndex = 63;
-            this.ButtonUp.Text = "Λ";
-            this.ButtonUp.UseVisualStyleBackColor = true;
-            // 
             // CheckedListBoxCurves
             // 
             this.CheckedListBoxCurves.FormattingEnabled = true;
             this.CheckedListBoxCurves.Location = new System.Drawing.Point(4, 14);
             this.CheckedListBoxCurves.Name = "CheckedListBoxCurves";
-            this.CheckedListBoxCurves.Size = new System.Drawing.Size(218, 94);
+            this.CheckedListBoxCurves.Size = new System.Drawing.Size(306, 94);
             this.CheckedListBoxCurves.TabIndex = 62;
             this.CheckedListBoxCurves.SelectedIndexChanged += new System.EventHandler(this.CheckedListBoxCurves_SelectedIndexChanged);
             // 
@@ -875,10 +843,10 @@
             this.RadioButtonKeep.AutoSize = true;
             this.RadioButtonKeep.Location = new System.Drawing.Point(7, 41);
             this.RadioButtonKeep.Name = "RadioButtonKeep";
-            this.RadioButtonKeep.Size = new System.Drawing.Size(50, 17);
+            this.RadioButtonKeep.Size = new System.Drawing.Size(48, 17);
             this.RadioButtonKeep.TabIndex = 3;
             this.RadioButtonKeep.TabStop = true;
-            this.RadioButtonKeep.Text = "Keep";
+            this.RadioButtonKeep.Text = "Drop";
             this.RadioButtonKeep.UseVisualStyleBackColor = true;
             // 
             // label9
@@ -907,10 +875,10 @@
             this.RadioButtonDrop.AutoSize = true;
             this.RadioButtonDrop.Location = new System.Drawing.Point(7, 18);
             this.RadioButtonDrop.Name = "RadioButtonDrop";
-            this.RadioButtonDrop.Size = new System.Drawing.Size(48, 17);
+            this.RadioButtonDrop.Size = new System.Drawing.Size(50, 17);
             this.RadioButtonDrop.TabIndex = 0;
             this.RadioButtonDrop.TabStop = true;
-            this.RadioButtonDrop.Text = "Drop";
+            this.RadioButtonDrop.Text = "Keep";
             this.RadioButtonDrop.UseVisualStyleBackColor = true;
             // 
             // groupBox6
@@ -1000,6 +968,7 @@
             this.ButtonCurveDelete.TabIndex = 30;
             this.ButtonCurveDelete.Text = "Delete";
             this.ButtonCurveDelete.UseVisualStyleBackColor = true;
+            this.ButtonCurveDelete.Click += new System.EventHandler(this.ButtonCurveDelete_Click);
             // 
             // ButtonCurveNew
             // 
@@ -1066,7 +1035,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.DataGridViewCurved)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox7.ResumeLayout(false);
-            this.groupBox7.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownKeep)).EndInit();
@@ -1133,9 +1101,6 @@
         private System.Windows.Forms.Button ButtonCurveClear;
         private System.Windows.Forms.Button ButtonCurveSave;
         private System.Windows.Forms.GroupBox groupBox7;
-        private System.Windows.Forms.Button ButtonDown;
-        private System.Windows.Forms.Label Label8;
-        private System.Windows.Forms.Button ButtonUp;
         private System.Windows.Forms.CheckedListBox CheckedListBoxCurves;
         private System.Windows.Forms.RadioButton RadioButtonDrop;
         private System.Windows.Forms.Label label12;

@@ -16,8 +16,7 @@ namespace Grade_Calculator_3
         private readonly Main _main;
         private Assignment[] _assignments;
         private Assignment _currentAssignment;
-        private Curve _currentCurve;
-        private int _currentTab;
+        public int currentTab;
 
         public Assignments(Main main, SchoolClass schoolClass)
         {
@@ -25,7 +24,7 @@ namespace Grade_Calculator_3
             _schoolClass = schoolClass;
             _assignments = _schoolClass.assignments;
             _main = main;
-            _currentTab = 0;
+            currentTab = 0;
             this.Closing += delegate
             {
                 _main.SetAssignmentsToNull();
@@ -106,7 +105,7 @@ namespace Grade_Calculator_3
 
             string arg1, arg2;
             bool arg3;
-            (arg1, arg2, arg3) = _schoolClass.GetMeanGrade(_main.DataRows);
+            (arg1, arg2, arg3) = _schoolClass.GetMeanGrade(_main.DataRows, assignmentsToUse);
             _main.DisplayMean(arg1, arg2, arg3);
             _main.CalculateGrade();
         }
@@ -317,7 +316,7 @@ namespace Grade_Calculator_3
 
         private void TabChanged()
         {
-            switch (_currentTab)
+            switch (currentTab)
             {
                 case 1 when TabsAssignments.SelectedTab == TabUncurved:
                 case 2 when TabsAssignments.SelectedTab == TabCurved:
@@ -326,12 +325,12 @@ namespace Grade_Calculator_3
 
             if (TabsAssignments.SelectedTab == TabCurved)
             {
-                _currentTab = 2;
+                currentTab = 2;
                 InitializeCurvedTab(true);
             }
             else
             {
-                _currentTab = 1;
+                currentTab = 1;
                 InitializeUncurvedTab();
             }
         }
@@ -365,7 +364,6 @@ namespace Grade_Calculator_3
             if (clearName)
             {
                 TextBoxCurveName.Text = "";
-                _currentCurve = null;
                 CheckBoxCurveActive.Checked = true;
             }
             if(deselect) CheckedListBoxCurves.ClearSelected();
@@ -436,6 +434,28 @@ namespace Grade_Calculator_3
             }
         }
 
+        private void InitAssgnCheckedListBox(string curveName)
+        {
+            CheckedListBoxAssignments.Items.Clear();
+
+            Curve curve = _schoolClass.curves[_schoolClass.CurveExists(curveName)];
+            List<string> assgnsInCats = new List<string>();
+            foreach (int index in curve.appliedCatIndexes)
+            {
+                Assignment[] tempAssgns = _schoolClass.GetAssgnsInCat(index);
+                foreach (Assignment assgn in tempAssgns)
+                {
+                    assgnsInCats.Add(assgn.name);
+                }
+            }
+            foreach (string assgnName in assgnsInCats)
+            {
+                CheckedListBoxAssignments.Items.Add(assgnName);
+                CheckedListBoxAssignments.SetItemChecked(CheckedListBoxAssignments.Items.IndexOf(assgnName),
+                    curve.appliedAssgnNames.Contains(assgnName));
+            }
+        }
+
         private void FillCurvesCheckedListBox()
         {
             CheckedListBoxCurves.Items.Clear();
@@ -454,7 +474,7 @@ namespace Grade_Calculator_3
 
         private void ButtonCurveHelp_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(CheckedListBoxCategories.GetItemChecked(CheckedListBoxCategories.SelectedIndex).ToString());
+            
         }
 
         private void CheckedListBoxCategories_SelectedIndexChanged(object sender, EventArgs e)
@@ -510,10 +530,28 @@ namespace Grade_Calculator_3
             if (RadioButtonDrop.Checked)
             {
                 newCurve.kept = -1 * (int) NumericUpDownDrop.Value;
+                if (!Settings.unrestrictedCurves)
+                {
+                    if (enabledCatIndexes.Count > 1)
+                    {
+                        MessageBox.Show("This curve can only be applied to 1 category. Cannot apply/save curve.", "Error!", MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+                        return;
+                    }
+                }
             }
             else if (RadioButtonKeep.Checked)
             {
                 newCurve.kept = (int) NumericUpDownKeep.Value;
+                if (!Settings.unrestrictedCurves)
+                {
+                    if (enabledCatIndexes.Count > 1)
+                    {
+                        MessageBox.Show("This curve can only be applied to 1 category. Cannot apply/save curve.", "Error!", MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+                        return;
+                    }
+                }
             }
             else if (RadioButtonConDropPercent.Checked)
             {
@@ -555,6 +593,16 @@ namespace Grade_Calculator_3
                     MessageBox.Show("Value entered for curve to mean % is invalid.", "Error!", MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                     return;
+                }
+
+                if (!Settings.unrestrictedCurves)
+                {
+                    if (enabledCatIndexes.Count > 1)
+                    {
+                        MessageBox.Show("This curve can only be applied to 1 category. Cannot apply/save curve.", "Error!", MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+                        return;
+                    }
                 }
             }
             else if (RadioButtonAdditivePercent.Checked)
@@ -599,7 +647,7 @@ namespace Grade_Calculator_3
                     return;
                 }
             }
-            else
+            else if(!Settings.unrestrictedCurves)
             {
                 MessageBox.Show("No curve method selected. Cannot save.", "Error!", MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
@@ -613,7 +661,7 @@ namespace Grade_Calculator_3
                         "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (result == DialogResult.Yes)
                 {
-                    XMLHandler.DeleteCurve(_schoolClass, newCurve, false);
+                    XMLHandler.DeleteCurve(_schoolClass, newCurve);
                 }
                 else
                 {
@@ -638,8 +686,14 @@ namespace Grade_Calculator_3
 
         private void CheckedListBoxCurves_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(!(CheckedListBoxCurves.SelectedItem is null)) FillCurveForm(_schoolClass.curves[_schoolClass.CurveExists(CheckedListBoxCurves.SelectedItem.ToString())]);
+            if (!(CheckedListBoxCurves.SelectedItem is null))
+            {
+                string workaround = CheckedListBoxCurves.SelectedItem.ToString();
+                FillCurveForm(_schoolClass.curves[_schoolClass.CurveExists(CheckedListBoxCurves.SelectedItem.ToString())]);
+                InitAssgnCheckedListBox(workaround);
+            }
         }
+    
 
         private void FillCurveForm(Curve curve)
         {
@@ -724,6 +778,18 @@ namespace Grade_Calculator_3
             {
                 CheckedListBoxCategories.SetItemChecked(x, true);
             }
+        }
+
+        private void ButtonCurveDelete_Click(object sender, EventArgs e)
+        {
+            if (_schoolClass.CurveExists(TextBoxCurveName.Text) == -1) return;
+            var result = MessageBox.Show("Delete data for " + TextBoxCurveName.Text + "?", "Confirm",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (result == DialogResult.Yes)
+            {
+                XMLHandler.DeleteCurve(_schoolClass, _schoolClass.curves[_schoolClass.CurveExists(TextBoxCurveName.Text)]);
+            }
+            InitializeCurvedTab();
         }
     }
 

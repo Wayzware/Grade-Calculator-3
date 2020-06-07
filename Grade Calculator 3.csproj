@@ -24,8 +24,8 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <PublisherName>Jacob Rice</PublisherName>
-    <ApplicationRevision>10</ApplicationRevision>
-    <ApplicationVersion>0.3.2.%2a</ApplicationVersion>
+    <ApplicationRevision>11</ApplicationRevision>
+    <ApplicationVersion>0.4.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -111,12 +111,6 @@
       <DependentUpon>Assignments.cs</DependentUpon>
     </Compile>
     <Compile Include="Canvas.cs" />
-    <Compile Include="CurveForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CurveForm.Designer.cs">
-      <DependentUpon>CurveForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -137,9 +131,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Assignments.resx">
       <DependentUpon>Assignments.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CurveForm.resx">
-      <DependentUpon>CurveForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
