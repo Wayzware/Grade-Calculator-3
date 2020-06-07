@@ -42,7 +42,7 @@
             this.Label2.Name = "Label2";
             this.Label2.Size = new System.Drawing.Size(183, 60);
             this.Label2.TabIndex = 4;
-            this.Label2.Text = "© 2016-2020 Jacob \"Wayz\" Rice\r\nReleased on June 6, 2020\r\n\r\nVersion 0.4\r\n";
+            this.Label2.Text = "© 2016-2020 Jacob \"Wayz\" Rice\r\nReleased on June 6, 2020\r\n\r\nVersion 0.4.1\r\n";
             this.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // linkLabel1

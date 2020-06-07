@@ -1127,8 +1127,8 @@ namespace Grade_Calculator_3
 
         private Assignment[] MergeAssignments(Assignment[] overrides)
         {
-            Assignment[] temp = new Assignment[assignments.Length];
-            Array.Copy(assignments, temp, assignments.Length);
+            Assignment[] temp = new Assignment[curvedAssignments.Length];
+            Array.Copy(curvedAssignments, temp, curvedAssignments.Length);
             foreach (Assignment assgn in overrides)
             {
                 int index = AssignmentExists(assgn.name);
