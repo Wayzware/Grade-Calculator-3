@@ -68,14 +68,7 @@ namespace Grade_Calculator_3
         {
             Assignment[] assignmentsToUse;
             DataGridView relevantDataGridView;
-            if (dgv is null)
-            {
-                relevantDataGridView = DataGridView;
-            }
-            else
-            {
-                relevantDataGridView = DataGridViewCurved;
-            }
+            relevantDataGridView = dgv is null ? DataGridView : DataGridViewCurved;
             relevantDataGridView.Rows.Clear();
             if (assgns is null)
             {
@@ -693,8 +686,7 @@ namespace Grade_Calculator_3
                 InitAssgnCheckedListBox(workaround);
             }
         }
-    
-
+        
         private void FillCurveForm(Curve curve)
         {
             ClearCurvedForm();
@@ -790,6 +782,11 @@ namespace Grade_Calculator_3
                 XMLHandler.DeleteCurve(_schoolClass, _schoolClass.curves[_schoolClass.CurveExists(TextBoxCurveName.Text)]);
             }
             InitializeCurvedTab();
+        }
+
+        private void splitContainer1_Panel2_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 

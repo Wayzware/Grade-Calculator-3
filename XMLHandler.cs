@@ -810,9 +810,17 @@ namespace Grade_Calculator_3
 
     static class Settings
     {
+        public static bool DEBUG_MODE = true; //TODO: CHANGE TO FALSE
+
         public static bool DebugMsg = false;
         public static int WarningLevel = 0;
         public static bool AlwaysDeleteOldAssignment = false;
         public static bool unrestrictedCurves = false;
+    }
+
+    static class SyncSettings
+    {
+        public static string AccessToken = "4356~pE0R0fDfDEVtE6iegOHgwCA5UA05VLkxFLDuT18sRQGOsHEXpRqXqg0ocVD8aQJc";
+        public static string CanvasURL = "https://umn.instructure.com/";
     }
 }

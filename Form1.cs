@@ -24,7 +24,12 @@ namespace Grade_Calculator_3
 
         private void Main_Load(object sender, EventArgs e)
         {
-            XMLHandler.DIRECTORY = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "/Grade Calculator/";
+            string directory = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"/Grade Calculator/";
+            if (Settings.DEBUG_MODE)
+            {
+                directory += @"DEBUG/";
+            }
+            XMLHandler.DIRECTORY = directory;
             comboBoxClasses.DropDownStyle = ComboBoxStyle.DropDownList;
             InitialSetup();
         }
@@ -853,6 +858,12 @@ namespace Grade_Calculator_3
                 c++;
             }
             return retVal;
+        }
+
+        private void signInToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Sync sync = new Sync();
+            sync.Show();
         }
 
         public class DataRow
