@@ -25,6 +25,9 @@ namespace Grade_Calculator_3
         private static readonly string CURVE_DIR = "Curves/";
         private static readonly string C_FILE_EXT = ".gccx";
         private static readonly int C_SCHEMA_VER = 1;
+        private static readonly string SETTINGS_DIR = "Settings/";
+        private static readonly string S_FILE_EXT = ".gcsx";
+        private static readonly int S_SCHEMA_VER = 1;
 
         public static SchoolClass[] Data;
 
@@ -37,6 +40,8 @@ namespace Grade_Calculator_3
          *          1 : v0.3-Present
          *      C_SCHEMA_VER:
          *          1 : v0.4-Present
+         *      S_SCHEMA_VER:
+         *          1 : v0.5-Present
          */
 
         public static SchoolClass[] ReadSchoolClasses()
@@ -821,6 +826,7 @@ namespace Grade_Calculator_3
     static class SyncSettings
     {
         public static string AccessToken = "4356~pE0R0fDfDEVtE6iegOHgwCA5UA05VLkxFLDuT18sRQGOsHEXpRqXqg0ocVD8aQJc";
-        public static string CanvasURL = "https://umn.instructure.com/";
+        public static string CanvasURL = "https://umn.instructure.com";
+        public static int TimeoutLength = 100;
     }
 }

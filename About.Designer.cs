@@ -42,7 +42,7 @@
             this.Label2.Name = "Label2";
             this.Label2.Size = new System.Drawing.Size(183, 60);
             this.Label2.TabIndex = 4;
-            this.Label2.Text = "© 2016-2020 Jacob \"Wayz\" Rice\r\nReleased on {DATE}\r\n\r\nVersion 0.4.2";
+            this.Label2.Text = "© 2016-2020 Jacob \"Wayz\" Rice\r\nReleased on {DATE}\r\n\r\nVersion 0.5";
             this.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // linkLabel1
@@ -59,9 +59,9 @@
             // LabelDisclaimer
             // 
             this.LabelDisclaimer.AutoSize = true;
-            this.LabelDisclaimer.Location = new System.Drawing.Point(16, 112);
+            this.LabelDisclaimer.Location = new System.Drawing.Point(14, 99);
             this.LabelDisclaimer.Name = "LabelDisclaimer";
-            this.LabelDisclaimer.Size = new System.Drawing.Size(390, 39);
+            this.LabelDisclaimer.Size = new System.Drawing.Size(392, 52);
             this.LabelDisclaimer.TabIndex = 6;
             this.LabelDisclaimer.Text = resources.GetString("LabelDisclaimer.Text");
             this.LabelDisclaimer.TextAlign = System.Drawing.ContentAlignment.TopCenter;

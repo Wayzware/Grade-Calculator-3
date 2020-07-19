@@ -31,6 +31,15 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Assignments));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.DataGridView = new System.Windows.Forms.DataGridView();
+            this.Active = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.cName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cCat = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cOutOf = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cPercent = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cReal = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.cMeanPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cMeanPercent = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -106,15 +115,6 @@
             this.ButtonCurveNew = new System.Windows.Forms.Button();
             this.ButtonCurveClear = new System.Windows.Forms.Button();
             this.ButtonCurveSave = new System.Windows.Forms.Button();
-            this.Active = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.cName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cCat = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cOutOf = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cPercent = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cReal = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.cMeanPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cMeanPercent = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -152,7 +152,6 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.groupBox1);
-            this.splitContainer1.Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel2_Paint);
             this.splitContainer1.Size = new System.Drawing.Size(903, 471);
             this.splitContainer1.SplitterDistance = 554;
             this.splitContainer1.TabIndex = 1;
@@ -180,6 +179,73 @@
             this.DataGridView.RowHeadersVisible = false;
             this.DataGridView.Size = new System.Drawing.Size(554, 471);
             this.DataGridView.TabIndex = 1;
+            // 
+            // Active
+            // 
+            this.Active.HeaderText = "Active";
+            this.Active.Name = "Active";
+            this.Active.ReadOnly = true;
+            this.Active.Width = 45;
+            // 
+            // cName
+            // 
+            this.cName.HeaderText = "Name";
+            this.cName.Name = "cName";
+            this.cName.ReadOnly = true;
+            this.cName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.cName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.cName.Width = 85;
+            // 
+            // cCat
+            // 
+            this.cCat.HeaderText = "Category";
+            this.cCat.Name = "cCat";
+            this.cCat.ReadOnly = true;
+            this.cCat.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.cCat.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.cCat.Width = 85;
+            // 
+            // cPoints
+            // 
+            this.cPoints.HeaderText = "Points";
+            this.cPoints.Name = "cPoints";
+            this.cPoints.ReadOnly = true;
+            this.cPoints.Width = 58;
+            // 
+            // cOutOf
+            // 
+            this.cOutOf.HeaderText = "Out Of";
+            this.cOutOf.Name = "cOutOf";
+            this.cOutOf.ReadOnly = true;
+            this.cOutOf.Width = 58;
+            // 
+            // cPercent
+            // 
+            this.cPercent.HeaderText = "Percent";
+            this.cPercent.Name = "cPercent";
+            this.cPercent.ReadOnly = true;
+            this.cPercent.Width = 58;
+            // 
+            // cReal
+            // 
+            this.cReal.HeaderText = "Real";
+            this.cReal.Name = "cReal";
+            this.cReal.ReadOnly = true;
+            this.cReal.Width = 45;
+            // 
+            // cMeanPoints
+            // 
+            this.cMeanPoints.HeaderText = "Mean Points";
+            this.cMeanPoints.Name = "cMeanPoints";
+            this.cMeanPoints.ReadOnly = true;
+            this.cMeanPoints.Width = 58;
+            // 
+            // cMeanPercent
+            // 
+            this.cMeanPercent.HeaderText = "Mean %";
+            this.cMeanPercent.Name = "cMeanPercent";
+            this.cMeanPercent.ReadOnly = true;
+            this.cMeanPercent.Width = 58;
             // 
             // groupBox1
             // 
@@ -431,7 +497,7 @@
             this.TabCurved.Location = new System.Drawing.Point(4, 22);
             this.TabCurved.Name = "TabCurved";
             this.TabCurved.Padding = new System.Windows.Forms.Padding(3);
-            this.TabCurved.Size = new System.Drawing.Size(934, 484);
+            this.TabCurved.Size = new System.Drawing.Size(909, 477);
             this.TabCurved.TabIndex = 2;
             this.TabCurved.Text = "Curved";
             this.TabCurved.UseVisualStyleBackColor = true;
@@ -449,8 +515,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.groupBox4);
-            this.splitContainer2.Size = new System.Drawing.Size(928, 478);
-            this.splitContainer2.SplitterDistance = 533;
+            this.splitContainer2.Size = new System.Drawing.Size(903, 471);
+            this.splitContainer2.SplitterDistance = 518;
             this.splitContainer2.TabIndex = 1;
             // 
             // DataGridViewCurved
@@ -472,7 +538,7 @@
             this.DataGridViewCurved.Location = new System.Drawing.Point(0, 0);
             this.DataGridViewCurved.Name = "DataGridViewCurved";
             this.DataGridViewCurved.RowHeadersVisible = false;
-            this.DataGridViewCurved.Size = new System.Drawing.Size(533, 478);
+            this.DataGridViewCurved.Size = new System.Drawing.Size(518, 471);
             this.DataGridViewCurved.TabIndex = 1;
             // 
             // dataGridViewCheckBoxColumn1
@@ -538,7 +604,7 @@
             this.groupBox4.Controls.Add(this.ButtonCurveNew);
             this.groupBox4.Controls.Add(this.ButtonCurveClear);
             this.groupBox4.Controls.Add(this.ButtonCurveSave);
-            this.groupBox4.Location = new System.Drawing.Point(60, 3);
+            this.groupBox4.Location = new System.Drawing.Point(50, 3);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(328, 402);
             this.groupBox4.TabIndex = 0;
@@ -953,73 +1019,6 @@
             this.ButtonCurveSave.Text = "Save";
             this.ButtonCurveSave.UseVisualStyleBackColor = true;
             this.ButtonCurveSave.Click += new System.EventHandler(this.ButtonCurveSave_Click);
-            // 
-            // Active
-            // 
-            this.Active.HeaderText = "Active";
-            this.Active.Name = "Active";
-            this.Active.ReadOnly = true;
-            this.Active.Width = 45;
-            // 
-            // cName
-            // 
-            this.cName.HeaderText = "Name";
-            this.cName.Name = "cName";
-            this.cName.ReadOnly = true;
-            this.cName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.cName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.cName.Width = 85;
-            // 
-            // cCat
-            // 
-            this.cCat.HeaderText = "Category";
-            this.cCat.Name = "cCat";
-            this.cCat.ReadOnly = true;
-            this.cCat.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.cCat.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.cCat.Width = 85;
-            // 
-            // cPoints
-            // 
-            this.cPoints.HeaderText = "Points";
-            this.cPoints.Name = "cPoints";
-            this.cPoints.ReadOnly = true;
-            this.cPoints.Width = 58;
-            // 
-            // cOutOf
-            // 
-            this.cOutOf.HeaderText = "Out Of";
-            this.cOutOf.Name = "cOutOf";
-            this.cOutOf.ReadOnly = true;
-            this.cOutOf.Width = 58;
-            // 
-            // cPercent
-            // 
-            this.cPercent.HeaderText = "Percent";
-            this.cPercent.Name = "cPercent";
-            this.cPercent.ReadOnly = true;
-            this.cPercent.Width = 58;
-            // 
-            // cReal
-            // 
-            this.cReal.HeaderText = "Real";
-            this.cReal.Name = "cReal";
-            this.cReal.ReadOnly = true;
-            this.cReal.Width = 45;
-            // 
-            // cMeanPoints
-            // 
-            this.cMeanPoints.HeaderText = "Mean Points";
-            this.cMeanPoints.Name = "cMeanPoints";
-            this.cMeanPoints.ReadOnly = true;
-            this.cMeanPoints.Width = 58;
-            // 
-            // cMeanPercent
-            // 
-            this.cMeanPercent.HeaderText = "Mean %";
-            this.cMeanPercent.Name = "cMeanPercent";
-            this.cMeanPercent.ReadOnly = true;
-            this.cMeanPercent.Width = 58;
             // 
             // Assignments
             // 

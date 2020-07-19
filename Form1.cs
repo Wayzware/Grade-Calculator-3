@@ -1618,6 +1618,23 @@ namespace Grade_Calculator_3
         }
     }
 
+    public class CanvasCourse
+    {
+        public string schoolClassName;
+        public string canvasClassName;
+
+
+        public CanvasCourse(string schoolClassName)
+        {
+            this.schoolClassName = schoolClassName;
+        }
+
+        public CanvasCourse(SchoolClass schoolClass)
+        {
+            schoolClassName = schoolClass.className;
+        }
+    }
+
     public static class ErrorChecking
     {
         public static bool TextIsType(string type, Object value)

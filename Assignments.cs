@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Grade_Calculator_3
@@ -782,11 +778,6 @@ namespace Grade_Calculator_3
                 XMLHandler.DeleteCurve(_schoolClass, _schoolClass.curves[_schoolClass.CurveExists(TextBoxCurveName.Text)]);
             }
             InitializeCurvedTab();
-        }
-
-        private void splitContainer1_Panel2_Paint(object sender, PaintEventArgs e)
-        {
-
         }
     }
 
