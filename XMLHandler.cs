@@ -826,8 +826,8 @@ namespace Grade_Calculator_3
 
     static class SyncSettings
     {
-        public static string AccessToken = "4356~pE0R0fDfDEVtE6iegOHgwCA5UA05VLkxFLDuT18sRQGOsHEXpRqXqg0ocVD8aQJc";
-        public static string CanvasURL = "https://umn.instructure.com";
+        public static string AccessToken = "";
+        public static string CanvasURL = "";
         public static int TimeoutLength = 100;
         public static bool ReSyncAllNonStaticData = true;
     }
