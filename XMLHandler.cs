@@ -35,7 +35,8 @@ namespace Grade_Calculator_3
          *  Schema version history:
          *      D_SCHEMA_VER:
          *          1 : v0.1-v0.3.2
-         *          2 : v0.4-Present
+         *          2 : v0.4-v0.4.1
+         *          3 : v0.5-Present
          *      A_SCHEMA_VER:
          *          1 : v0.3-Present
          *      C_SCHEMA_VER:
@@ -828,5 +829,6 @@ namespace Grade_Calculator_3
         public static string AccessToken = "4356~pE0R0fDfDEVtE6iegOHgwCA5UA05VLkxFLDuT18sRQGOsHEXpRqXqg0ocVD8aQJc";
         public static string CanvasURL = "https://umn.instructure.com";
         public static int TimeoutLength = 100;
+        public static bool ReSyncAllNonStaticData = true;
     }
 }

@@ -188,7 +188,7 @@ namespace Grade_Calculator_3
             // 
             this.signInToolStripMenuItem.Name = "signInToolStripMenuItem";
             this.signInToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.signInToolStripMenuItem.Text = "Sign in/out";
+            this.signInToolStripMenuItem.Text = "Configure";
             this.signInToolStripMenuItem.Click += new System.EventHandler(this.signInToolStripMenuItem_Click);
             // 
             // importToolStripMenuItem

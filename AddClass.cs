@@ -137,7 +137,7 @@ namespace Grade_Calculator_3
 
             //Class Information
             //Class Name
-            if (textBoxClassName.Text != "")
+            if ((textBoxClassName.Text != "") && (textBoxClassName.Text != @"(None)"))
             {
                 schoolClass.className = textBoxClassName.Text;
             }

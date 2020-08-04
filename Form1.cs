@@ -899,6 +899,7 @@ namespace Grade_Calculator_3
         public Assignment[] assignments;
         public Curve[] curves;
         public Assignment[] curvedAssignments;
+        public CanvasData canvasData;
 
 
         public void LoadAssignments()
@@ -911,6 +912,11 @@ namespace Grade_Calculator_3
             curves = XMLHandler.ReadCurves(this);
         }
 
+        /// <summary>
+        /// Remaps assignment categories from the current object to <param>newClass</param>
+        /// </summary>
+        /// <param name="newClass"></param>
+        /// <param name="deleteUnmapped"></param>
         public void RemapAssignments(SchoolClass newClass, bool deleteUnmapped = true)
         {
             if (assignments is null || assignments.Length == 0)
@@ -1136,7 +1142,7 @@ namespace Grade_Calculator_3
             return -1;
         }
 
-        private Assignment[] MergeAssignments(Assignment[] overrides)
+        public Assignment[] MergeAssignments(Assignment[] overrides)
         {
             Assignment[] temp = new Assignment[curvedAssignments.Length];
             Array.Copy(curvedAssignments, temp, curvedAssignments.Length);
@@ -1236,6 +1242,26 @@ namespace Grade_Calculator_3
             {
                 XMLHandler.SaveCurveToFile(this, curve, false);
             }
+        }
+
+        public void SyncWithCanvas()
+        {
+            //TODO
+            
+        }
+
+        public class CanvasData
+        {
+            public string id;
+            public string name;
+            public string startDate;
+            public string courseCode;
+            public string gradingStandardID;
+            public string[] canvasAssignmentIDsToSync; //if null, do not sync; if len == 0, sync all; if other, sync only those ids
+            public bool syncOnLoad;
+            public Dictionary<string, string> assignmentIDtoGCAXName;
+            public Dictionary<string, string> canvasCategoryIDtoGCCatName;
+            
         }
     }
 
@@ -1615,23 +1641,6 @@ namespace Grade_Calculator_3
                 }
             }
             appliedAssgnNames = newAppAssgnNames;
-        }
-    }
-
-    public class CanvasCourse
-    {
-        public string schoolClassName;
-        public string canvasClassName;
-
-
-        public CanvasCourse(string schoolClassName)
-        {
-            this.schoolClassName = schoolClassName;
-        }
-
-        public CanvasCourse(SchoolClass schoolClass)
-        {
-            schoolClassName = schoolClass.className;
         }
     }
 

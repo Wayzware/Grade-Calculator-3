@@ -20,36 +20,47 @@ namespace Grade_Calculator_3
     {
         private HttpClient _httpClient = new HttpClient();
         private List<string> _importedClasses;
-        private JObject[] courses;
-        private string _canvasURL;
+        private JObject[] _courses;
+        private string _canvasUrl;
         private string _accessToken;
         private int _currentPage;
+        private int _subpage;
+        private JObject _coursesToSync;
 
-        public Sync()
+        public Sync(int mode = 0)
         {
             InitializeComponent();
-            LoadPage(1);
+            if (mode == 0) //setup
+            {
+                LoadPage(1);
+            }
+            else if (mode == 1) //change just credentials/url
+            {
+
+            }
         }
 
         public void LoadPage(int page)
         {
             if (page == 1)
             {
-                if (SyncSettings.CanvasURL != null)
+                if (SyncSettings.CanvasURL != null && TextBoxCanvasURL.Text == "")
                 {
                     TextBoxCanvasURL.Text = SyncSettings.CanvasURL;
                 }
 
-                if (SyncSettings.AccessToken != null)
+                if (SyncSettings.AccessToken != null && TextBoxAccessToken.Text == "")
                 {
                     TextBoxAccessToken.Text = SyncSettings.AccessToken;
                 }
+
                 ButtonBack.Enabled = false;
                 groupBox1.Visible = true;
                 groupBox2.Visible = false;
             }
             else if (page == 2)
             {
+                //fail conditions
                 if ((TextBoxCanvasURL.Text == "") || (TextBoxAccessToken.Text == ""))
                 {
                     MessageBox.Show("You must enter a URL and access token!", "Warning!", MessageBoxButtons.OK,
@@ -57,7 +68,7 @@ namespace Grade_Calculator_3
                     return;
                 }
 
-                _canvasURL = TextBoxCanvasURL.Text;
+                _canvasUrl = TextBoxCanvasURL.Text;
                 _accessToken = TextBoxAccessToken.Text;
 
                 groupBox2.Visible = true;
@@ -66,100 +77,48 @@ namespace Grade_Calculator_3
                 {
                     ButtonRefreshCourses.Text = @"Loading...";
                     ButtonRefreshCourses.Enabled = false;
-                    ImportClassList();
+                    _importedClasses = SyncHandler.ImportClassList(_canvasUrl, _accessToken);
+                    if (_importedClasses != null)
+                    {
+                        CheckedListBoxCourses.Items.Clear();
+                        CheckedListBoxCourses.Items.AddRange(_importedClasses.ToArray());
+                    }
                     ButtonRefreshCourses.Text = @"Refresh";
                     ButtonRefreshCourses.Enabled = true;
                 }
             }
             else if (page == 3)
             {
+                //fail conditions
                 if (CheckedListBoxCourses.CheckedItems.Count == 0)
                 {
-                    MessageBox.Show("You must select at least one class to sync.", "Warning!", MessageBoxButtons.OK,
+                    MessageBox.Show(@"You must select at least one class to sync.", @"Warning!", MessageBoxButtons.OK,
                         MessageBoxIcon.Exclamation);
                     return;
                 }
 
             }
+            else if (page > 3)
+            {
+                /*
+                 * each class should have 1 or 2 pages to do the following:
+                 *      sync on program load (y/n)
+                 *      select which assignments to be added (and maybe if they should be synced on program load)
+                 *      link to an already entered class (select existing or create new)
+                 *      import grade scale (y/n)
+                 *      import categories (y (required if adding assignments) / n)
+                 *      
+                 */
+                goto skipChangingPage;
+            }
+
 
             _currentPage = page;
+            skipChangingPage:;
         }
 
-        public Uri BuildUri(string accessArea)
+        private void InitIndividualClassSetup()
         {
-            return new Uri(_canvasURL + @"/api/v1/" + accessArea + @"?access_token=" + _accessToken);
-        }
-
-        private void button1_ClickAsync(object sender, EventArgs e)
-        {
-            ImportClassList();
-
-            //_httpClient.Dispose();
-            //_httpClient = new HttpClient
-            //{
-            //    BaseAddress = BuildUri("courses")
-            //};
-            //var result = await _httpClient.GetAsync(_httpClient.BaseAddress);
-            //foreach (var msg in result.Headers.GetValues("X-Rate-Limit-Remaining"))
-            //{
-            //    MessageBox.Show(msg);
-            //}
-            //var content = await result.Content.ReadAsStringAsync();
-            ////content = "\"Classes\":" + content + "}";
-
-            //textBox1.Text = content;
-            //MessageBox.Show(content);
-            //JArray jArray = JArray.Parse(content);
-            //if (jArray.First != null) MessageBox.Show(jArray.First.ToString());
-            //else MessageBox.Show("Null");
-        }
-
-        public void ImportClassList()
-        {
-            _httpClient.Dispose();
-            _httpClient = new HttpClient
-            {
-                BaseAddress = BuildUri("courses"),
-                Timeout = new TimeSpan(0, 0, SyncSettings.TimeoutLength)
-            };
-            HttpResponseMessage response;
-            try
-            {
-                response = _httpClient.GetAsync(_httpClient.BaseAddress).Result;
-            }
-            catch
-            {
-                return;
-            }
-
-            if (!response.IsSuccessStatusCode)
-            {
-                MessageBox.Show(@"Error downloading data from Canvas. Check that the URL and access token are correct.");
-                return;
-            }
-
-            var content = response.Content.ReadAsStringAsync().Result;
-
-            try{
-                JArray jArray = JArray.Parse(content);
-                List<String> retVal = new List<string>();
-                courses = new JObject[jArray.Count];
-                int c = 0;
-                foreach (JObject jObj in jArray)
-                {
-                    courses[c] = jObj;
-                    c++;
-                    retVal.Add(jObj.GetValue("name").ToString());
-                }
-                _importedClasses = retVal;
-                CheckedListBoxCourses.Items.Clear();
-                CheckedListBoxCourses.Items.AddRange(retVal.ToArray());
-            }
-            catch
-            {
-                MessageBox.Show(@"Error downloading data from Canvas. Check that the URL and access token are correct.");    
-                return;
-            }
 
         }
 
@@ -167,19 +126,19 @@ namespace Grade_Calculator_3
         {
             if (TextBoxCanvasURL.Text != null)
             {
-                _canvasURL = TextBoxCanvasURL.Text;
+                _canvasUrl = TextBoxCanvasURL.Text;
                 linkLabel1.Enabled = true;
             }
             else
             {
-                _canvasURL = null;
+                _canvasUrl = null;
                 linkLabel1.Enabled = false;
             }
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start(_canvasURL + @"/profile/settings");
+            System.Diagnostics.Process.Start(_canvasUrl + @"/profile/settings");
         }
 
         private void ButtonBack_Click(object sender, EventArgs e)
@@ -196,7 +155,12 @@ namespace Grade_Calculator_3
         {
             ButtonRefreshCourses.Text = @"Loading...";
             ButtonRefreshCourses.Enabled = false;
-            ImportClassList();
+            _importedClasses = SyncHandler.ImportClassList(_canvasUrl, _accessToken);
+            if (_importedClasses != null)
+            {
+                CheckedListBoxCourses.Items.Clear();
+                CheckedListBoxCourses.Items.AddRange(_importedClasses.ToArray());
+            }
             ButtonRefreshCourses.Text = @"Refresh";
             ButtonRefreshCourses.Enabled = true;
         }
@@ -204,7 +168,7 @@ namespace Grade_Calculator_3
         private int ClassJObjectExists(string name)
         {
             int c = 0;
-            foreach (JObject jObj in courses)
+            foreach (JObject jObj in _courses)
             {
                 try
                 {
