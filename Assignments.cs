@@ -500,6 +500,14 @@ namespace Grade_Calculator_3
         private void SaveCurve(bool warning = true)
         {
             //everything in the required group box
+            if (TextBoxCurveName.Text.StartsWith("$$$ADJUST$$$"))
+            {
+                MessageBox.Show(
+                    "You sly dog! You can't start a curve with \"$$$ADJUST$$$\" because it has a special meaning" +
+                    " in this program.", "Someone read the code!", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                return;
+            }
+
             Curve newCurve = new Curve(TextBoxCurveName.Text);
             newCurve.active = CheckBoxCurveActive.Checked;
             List<int> enabledCatIndexes = new List<int>();

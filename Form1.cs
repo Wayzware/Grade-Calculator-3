@@ -1,4 +1,6 @@
-﻿using System;
+﻿#define DEBUG_MODE
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
@@ -25,10 +27,11 @@ namespace Grade_Calculator_3
         private void Main_Load(object sender, EventArgs e)
         {
             string directory = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"/Grade Calculator/";
-            if (Settings.DEBUG_MODE)
+#if (DEBUG_MODE)
             {
                 directory += @"DEBUG/";
             }
+#endif
             XMLHandler.DIRECTORY = directory;
             comboBoxClasses.DropDownStyle = ComboBoxStyle.DropDownList;
             InitialSetup();
@@ -680,11 +683,6 @@ namespace Grade_Calculator_3
             _addPoints = new AddPoints[0];
         }
 
-        private void ButtonCurve_Click(object sender, EventArgs e)
-        {
-            
-        }
-
         private void refreshClassListToolStripMenuItem_Click(object sender, EventArgs e)
         {
             InitialSetup();
@@ -866,6 +864,13 @@ namespace Grade_Calculator_3
             sync.Show();
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            _currentClass.TEMP_ADD_CANVAS_DATA();
+            _currentClass.SyncWithCanvas();
+            LoadClassData(_currentClass.className);
+        }
+
         public class DataRow
         {
             public string CatName, Points, OutOf, Weight, Percent, Total;
@@ -910,7 +915,39 @@ namespace Grade_Calculator_3
         public void LoadCurves()
         {
             curves = XMLHandler.ReadCurves(this);
+            if (curves == null)
+            {
+                return;
+            }
+
+            //next section is for adjusting curves imported from canvas
+            bool adjusted = false;
+            foreach (Curve curve in curves)
+            {
+                if (curve.name.StartsWith("$$$ADJUST$$$"))
+                {
+                    adjusted = true;
+                    int index = curve.appliedCatIndexes[0];
+                    foreach (Assignment assgn in assignments)
+                    {
+                        if (assgn.catIndex == index)
+                        {
+                            Array.Resize(ref curve.appliedAssgnNames, curve.appliedAssgnNames.Length + 1);
+                            curve.appliedAssgnNames[curve.appliedAssgnNames.Length - 1] = assgn.name;
+                        }
+                    }
+                    XMLHandler.DeleteCurve(this, curve);
+                    curve.name = curve.name.Substring(12);
+                    XMLHandler.SaveCurveToFile(this, curve, false);
+                }
+            }
+
+            if (adjusted)
+            {
+                LoadCurves();
+            }
         }
+
 
         /// <summary>
         /// Remaps assignment categories from the current object to <param>newClass</param>
@@ -1247,7 +1284,23 @@ namespace Grade_Calculator_3
         public void SyncWithCanvas()
         {
             //TODO
-            
+            SchoolClass temp = SyncHandler.SyncWithCanvas(this);
+            gradeScale = temp.gradeScale;
+            catNames = temp.catNames;
+            catWorths = temp.catWorths;
+            assignments = temp.assignments;
+            XMLHandler.SaveSchoolClassToFile(this, XMLHandler.D_SCHEMA_VER, false);
+            foreach (Assignment assgn in assignments)
+            {
+                XMLHandler.SaveAssignmentToFile(this, assgn, false);
+            }
+        }
+
+        public void TEMP_ADD_CANVAS_DATA()
+        {
+            canvasData = new CanvasData();
+            canvasData.id = "158119";
+
         }
 
         public class CanvasData
@@ -1257,11 +1310,25 @@ namespace Grade_Calculator_3
             public string startDate;
             public string courseCode;
             public string gradingStandardID;
-            public string[] canvasAssignmentIDsToSync; //if null, do not sync; if len == 0, sync all; if other, sync only those ids
+            public bool syncSemiStatics;
+            public string[] assignmentNameBlacklist;
             public bool syncOnLoad;
-            public Dictionary<string, string> assignmentIDtoGCAXName;
             public Dictionary<string, string> canvasCategoryIDtoGCCatName;
-            
+
+            public XElement ToXElement()
+            {
+                List<XElement> children = new List<XElement>(0);
+                children.Add(new XElement("ID", id));
+                children.Add(new XElement("Name", name));
+                children.Add(new XElement("StartDate", startDate));
+                children.Add(new XElement("CourseCode", courseCode));
+                children.Add(new XElement("GradingStandardID", gradingStandardID));
+                children.Add(new XElement("SyncSemiStatics", syncSemiStatics));
+                children.Add(new XElement("SyncOnLoad", syncOnLoad));
+                children.Add(XMLHandler.ArrayToXElement("AssignmentNameBlacklist", assignmentNameBlacklist));
+                children.Add(XMLHandler.DictionaryToXElement("CanvasCatIDToGCCatName", canvasCategoryIDtoGCCatName));
+                return new XElement("CanvasData", children);
+            }
         }
     }
 
@@ -1308,7 +1375,7 @@ namespace Grade_Calculator_3
         public string[] appliedAssgnNames = new string[0]; //applied to all assgns in the parent SchoolClass
 
         //dropped assignments (10)
-        public int kept = 0; //(11)pos val = assignments to count, neg val = assgns to drop. ex: kept = 1, count only 1. kept = -1, drop 1
+        public int kept = 0; //(11)neg val = assignments to count, pos val = assgns to drop. ex: kept = -1, count only 1. kept = 1, drop 1
         public double conDropPercent = 0D; //(12)pos val = drop assgns below percent (0-100), neg val = drop assgns above -1*val
         public double conDropPoints = 0D; //(13)same as above but with raw points
         //point changes (20)
@@ -1644,6 +1711,10 @@ namespace Grade_Calculator_3
         }
     }
 
+    /// <summary>
+    /// This class is not needed, as built-in functions do what this class does, but better.
+    /// Stop using this.
+    /// </summary>
     public static class ErrorChecking
     {
         public static bool TextIsType(string type, Object value)

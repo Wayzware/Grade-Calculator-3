@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using System.Xml.Linq;
 
+
 namespace Grade_Calculator_3
 {
     static class XMLHandler
@@ -302,8 +303,34 @@ namespace Grade_Calculator_3
                 retVal[c] = new XElement(GradesAF[c], value);
                 c++;
             }
+            if (c >= retVal.Length)
+            {
+                c = retVal.Length - 1;
+            }
             retVal[c] = new XElement(GradesAF[c], 0);
             return retVal;
+        }
+
+        public static XElement DictionaryToXElement<TKey, TValue>(string XName, Dictionary<TKey, TValue> dictionary)
+        {
+            List<XElement> xElements = new List<XElement>(0);
+            foreach (TKey key in dictionary.Keys)
+            {
+                XElement temp = new XElement(key.ToString(), dictionary[key].ToString());
+                xElements.Add(temp);
+            }
+            return new XElement(XName, xElements);
+        }
+
+        public static XElement ArrayToXElement<T>(string XName, IEnumerable<T> array, string childrenName="Value")
+        {
+            List<XElement> xElements = new List<XElement>(0);
+            foreach (T val in array)
+            {
+                XElement temp = new XElement(childrenName, val);
+                xElements.Add(temp);
+            }
+            return new XElement(XName, xElements);
         }
 
         private static int UpdateSchema(int oldSchema, string file)
@@ -344,6 +371,7 @@ namespace Grade_Calculator_3
         {
             string fullFilePath = DIRECTORY + CLASS_DIR + className + D_FILE_EXT;
             string assgnDir = DIRECTORY + ASSGN_DIR + className + "/";
+            string curveDir = DIRECTORY + CURVE_DIR + className + "/";
             if (ClassFileExists(className))
             {
                 if (warning)
@@ -361,6 +389,11 @@ namespace Grade_Calculator_3
                     File.Delete(file);
                 }
                 Directory.Delete(assgnDir);
+                foreach (var file in Directory.GetFiles(curveDir))
+                {
+                    File.Delete(file);
+                }
+                Directory.Delete(curveDir);
                 File.Delete(fullFilePath);
                 if (warning) MessageBox.Show("File Deleted!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -427,7 +460,7 @@ namespace Grade_Calculator_3
             }
             catch
             {
-                MessageBox.Show(@"Name is invalid", @"Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(@"Name: " + assignment.name + @" is invalid", @"Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             if (warning)
@@ -812,6 +845,7 @@ namespace Grade_Calculator_3
             string fullFilePath = DIRECTORY + CURVE_DIR + schoolClass.className + "/" + curve.name + C_FILE_EXT;
             File.Delete(fullFilePath);
         }
+
     }
 
     static class Settings
@@ -827,8 +861,9 @@ namespace Grade_Calculator_3
     static class SyncSettings
     {
         public static string AccessToken = "";
-        public static string CanvasURL = "";
+        public static string CanvasURL = "https://umn.instructure.com/";
         public static int TimeoutLength = 100;
+        public static string ResponsePageLength = "256";
         public static bool ReSyncAllNonStaticData = true;
     }
 }

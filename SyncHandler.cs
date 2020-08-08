@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 using System.Windows.Forms.VisualStyles;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
@@ -20,7 +22,7 @@ namespace Grade_Calculator_3
 
         private static Uri BuildUri(string canvasURL, string accessToken, string accessArea)
         {
-            return new Uri(canvasURL + @"/api/v1/" + accessArea + @"?access_token=" + accessToken);
+            return new Uri(canvasURL + @"/api/v1/" + accessArea + @"?access_token=" + SyncSettings.AccessToken + @"&per_page=" + SyncSettings.ResponsePageLength);
         }
 
         public static List<String> ImportClassList(string canvasURL, string accessToken)
@@ -105,9 +107,8 @@ namespace Grade_Calculator_3
                     response = HttpClient.GetAsync(HttpClient.BaseAddress).Result;
                     if (!response.IsSuccessStatusCode)
                     {
-                        MessageBox.Show(@"Error downloading data from Canvas. Check that the URL and access token are correct.", "Warning!", MessageBoxButtons.OK,
+                        MessageBox.Show(response.ToString(), "Warning!", MessageBoxButtons.OK,
                             MessageBoxIcon.Exclamation);
-                        return null;
                     }
 
                     var content = response.Content.ReadAsStringAsync().Result;
@@ -118,6 +119,7 @@ namespace Grade_Calculator_3
                         newSchoolClass.canvasData.name = jObj.GetValue("name").ToString();
                         newSchoolClass.canvasData.startDate = jObj.GetValue("start_at").ToString();
                         newSchoolClass.canvasData.courseCode = jObj.GetValue("course_code").ToString();
+                        newSchoolClass.canvasData.gradingStandardID = jObj.GetValue("grading_standard_id").ToString();
                     }
                     catch
                     {
@@ -132,7 +134,8 @@ namespace Grade_Calculator_3
             }
 
             newSchoolClass = SyncCanvasCategories(newSchoolClass);
-            newSchoolClass.MergeAssignments(SyncCanvasAssignments(newSchoolClass));
+            newSchoolClass.assignments = SyncCanvasAssignments(newSchoolClass);
+            newSchoolClass.gradeScale = SyncGradeScale(newSchoolClass);
 
             return newSchoolClass;
 
@@ -140,7 +143,118 @@ namespace Grade_Calculator_3
 
         public static Double[] SyncGradeScale(SchoolClass schoolClass)
         {
+            Double[] gradeScale = {-1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, 0.0};
 
+            HttpClient?.Dispose();
+            HttpClient = new HttpClient
+            {
+                BaseAddress = BuildUri(SyncSettings.CanvasURL, SyncSettings.CanvasURL, "courses/" + schoolClass.canvasData.id + "/grading_standards/" + schoolClass.canvasData.gradingStandardID),
+                Timeout = new TimeSpan(0, 0, SyncSettings.TimeoutLength)
+            };
+            try
+            {
+                var response = HttpClient.GetAsync(HttpClient.BaseAddress).Result;
+                if (!response.IsSuccessStatusCode)
+                {
+                    MessageBox.Show(@"Error downloading data from Canvas. Check that the URL and access token are correct.", "Warning!", MessageBoxButtons.OK,
+                        MessageBoxIcon.Exclamation);
+                    return null;
+                }
+
+                var content = response.Content.ReadAsStringAsync().Result;
+
+                try
+                {
+                    bool changed = false;
+                    JObject temp = JObject.Parse(content);
+                    var jTok = temp.GetValue("grading_scheme");
+                    foreach (JObject jObj in jTok)
+                    {
+                        double val = jObj.GetValue("value").ToObject<Double>() * 100;
+                        switch (jObj.GetValue("name").ToString())
+                        {
+                            case "A":
+                                gradeScale[0] = val;
+                                changed = true;
+                                break;
+                            case "A-":
+                                gradeScale[1] = val;
+                                changed = true;
+                                break;
+                            case "B+":
+                                gradeScale[2] = val;
+                                changed = true;
+                                break;
+                            case "B":
+                                gradeScale[3] = val;
+                                changed = true;
+                                break;
+                            case "B-":
+                                gradeScale[4] = val;
+                                changed = true;
+                                break;
+                            case "C+":
+                                gradeScale[5] = val;
+                                changed = true;
+                                break;
+                            case "C":
+                                gradeScale[6] = val;
+                                changed = true;
+                                break;
+                            case "C-":
+                                gradeScale[7] = val;
+                                changed = true;
+                                break;
+                            case "D+":
+                                gradeScale[8] = val;
+                                changed = true;
+                                break;
+                            case "D":
+                                gradeScale[9] = val;
+                                changed = true;
+                                break;
+                            case "D-":
+                                gradeScale[10] = val;
+                                changed = true;
+                                break;
+                        }
+                        
+                    }
+
+                    if (changed)
+                    {
+                        return gradeScale;
+                    }
+                    else
+                    {
+                        double[] defaultGradeScale =
+                        {
+                            0.01, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, 0.0
+                        };
+                        return defaultGradeScale;
+                    }
+                }
+                catch
+                {
+                    double[] defaultGradeScale =
+                    {
+                        0.01, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, 0.0
+                    };
+                    return defaultGradeScale;
+                }
+
+            }
+            catch
+            {
+                MessageBox.Show(@"Error updating semi-static Canvas data.", "Warning!", MessageBoxButtons.OK,
+                    MessageBoxIcon.Exclamation);
+                double[] defaultGradeScale =
+                {
+                    0.01, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, 0.0
+                };
+                return defaultGradeScale;
+            }
+            
         }
 
         public static SchoolClass SyncCanvasCategories(SchoolClass schoolClass)
@@ -212,12 +326,30 @@ namespace Grade_Calculator_3
                             if (index == -1)
                             {
                                 //the category does not exist, so we need to create it
-                                newSchoolClass.catNames.Append(jObj.GetValue("name").ToString());
-                                newSchoolClass.catWorths.Append(jObj.GetValue("group_weight").ToObject<Double>());
+                                Array.Resize(ref newSchoolClass.catNames, newSchoolClass.catNames.Length + 1);
+                                newSchoolClass.catNames[newSchoolClass.catNames.Length - 1] = jObj.GetValue("name").ToString();
+
+                                Array.Resize(ref newSchoolClass.catWorths, newSchoolClass.catWorths.Length + 1);
+                                newSchoolClass.catWorths[newSchoolClass.catWorths.Length - 1] = jObj.GetValue("group_weight").ToObject<Double>();
                             }
 
                             newSchoolClass.canvasData.canvasCategoryIDtoGCCatName.Add(jObj.GetValue("id")
                                 .ToString(), jObj.GetValue("name").ToString());
+                        }
+
+                        if (jObj.ContainsKey("rules") && jObj["rules"] != null)
+                        {
+                            var rules = JObject.Parse(jObj.GetValue("rules").ToString());
+                            if (rules.ContainsKey("drop_lowest"))
+                            {
+                                int toDrop = rules["drop_lowest"].ToObject<int>();
+                                Curve tempCurve = new Curve("$$$ADJUST$$$" + "Drop lowest in " + jObj.GetValue("name"));
+                                tempCurve.active = true;
+                                //TODO: Add support for "never_drop" assignments from the Canvas API
+                                tempCurve.kept = toDrop;
+                                tempCurve.appliedCatIndexes = new int[] { newSchoolClass.CatExists(jObj.GetValue("name").ToString()) };
+                                XMLHandler.SaveCurveToFile(newSchoolClass, tempCurve, false);
+                            }
                         }
                     }
                     catch
@@ -278,7 +410,7 @@ namespace Grade_Calculator_3
                     }
                     catch
                     {
-                        
+                        ;
                     }
                     c++;
                 }
@@ -296,19 +428,28 @@ namespace Grade_Calculator_3
         public static Assignment ParseAssgnJObjToAssignment(SchoolClass schoolClass, JObject assgn)
         {
             //TODO: add a date handler that will auto set if the assgn is active based on if the assignment due date has passed
-            Assignment newAssignment = new Assignment();
-            newAssignment.active = true;
-            newAssignment.catIndex =
+            Assignment newAssignment = new Assignment
+            {
+                catIndex =
                 schoolClass.CatExists(
                     schoolClass.canvasData.canvasCategoryIDtoGCCatName
-                        [assgn.GetValue("assignment_group_id").ToString()]);
-            newAssignment.name = assgn.GetValue("name").ToString();
-            newAssignment.outOf = assgn.GetValue("points_possible").ToObject<Double>();
+                        [assgn.GetValue("assignment_group_id").ToString()]),
+                name = CleanseAssignmentName(assgn.GetValue("name").ToString()),
+                outOf = assgn.GetValue("points_possible").ToObject<Double>()
+            };
+            try
+            {
+                newAssignment.active = !assgn.GetValue("omit_from_final_grade").ToObject<Boolean>();
+            }
+            catch
+            {
+                newAssignment.active = true;
+            }
 
             HttpClient?.Dispose();
             HttpClient = new HttpClient
             {
-                BaseAddress = BuildUri(SyncSettings.CanvasURL, SyncSettings.AccessToken, "courses/" + schoolClass.canvasData.id + "/assignments/" + assgn.GetValue("id") + "/submissions"),
+                BaseAddress = BuildUri(SyncSettings.CanvasURL, SyncSettings.AccessToken, "courses/" + schoolClass.canvasData.id + "/assignments/" + assgn.GetValue("id") + "/submissions/self"),
                 Timeout = new TimeSpan(0, 0, SyncSettings.TimeoutLength)
             };
             HttpResponseMessage response;
@@ -346,16 +487,40 @@ namespace Grade_Calculator_3
                     }
                     catch
                     {
+                        ;
                     }
                 }
             }
             catch
             {
-                ;
+                try
+                {
+                    JObject jObj = JObject.Parse(content);
+                    if (jObj.GetValue("grade_matches_current_submission").ToObject<Boolean>())
+                    {
+                        pointsEarned = jObj.GetValue("score").ToObject<Double>();
+                    }
+                }
+                catch
+                {
+                    ;
+                }
             }
-
             newAssignment.points = pointsEarned;
+            
             return newAssignment;
+        }
+
+        private static string CleanseAssignmentName(string rawName)
+        {
+            string retVal = rawName;
+            retVal = retVal.Replace(@":", " ");
+            retVal = retVal.Replace(@"/", " ");
+            retVal = retVal.Replace(@"\", " ");
+            retVal = retVal.Replace("?", " ");
+            retVal = retVal.Replace("|", " ");
+            retVal = retVal.Replace("*", " ");
+            return retVal;
         }
     }
 }

@@ -109,6 +109,7 @@ namespace Grade_Calculator_3
             this.TextBoxT1 = new System.Windows.Forms.TextBox();
             this.ButtonClear = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -187,7 +188,7 @@ namespace Grade_Calculator_3
             // signInToolStripMenuItem
             // 
             this.signInToolStripMenuItem.Name = "signInToolStripMenuItem";
-            this.signInToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.signInToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.signInToolStripMenuItem.Text = "Configure";
             this.signInToolStripMenuItem.Click += new System.EventHandler(this.signInToolStripMenuItem_Click);
             // 
@@ -197,7 +198,7 @@ namespace Grade_Calculator_3
             this.newClassToolStripMenuItem,
             this.newAssignmentsToolStripMenuItem});
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.importToolStripMenuItem.Text = "Import...";
             // 
             // newClassToolStripMenuItem
@@ -218,7 +219,7 @@ namespace Grade_Calculator_3
             this.allAssignmentsToolStripMenuItem,
             this.allAssignmentsToolStripMenuItem1});
             this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
-            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.refreshToolStripMenuItem.Text = "Refresh...";
             // 
             // allAssignmentsToolStripMenuItem
@@ -620,6 +621,7 @@ namespace Grade_Calculator_3
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.button1);
             this.groupBox2.Controls.Add(this.LabelCurved);
             this.groupBox2.Controls.Add(this.LabelMeanZero);
             this.groupBox2.Controls.Add(this.label8);
@@ -854,6 +856,16 @@ namespace Grade_Calculator_3
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Score Input";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(132, -1);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(87, 37);
+            this.button1.TabIndex = 1005;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -961,6 +973,7 @@ namespace Grade_Calculator_3
         private ToolStripMenuItem refreshToolStripMenuItem;
         private ToolStripMenuItem allAssignmentsToolStripMenuItem;
         private ToolStripMenuItem allAssignmentsToolStripMenuItem1;
+        private Button button1;
     }
 }
 

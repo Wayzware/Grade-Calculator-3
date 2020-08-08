@@ -647,7 +647,7 @@
             // LabelWorth3
             // 
             this.LabelWorth3.AutoSize = true;
-            this.LabelWorth3.Location = new System.Drawing.Point(35, 226);
+            this.LabelWorth3.Location = new System.Drawing.Point(32, 225);
             this.LabelWorth3.Name = "LabelWorth3";
             this.LabelWorth3.Size = new System.Drawing.Size(54, 13);
             this.LabelWorth3.TabIndex = 35;
