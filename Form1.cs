@@ -27,14 +27,15 @@ namespace Grade_Calculator_3
         private void Main_Load(object sender, EventArgs e)
         {
             string directory = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"/Grade Calculator/";
-#if (DEBUG_MODE)
+            #if (DEBUG_MODE)
             {
                 directory += @"DEBUG/";
             }
-#endif
+            #endif
             XMLHandler.DIRECTORY = directory;
             comboBoxClasses.DropDownStyle = ComboBoxStyle.DropDownList;
             InitialSetup();
+            SyncAll(true);
         }
 
         public void InitialSetup()
@@ -860,15 +861,45 @@ namespace Grade_Calculator_3
 
         private void signInToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Sync sync = new Sync();
+            Sync sync = new Sync(this);
             sync.Show();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            _currentClass.TEMP_ADD_CANVAS_DATA();
-            _currentClass.SyncWithCanvas();
-            LoadClassData(_currentClass.className);
+            SyncAll();
+        }
+
+        public void SyncAll(bool isLaunch = false)
+        {
+            foreach (SchoolClass schoolClass in XMLHandler.Data)
+            {
+                if (schoolClass.canvasData != null)
+                {
+                    if (isLaunch)
+                    {
+                        if (schoolClass.canvasData.syncOnLoad)
+                        {
+                            SyncClass(schoolClass, true);
+                        }
+                    }
+                    else
+                    {
+                        SyncClass(schoolClass, true);
+                    }
+                }
+            }
+        }
+
+        private void SyncClass(SchoolClass schoolClass, bool warning)
+        {
+            if (schoolClass.canvasData != null)
+            {
+                SyncProgress syncProgress = new SyncProgress();
+                syncProgress.Show();
+                schoolClass.SyncWithCanvas();
+                syncProgress.Close();
+            }
         }
 
         public class DataRow
@@ -892,6 +923,7 @@ namespace Grade_Calculator_3
                 Total = "";
             }
         }
+
     }
 
     public class SchoolClass
@@ -1153,6 +1185,10 @@ namespace Grade_Calculator_3
         public int AssignmentExists(string assgnName)
         {
             int c = 0;
+            if (assignments == null)
+            {
+                return -1;
+            }
             foreach (Assignment assgn in assignments)
             {
                 if (assgn.name.Equals(assgnName))
@@ -1189,6 +1225,27 @@ namespace Grade_Calculator_3
                 temp[index] = assgn.Copy();
             }
             return temp;
+        }
+
+        public void OverrideAssignments(IEnumerable<Assignment> overrides)
+        {
+            foreach (Assignment assgn in overrides)
+            {
+                int index = AssignmentExists(assgn.name);
+                if (index != -1)
+                {
+                    assignments[index] = assgn.Copy();
+                }
+                else
+                {
+                    if (assignments == null)
+                    {
+                        assignments = new Assignment[0];
+                    }
+                    Array.Resize(ref assignments, assignments.Length + 1);
+                    assignments[assignments.Length - 1] = assgn;
+                }
+            }
         }
 
         public void ApplyCurves()
@@ -1283,7 +1340,6 @@ namespace Grade_Calculator_3
 
         public void SyncWithCanvas()
         {
-            //TODO
             SchoolClass temp = SyncHandler.SyncWithCanvas(this);
             gradeScale = temp.gradeScale;
             catNames = temp.catNames;
@@ -1313,6 +1369,7 @@ namespace Grade_Calculator_3
             public bool syncSemiStatics;
             public string[] assignmentNameBlacklist;
             public bool syncOnLoad;
+            public bool syncAssignments;
             public Dictionary<string, string> canvasCategoryIDtoGCCatName;
 
             public XElement ToXElement()
@@ -1325,6 +1382,7 @@ namespace Grade_Calculator_3
                 children.Add(new XElement("GradingStandardID", gradingStandardID));
                 children.Add(new XElement("SyncSemiStatics", syncSemiStatics));
                 children.Add(new XElement("SyncOnLoad", syncOnLoad));
+                children.Add(new XElement("SyncAssignments", syncAssignments));
                 children.Add(XMLHandler.ArrayToXElement("AssignmentNameBlacklist", assignmentNameBlacklist));
                 children.Add(XMLHandler.DictionaryToXElement("CanvasCatIDToGCCatName", canvasCategoryIDtoGCCatName));
                 return new XElement("CanvasData", children);

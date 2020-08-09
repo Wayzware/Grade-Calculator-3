@@ -81,6 +81,7 @@
     <Reference Include="Syncfusion.Core.WinForms, Version=18.2460.0.44, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Grid.Base, Version=18.2460.0.44, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
     <Reference Include="Syncfusion.Grid.Windows, Version=18.2460.0.44, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
+    <Reference Include="Syncfusion.SfBarcode.Windows, Version=18.2460.0.44, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.SfInput.WinForms, Version=18.2460.0.44, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Shared.Base, Version=18.2460.0.44, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
     <Reference Include="Syncfusion.Shared.Windows, Version=18.2460.0.44, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
@@ -141,6 +142,12 @@
       <DependentUpon>Sync.cs</DependentUpon>
     </Compile>
     <Compile Include="SyncHandler.cs" />
+    <Compile Include="SyncProgress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SyncProgress.Designer.cs">
+      <DependentUpon>SyncProgress.cs</DependentUpon>
+    </Compile>
     <Compile Include="XMLHandler.cs" />
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.cs</DependentUpon>
@@ -169,6 +176,9 @@
     </Compile>
     <EmbeddedResource Include="Sync.resx">
       <DependentUpon>Sync.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SyncProgress.resx">
+      <DependentUpon>SyncProgress.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Grade Calculator 3_TemporaryKey.pfx" />
     <None Include="Jacob Rice.pfx" />

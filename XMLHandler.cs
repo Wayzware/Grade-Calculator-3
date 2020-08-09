@@ -36,8 +36,7 @@ namespace Grade_Calculator_3
          *  Schema version history:
          *      D_SCHEMA_VER:
          *          1 : v0.1-v0.3.2
-         *          2 : v0.4-v0.4.1
-         *          3 : v0.5-Present
+         *          2 : v0.4-Present
          *      A_SCHEMA_VER:
          *          1 : v0.3-Present
          *      C_SCHEMA_VER:
@@ -123,6 +122,7 @@ namespace Grade_Calculator_3
                 try
                 {
                     XElement XE = XElement.Load(file);
+                    XElement xCanvasData = XE.Element("CanvasData");
                     XE = XE.Element("ClassData");
                     SchoolClass CC = new SchoolClass();
                     CC.className = XE.Element("ClassName").Value;
@@ -135,6 +135,13 @@ namespace Grade_Calculator_3
                     CC.gradeScale = XGradeScaleToDouble(CC.gradeScaleFormat, XE.Element("GradeScale"));
                     (CC.catNames, CC.catWorths) = XCatsToArray(XE.Element("Categories"));
                     CC.enrolled = Convert.ToInt32(XE.Element("Enrolled").Value);
+
+                    
+                    if (xCanvasData != null)
+                    {
+                        CC.canvasData = XElementToCanvasData(xCanvasData);
+                    }
+
                     Array.Resize(ref schoolClasses, schoolClasses.Length + 1);
                     schoolClasses[schoolClasses.Length - 1] = CC;
                 }
@@ -167,6 +174,7 @@ namespace Grade_Calculator_3
         }
 
         //note: this assumes the file is ordered from A-F, and will not work if unordered
+        //this should be fixed in future versions
         private static Double[] XGradeScaleToDouble(int format, XElement xGradeScale)
         {
             if (format == 1) {
@@ -224,7 +232,7 @@ namespace Grade_Calculator_3
                     )
                 );
             }
-            else if (schemaVer == 2)
+            else if (schemaVer == 2 && schoolClass.canvasData == null)
             {
                 xSchoolClass = new XElement("GC3_Data",
                     new XElement("SCHEMA_VER", schemaVer),
@@ -240,6 +248,25 @@ namespace Grade_Calculator_3
                         CatToXElement(schoolClass.catNames, schoolClass.catWorths),
                         new XElement("Enrolled", schoolClass.enrolled)
                     )
+                );
+            }
+            else if (schemaVer == 2)
+            {
+                xSchoolClass = new XElement("GC3_Data",
+                    new XElement("SCHEMA_VER", schemaVer),
+                    new XElement("ClassData",
+                        new XElement("ClassName", schoolClass.className),
+                        new XElement("Professor", schoolClass.professor),
+                        new XElement("Term",
+                            new XElement("Year", schoolClass.termYear),
+                            new XElement("Season", schoolClass.termSeason)),
+                        new XElement("Credits", schoolClass.credits),
+                        new XElement("GradeScaleFormat", schoolClass.gradeScaleFormat),
+                        GradeScaleToXElement(schoolClass.gradeScaleFormat, schoolClass.gradeScale),
+                        CatToXElement(schoolClass.catNames, schoolClass.catWorths),
+                        new XElement("Enrolled", schoolClass.enrolled)
+                    ),
+                    schoolClass.canvasData.ToXElement()
                 );
             }
 
@@ -314,6 +341,10 @@ namespace Grade_Calculator_3
         public static XElement DictionaryToXElement<TKey, TValue>(string XName, Dictionary<TKey, TValue> dictionary)
         {
             List<XElement> xElements = new List<XElement>(0);
+            if (dictionary == null)
+            {
+                return new XElement(XName, null);
+            }
             foreach (TKey key in dictionary.Keys)
             {
                 XElement temp = new XElement(key.ToString(), dictionary[key].ToString());
@@ -325,12 +356,29 @@ namespace Grade_Calculator_3
         public static XElement ArrayToXElement<T>(string XName, IEnumerable<T> array, string childrenName="Value")
         {
             List<XElement> xElements = new List<XElement>(0);
+            if (array == null)
+            {
+                return new XElement(XName, null);
+            }
             foreach (T val in array)
             {
                 XElement temp = new XElement(childrenName, val);
                 xElements.Add(temp);
             }
             return new XElement(XName, xElements);
+        }
+
+        public static SchoolClass.CanvasData XElementToCanvasData(XElement xCanvasData)
+        {
+            SchoolClass.CanvasData retVal = new SchoolClass.CanvasData();
+            retVal.id = xCanvasData.Element("ID").Value;
+            retVal.name = xCanvasData.Element("Name").Value;
+            var test = xCanvasData.Element("SyncSemiStatics").ToString();
+            retVal.syncSemiStatics = bool.Parse(xCanvasData.Element("SyncSemiStatics").Value);
+            retVal.syncOnLoad = bool.Parse(xCanvasData.Element("SyncOnLoad").Value);
+            retVal.syncAssignments = bool.Parse(xCanvasData.Element("SyncAssignments").Value);
+            return retVal;
+
         }
 
         private static int UpdateSchema(int oldSchema, string file)
@@ -846,6 +894,20 @@ namespace Grade_Calculator_3
             File.Delete(fullFilePath);
         }
 
+        public static int ClassExists(string className)
+        {
+            int c = 0;
+            foreach (SchoolClass schoolClass in Data)
+            {
+                if (schoolClass.className == className)
+                {
+                    return c;
+                }
+                c++;
+            }
+            return -1;
+        }
+
     }
 
     static class Settings
@@ -860,7 +922,7 @@ namespace Grade_Calculator_3
 
     static class SyncSettings
     {
-        public static string AccessToken = "";
+        public static string AccessToken = "4356~BfqFJZh1TaSrDwD1gvNRTLXH0kY0TNzuTgkLBKUN8ozDKtWXrXmNW4YWjBFED6Xa";
         public static string CanvasURL = "https://umn.instructure.com/";
         public static int TimeoutLength = 100;
         public static string ResponsePageLength = "256";

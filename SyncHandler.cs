@@ -25,7 +25,7 @@ namespace Grade_Calculator_3
             return new Uri(canvasURL + @"/api/v1/" + accessArea + @"?access_token=" + SyncSettings.AccessToken + @"&per_page=" + SyncSettings.ResponsePageLength);
         }
 
-        public static List<String> ImportClassList(string canvasURL, string accessToken)
+        public static List<String> ImportClassList(string canvasURL, string accessToken, out JObject[] jObjClasses)
         {
             HttpClient?.Dispose();
             HttpClient = new HttpClient
@@ -40,6 +40,7 @@ namespace Grade_Calculator_3
             }
             catch
             {
+                jObjClasses = null;
                 return null;
             }
 
@@ -47,6 +48,7 @@ namespace Grade_Calculator_3
             {
                 MessageBox.Show(@"Error downloading data from Canvas. Check that the URL and access token are correct.", "Warning!", MessageBoxButtons.OK,
                     MessageBoxIcon.Exclamation);
+                jObjClasses = null;
                 return null;
             }
 
@@ -73,12 +75,14 @@ namespace Grade_Calculator_3
                     c++;
                 }
 
+                jObjClasses = courses;
                 return retVal;
             }
             catch
             {
                 MessageBox.Show(@"Error downloading data from Canvas. Check that the URL and access token are correct.", "Warning!", MessageBoxButtons.OK,
                     MessageBoxIcon.Exclamation);
+                jObjClasses = null;
                 return null;
             }
 
@@ -133,10 +137,36 @@ namespace Grade_Calculator_3
                 }
             }
 
-            newSchoolClass = SyncCanvasCategories(newSchoolClass);
-            newSchoolClass.assignments = SyncCanvasAssignments(newSchoolClass);
-            newSchoolClass.gradeScale = SyncGradeScale(newSchoolClass);
+            newSchoolClass = SyncCanvasCategories(newSchoolClass); //TODO: should prob make this optional later
+            if(newSchoolClass.canvasData.syncAssignments) newSchoolClass.OverrideAssignments(SyncCanvasAssignments(newSchoolClass));
+            if (newSchoolClass.canvasData.syncSemiStatics)
+            {
+                double[] defaultGradeScale =
+                {
+                    0.01, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, 0.0
+                };
+                var gradeScale = SyncGradeScale(newSchoolClass);
+                bool isEqualToDefault = true;
+                int c = 0;
 
+                if (gradeScale != null)
+                {
+                    foreach (double val in gradeScale)
+                    {
+                        if (val != defaultGradeScale[c])
+                        {
+                            isEqualToDefault = false;
+                        }
+
+                        c++;
+                    }
+                }
+
+                if(!isEqualToDefault)
+                {
+                    newSchoolClass.gradeScale = gradeScale;
+                }
+            }
             return newSchoolClass;
 
         }
@@ -144,6 +174,10 @@ namespace Grade_Calculator_3
         public static Double[] SyncGradeScale(SchoolClass schoolClass)
         {
             Double[] gradeScale = {-1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, 0.0};
+            double[] defaultGradeScale =
+            {
+                0.01, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, 0.0
+            };
 
             HttpClient?.Dispose();
             HttpClient = new HttpClient
@@ -156,9 +190,9 @@ namespace Grade_Calculator_3
                 var response = HttpClient.GetAsync(HttpClient.BaseAddress).Result;
                 if (!response.IsSuccessStatusCode)
                 {
-                    MessageBox.Show(@"Error downloading data from Canvas. Check that the URL and access token are correct.", "Warning!", MessageBoxButtons.OK,
+                    MessageBox.Show(@"Error downloading grade scale data from Canvas.", "Warning!", MessageBoxButtons.OK,
                         MessageBoxIcon.Exclamation);
-                    return null;
+                    return defaultGradeScale;
                 }
 
                 var content = response.Content.ReadAsStringAsync().Result;
@@ -227,19 +261,12 @@ namespace Grade_Calculator_3
                     }
                     else
                     {
-                        double[] defaultGradeScale =
-                        {
-                            0.01, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, 0.0
-                        };
+                        
                         return defaultGradeScale;
                     }
                 }
                 catch
                 {
-                    double[] defaultGradeScale =
-                    {
-                        0.01, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, 0.0
-                    };
                     return defaultGradeScale;
                 }
 
@@ -248,10 +275,6 @@ namespace Grade_Calculator_3
             {
                 MessageBox.Show(@"Error updating semi-static Canvas data.", "Warning!", MessageBoxButtons.OK,
                     MessageBoxIcon.Exclamation);
-                double[] defaultGradeScale =
-                {
-                    0.01, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, 0.0
-                };
                 return defaultGradeScale;
             }
             
@@ -434,7 +457,7 @@ namespace Grade_Calculator_3
                 schoolClass.CatExists(
                     schoolClass.canvasData.canvasCategoryIDtoGCCatName
                         [assgn.GetValue("assignment_group_id").ToString()]),
-                name = CleanseAssignmentName(assgn.GetValue("name").ToString()),
+                name = CleanseName(assgn.GetValue("name").ToString()),
                 outOf = assgn.GetValue("points_possible").ToObject<Double>()
             };
             try
@@ -511,15 +534,15 @@ namespace Grade_Calculator_3
             return newAssignment;
         }
 
-        private static string CleanseAssignmentName(string rawName)
+        public static string CleanseName(string rawName)
         {
             string retVal = rawName;
             retVal = retVal.Replace(@":", " ");
             retVal = retVal.Replace(@"/", " ");
             retVal = retVal.Replace(@"\", " ");
-            retVal = retVal.Replace("?", " ");
-            retVal = retVal.Replace("|", " ");
-            retVal = retVal.Replace("*", " ");
+            retVal = retVal.Replace(@"?", " ");
+            retVal = retVal.Replace(@"|", " ");
+            retVal = retVal.Replace(@"*", " ");
             return retVal;
         }
     }

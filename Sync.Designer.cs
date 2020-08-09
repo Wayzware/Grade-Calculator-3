@@ -30,24 +30,30 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Sync));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.ButtonRefreshCourses = new System.Windows.Forms.Button();
-            this.CheckedListBoxCourses = new System.Windows.Forms.CheckedListBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.label2 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.TextBoxAccessToken = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.TextBoxCanvasURL = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.CheckBoxSyncOnLaunch = new System.Windows.Forms.CheckBox();
+            this.CheckBoxGradeScale = new System.Windows.Forms.CheckBox();
+            this.CheckBoxAssignments = new System.Windows.Forms.CheckBox();
+            this.ComboBoxSelectClass = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.ButtonRefreshCourses = new System.Windows.Forms.Button();
+            this.CheckedListBoxCourses = new System.Windows.Forms.CheckedListBox();
             this.ButtonNext = new System.Windows.Forms.Button();
             this.ButtonBack = new System.Windows.Forms.Button();
             this.sfScrollFrame1 = new Syncfusion.WinForms.Controls.SfScrollFrame();
             this.barItem1 = new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem();
             this.barItem2 = new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -67,35 +73,14 @@
             this.groupBox1.Text = "Initial Setup";
             this.groupBox1.Visible = false;
             // 
-            // groupBox2
+            // label1
             // 
-            this.groupBox2.Controls.Add(this.groupBox3);
-            this.groupBox2.Controls.Add(this.ButtonRefreshCourses);
-            this.groupBox2.Controls.Add(this.CheckedListBoxCourses);
-            this.groupBox2.Location = new System.Drawing.Point(12, 3);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(298, 156);
-            this.groupBox2.TabIndex = 7;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Courses to Sync";
-            // 
-            // ButtonRefreshCourses
-            // 
-            this.ButtonRefreshCourses.Location = new System.Drawing.Point(6, 120);
-            this.ButtonRefreshCourses.Name = "ButtonRefreshCourses";
-            this.ButtonRefreshCourses.Size = new System.Drawing.Size(286, 30);
-            this.ButtonRefreshCourses.TabIndex = 2;
-            this.ButtonRefreshCourses.Text = "Refresh";
-            this.ButtonRefreshCourses.UseVisualStyleBackColor = true;
-            this.ButtonRefreshCourses.Click += new System.EventHandler(this.ButtonRefreshCourses_Click);
-            // 
-            // CheckedListBoxCourses
-            // 
-            this.CheckedListBoxCourses.FormattingEnabled = true;
-            this.CheckedListBoxCourses.Location = new System.Drawing.Point(6, 20);
-            this.CheckedListBoxCourses.Name = "CheckedListBoxCourses";
-            this.CheckedListBoxCourses.Size = new System.Drawing.Size(286, 94);
-            this.CheckedListBoxCourses.TabIndex = 0;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(7, 22);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(68, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Canvas URL";
             // 
             // linkLabel1
             // 
@@ -108,6 +93,15 @@
             this.linkLabel1.Text = "Visit this Canvas page";
             this.linkLabel1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(108, 42);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(156, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Ex. https://umn.instructure.com";
             // 
             // label4
             // 
@@ -135,15 +129,6 @@
             this.label3.TabIndex = 3;
             this.label3.Text = "Access Token";
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(108, 42);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(156, 13);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Ex. https://umn.instructure.com";
-            // 
             // TextBoxCanvasURL
             // 
             this.TextBoxCanvasURL.Location = new System.Drawing.Point(88, 19);
@@ -152,14 +137,98 @@
             this.TextBoxCanvasURL.TabIndex = 1;
             this.TextBoxCanvasURL.TextChanged += new System.EventHandler(this.TextBoxCanvasURL_TextChanged);
             // 
-            // label1
+            // groupBox2
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 22);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(68, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Canvas URL";
+            this.groupBox2.Controls.Add(this.groupBox3);
+            this.groupBox2.Controls.Add(this.ButtonRefreshCourses);
+            this.groupBox2.Controls.Add(this.CheckedListBoxCourses);
+            this.groupBox2.Location = new System.Drawing.Point(12, 3);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(298, 156);
+            this.groupBox2.TabIndex = 7;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Courses to Sync";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.CheckBoxSyncOnLaunch);
+            this.groupBox3.Controls.Add(this.CheckBoxGradeScale);
+            this.groupBox3.Controls.Add(this.CheckBoxAssignments);
+            this.groupBox3.Controls.Add(this.ComboBoxSelectClass);
+            this.groupBox3.Controls.Add(this.label5);
+            this.groupBox3.Location = new System.Drawing.Point(0, 1);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(298, 155);
+            this.groupBox3.TabIndex = 3;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "groupBox3";
+            // 
+            // CheckBoxSyncOnLaunch
+            // 
+            this.CheckBoxSyncOnLaunch.AutoSize = true;
+            this.CheckBoxSyncOnLaunch.Location = new System.Drawing.Point(4, 132);
+            this.CheckBoxSyncOnLaunch.Name = "CheckBoxSyncOnLaunch";
+            this.CheckBoxSyncOnLaunch.Size = new System.Drawing.Size(283, 17);
+            this.CheckBoxSyncOnLaunch.TabIndex = 5;
+            this.CheckBoxSyncOnLaunch.Text = "Sync on Launch (will cause delays, not recommended)";
+            this.CheckBoxSyncOnLaunch.UseVisualStyleBackColor = true;
+            // 
+            // CheckBoxGradeScale
+            // 
+            this.CheckBoxGradeScale.AutoSize = true;
+            this.CheckBoxGradeScale.Location = new System.Drawing.Point(4, 107);
+            this.CheckBoxGradeScale.Name = "CheckBoxGradeScale";
+            this.CheckBoxGradeScale.Size = new System.Drawing.Size(145, 17);
+            this.CheckBoxGradeScale.TabIndex = 3;
+            this.CheckBoxGradeScale.Text = "Sync Grading Scale (A-F)";
+            this.CheckBoxGradeScale.UseVisualStyleBackColor = true;
+            // 
+            // CheckBoxAssignments
+            // 
+            this.CheckBoxAssignments.AutoSize = true;
+            this.CheckBoxAssignments.Location = new System.Drawing.Point(4, 83);
+            this.CheckBoxAssignments.Name = "CheckBoxAssignments";
+            this.CheckBoxAssignments.Size = new System.Drawing.Size(264, 17);
+            this.CheckBoxAssignments.TabIndex = 2;
+            this.CheckBoxAssignments.Text = "Sync Assignments and Dropped Assignment Rules";
+            this.CheckBoxAssignments.UseVisualStyleBackColor = true;
+            // 
+            // ComboBoxSelectClass
+            // 
+            this.ComboBoxSelectClass.FormattingEnabled = true;
+            this.ComboBoxSelectClass.Location = new System.Drawing.Point(152, 35);
+            this.ComboBoxSelectClass.Name = "ComboBoxSelectClass";
+            this.ComboBoxSelectClass.Size = new System.Drawing.Size(136, 21);
+            this.ComboBoxSelectClass.Sorted = true;
+            this.ComboBoxSelectClass.TabIndex = 0;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(14, 25);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(122, 39);
+            this.label5.TabIndex = 1;
+            this.label5.Text = "Link to an existing class\r\nor enter new class name\r\n(recommended)";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // ButtonRefreshCourses
+            // 
+            this.ButtonRefreshCourses.Location = new System.Drawing.Point(6, 120);
+            this.ButtonRefreshCourses.Name = "ButtonRefreshCourses";
+            this.ButtonRefreshCourses.Size = new System.Drawing.Size(286, 30);
+            this.ButtonRefreshCourses.TabIndex = 2;
+            this.ButtonRefreshCourses.Text = "Refresh";
+            this.ButtonRefreshCourses.UseVisualStyleBackColor = true;
+            this.ButtonRefreshCourses.Click += new System.EventHandler(this.ButtonRefreshCourses_Click);
+            // 
+            // CheckedListBoxCourses
+            // 
+            this.CheckedListBoxCourses.FormattingEnabled = true;
+            this.CheckedListBoxCourses.Location = new System.Drawing.Point(6, 20);
+            this.CheckedListBoxCourses.Name = "CheckedListBoxCourses";
+            this.CheckedListBoxCourses.Size = new System.Drawing.Size(286, 94);
+            this.CheckedListBoxCourses.TabIndex = 0;
             // 
             // ButtonNext
             // 
@@ -195,15 +264,6 @@
             this.barItem2.SizeToFit = true;
             this.barItem2.Text = "555";
             // 
-            // groupBox3
-            // 
-            this.groupBox3.Location = new System.Drawing.Point(0, 1);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(298, 155);
-            this.groupBox3.TabIndex = 3;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "groupBox3";
-            // 
             // Sync
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -220,6 +280,8 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -243,5 +305,10 @@
         private Syncfusion.Windows.Forms.Tools.XPMenus.BarItem barItem1;
         private Syncfusion.Windows.Forms.Tools.XPMenus.BarItem barItem2;
         private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.ComboBox ComboBoxSelectClass;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.CheckBox CheckBoxAssignments;
+        private System.Windows.Forms.CheckBox CheckBoxSyncOnLaunch;
+        private System.Windows.Forms.CheckBox CheckBoxGradeScale;
     }
 }

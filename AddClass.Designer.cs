@@ -628,8 +628,8 @@
             // numericUpDownCategories
             // 
             this.numericUpDownCategories.Location = new System.Drawing.Point(92, 21);
-            this.numericUpDownCategories.Minimum = new decimal(new int[] {
-            1,
+            this.numericUpDownCategories.Maximum = new decimal(new int[] {
+            1000,
             0,
             0,
             0});
