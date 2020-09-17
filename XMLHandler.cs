@@ -929,7 +929,7 @@ namespace Grade_Calculator_3
 
     static class SyncSettings
     {
-        public static string AccessToken = "4356~BfqFJZh1TaSrDwD1gvNRTLXH0kY0TNzuTgkLBKUN8ozDKtWXrXmNW4YWjBFED6Xa";
+        public static string AccessToken = "";
         public static string CanvasURL = "https://umn.instructure.com/";
         public static int TimeoutLength = 100;
         public static string ResponsePageLength = "256";
