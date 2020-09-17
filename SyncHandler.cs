@@ -12,7 +12,6 @@ using System.Windows.Forms.DataVisualization.Charting;
 using System.Windows.Forms.VisualStyles;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
-using Syncfusion.Windows.Forms;
 
 namespace Grade_Calculator_3
 {
@@ -127,7 +126,7 @@ namespace Grade_Calculator_3
                     }
                     catch
                     {
-                        if(warning) MessageBox.Show(@"Error updating semi-static Canvas data.", "Warning!", MessageBoxButtons.OK,
+                        if(warning) MessageBox.Show(schoolClass.className + ":\nError updating semi-static Canvas data.", "Warning!", MessageBoxButtons.OK,
                             MessageBoxIcon.Exclamation);
                     }
                 }
@@ -190,7 +189,7 @@ namespace Grade_Calculator_3
                 var response = HttpClient.GetAsync(HttpClient.BaseAddress).Result;
                 if (!response.IsSuccessStatusCode)
                 {
-                    MessageBox.Show(@"Error downloading grade scale data from Canvas.", "Warning!", MessageBoxButtons.OK,
+                    MessageBox.Show(schoolClass.className + ":\nError downloading grade scale data from Canvas.", "Warning!", MessageBoxButtons.OK,
                         MessageBoxIcon.Exclamation);
                     return defaultGradeScale;
                 }
@@ -273,7 +272,7 @@ namespace Grade_Calculator_3
             }
             catch
             {
-                MessageBox.Show(@"Error updating semi-static Canvas data.", "Warning!", MessageBoxButtons.OK,
+                MessageBox.Show(schoolClass.className + ":\nError updating semi-static Canvas data.", "Warning!", MessageBoxButtons.OK,
                     MessageBoxIcon.Exclamation);
                 return defaultGradeScale;
             }
@@ -300,7 +299,7 @@ namespace Grade_Calculator_3
 
             if (!response.IsSuccessStatusCode)
             {
-                MessageBox.Show(@"Error downloading data from Canvas. Check that the URL and access token are correct.", "Warning!", MessageBoxButtons.OK,
+                MessageBox.Show(schoolClass.className + ":\nError downloading data from Canvas. Check that the URL and access token are correct.", "Warning!", MessageBoxButtons.OK,
                     MessageBoxIcon.Exclamation);
                 return null;
             }
@@ -386,7 +385,7 @@ namespace Grade_Calculator_3
             catch
             {
                 //the JArray could not be parsed, and therefore something is critically wrong and we cannot sync, so we return the input
-                MessageBox.Show(@"Error downloading data from Canvas. Check that the URL and access token are correct.", "Warning!", MessageBoxButtons.OK,
+                MessageBox.Show(schoolClass.className + ":\nError downloading data from Canvas. Check that the URL and access token are correct.", "Warning!", MessageBoxButtons.OK,
                     MessageBoxIcon.Exclamation);
                 return schoolClass;
             }
@@ -500,17 +499,22 @@ namespace Grade_Calculator_3
                 JArray jArray = JArray.Parse(content);
                 foreach (JObject jObj in jArray)
                 {
+                    if (jObj == null) continue;
                     try
                     {
-                        if (jObj.GetValue("grade_matches_current_submission").ToObject<Boolean>())
+                        if (jObj.GetValue("grade_matches_current_submission") != null)
                         {
-                            pointsEarned = jObj.GetValue("score").ToObject<Double>();
-                            break;
+                            if (jObj.GetValue("grade_matches_current_submission").ToObject<Boolean>())
+                            {
+                                var temp = jObj.GetValue("score");
+                                if (temp != null) pointsEarned = temp.ToObject<Double>();
+                                break;
+                            }
                         }
                     }
                     catch
                     {
-                        ;
+                        continue;
                     }
                 }
             }
@@ -521,7 +525,8 @@ namespace Grade_Calculator_3
                     JObject jObj = JObject.Parse(content);
                     if (jObj.GetValue("grade_matches_current_submission").ToObject<Boolean>())
                     {
-                        pointsEarned = jObj.GetValue("score").ToObject<Double>();
+                        var temp = jObj.GetValue("score");
+                        if (temp != null) pointsEarned = temp.ToObject<Double>();
                     }
                 }
                 catch

@@ -40,9 +40,9 @@
             this.Label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label2.Location = new System.Drawing.Point(122, 9);
             this.Label2.Name = "Label2";
-            this.Label2.Size = new System.Drawing.Size(183, 60);
+            this.Label2.Size = new System.Drawing.Size(192, 60);
             this.Label2.TabIndex = 4;
-            this.Label2.Text = "© 2016-2020 Jacob \"Wayz\" Rice\r\nReleased on {DATE}\r\n\r\nVersion 0.5";
+            this.Label2.Text = "© 2016-2020 Jacob \"Wayz\" Rice\r\nReleased on September 17, 2020\r\n\r\nVersion 0.5";
             this.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // linkLabel1

@@ -48,9 +48,6 @@
             this.CheckedListBoxCourses = new System.Windows.Forms.CheckedListBox();
             this.ButtonNext = new System.Windows.Forms.Button();
             this.ButtonBack = new System.Windows.Forms.Button();
-            this.sfScrollFrame1 = new Syncfusion.WinForms.Controls.SfScrollFrame();
-            this.barItem1 = new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem();
-            this.barItem2 = new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -250,20 +247,6 @@
             this.ButtonBack.UseVisualStyleBackColor = true;
             this.ButtonBack.Click += new System.EventHandler(this.ButtonBack_Click);
             // 
-            // barItem1
-            // 
-            this.barItem1.BarName = "barItem1";
-            this.barItem1.ShowToolTipInPopUp = false;
-            this.barItem1.SizeToFit = true;
-            // 
-            // barItem2
-            // 
-            this.barItem2.BarName = "barItem2";
-            this.barItem2.ID = "555";
-            this.barItem2.ShowToolTipInPopUp = false;
-            this.barItem2.SizeToFit = true;
-            this.barItem2.Text = "555";
-            // 
             // Sync
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -301,9 +284,6 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.CheckedListBox CheckedListBoxCourses;
         private System.Windows.Forms.Button ButtonRefreshCourses;
-        private Syncfusion.WinForms.Controls.SfScrollFrame sfScrollFrame1;
-        private Syncfusion.Windows.Forms.Tools.XPMenus.BarItem barItem1;
-        private Syncfusion.Windows.Forms.Tools.XPMenus.BarItem barItem2;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.ComboBox ComboBoxSelectClass;
         private System.Windows.Forms.Label label5;

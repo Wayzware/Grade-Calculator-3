@@ -347,8 +347,15 @@ namespace Grade_Calculator_3
             }
             foreach (TKey key in dictionary.Keys)
             {
-                XElement temp = new XElement(key.ToString(), dictionary[key].ToString());
-                xElements.Add(temp);
+                try
+                {
+                    XElement temp = new XElement(key.ToString(), dictionary[key].ToString());
+                    xElements.Add(temp);
+                }
+                catch
+                {
+                    ;
+                }
             }
             return new XElement(XName, xElements);
         }

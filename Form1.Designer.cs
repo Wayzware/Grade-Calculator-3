@@ -44,8 +44,6 @@ namespace Grade_Calculator_3
             this.canvasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.signInToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.allAssignmentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.allAssignmentsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.assignmentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.basicModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.advancedModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -88,7 +86,6 @@ namespace Grade_Calculator_3
             this.ButtonA5 = new System.Windows.Forms.Button();
             this.TextBoxP5 = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.LabelCurved = new System.Windows.Forms.Label();
             this.LabelMeanZero = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -180,6 +177,7 @@ namespace Grade_Calculator_3
             this.canvasToolStripMenuItem.Name = "canvasToolStripMenuItem";
             this.canvasToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
             this.canvasToolStripMenuItem.Text = "Canvas";
+            this.canvasToolStripMenuItem.Click += new System.EventHandler(this.canvasToolStripMenuItem_Click);
             // 
             // signInToolStripMenuItem
             // 
@@ -190,24 +188,10 @@ namespace Grade_Calculator_3
             // 
             // refreshToolStripMenuItem
             // 
-            this.refreshToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.allAssignmentsToolStripMenuItem,
-            this.allAssignmentsToolStripMenuItem1});
             this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
             this.refreshToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.refreshToolStripMenuItem.Text = "Refresh...";
-            // 
-            // allAssignmentsToolStripMenuItem
-            // 
-            this.allAssignmentsToolStripMenuItem.Name = "allAssignmentsToolStripMenuItem";
-            this.allAssignmentsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.allAssignmentsToolStripMenuItem.Text = "All Classes";
-            // 
-            // allAssignmentsToolStripMenuItem1
-            // 
-            this.allAssignmentsToolStripMenuItem1.Name = "allAssignmentsToolStripMenuItem1";
-            this.allAssignmentsToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-            this.allAssignmentsToolStripMenuItem1.Text = "All Assignments";
+            this.refreshToolStripMenuItem.Text = "Refresh All";
+            this.refreshToolStripMenuItem.Click += new System.EventHandler(this.refreshToolStripMenuItem_Click);
             // 
             // assignmentsToolStripMenuItem
             // 
@@ -596,7 +580,6 @@ namespace Grade_Calculator_3
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.button1);
             this.groupBox2.Controls.Add(this.LabelCurved);
             this.groupBox2.Controls.Add(this.LabelMeanZero);
             this.groupBox2.Controls.Add(this.label8);
@@ -625,16 +608,6 @@ namespace Grade_Calculator_3
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Score Output";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(132, -1);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(87, 37);
-            this.button1.TabIndex = 1005;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // LabelCurved
             // 
@@ -943,9 +916,6 @@ namespace Grade_Calculator_3
         private ToolStripMenuItem canvasToolStripMenuItem;
         private ToolStripMenuItem signInToolStripMenuItem;
         private ToolStripMenuItem refreshToolStripMenuItem;
-        private ToolStripMenuItem allAssignmentsToolStripMenuItem;
-        private ToolStripMenuItem allAssignmentsToolStripMenuItem1;
-        private Button button1;
     }
 }
 

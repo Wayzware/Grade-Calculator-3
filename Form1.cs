@@ -1,6 +1,4 @@
-﻿#define DEBUG_MODE
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
@@ -26,6 +24,7 @@ namespace Grade_Calculator_3
 
         private void Main_Load(object sender, EventArgs e)
         {
+
             string directory = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"/Grade Calculator/";
             #if (DEBUG_MODE)
             {
@@ -872,6 +871,7 @@ namespace Grade_Calculator_3
 
         public void SyncAll(bool isLaunch = false)
         {
+            if (XMLHandler.Data == null) return;
             foreach (SchoolClass schoolClass in XMLHandler.Data)
             {
                 if (schoolClass.canvasData != null)
@@ -891,6 +891,40 @@ namespace Grade_Calculator_3
             }
         }
 
+        public void FillCanvasRefreshBar()
+        {
+            if (XMLHandler.Data == null || XMLHandler.Data.Length == 0)
+            {
+                //there are no classes, do not sync
+                return;
+            }
+            refreshToolStripMenuItem.DropDownItems.Clear();
+            foreach (SchoolClass schoolClass in XMLHandler.Data)
+            {
+                if (schoolClass.canvasData != null)
+                {
+                    ToolStripItem temp = refreshToolStripMenuItem.DropDownItems.Add(schoolClass.className);
+                    temp.Click += delegate
+                    {
+                        SyncClassHandler(temp.Name);
+                    };
+                }
+            }
+        }
+
+        private void SyncClassHandler(string className)
+        {
+            //TODO
+
+            //TODO: add sync functionality here
+
+            if (advancedModeToolStripMenuItem.Checked)
+            {
+                _assignments.Close();
+                _assignments = new Assignments(this, _currentClass);
+            }
+        }
+
         private void SyncClass(SchoolClass schoolClass, bool warning)
         {
             if (schoolClass.canvasData != null)
@@ -900,6 +934,16 @@ namespace Grade_Calculator_3
                 schoolClass.SyncWithCanvas();
                 syncProgress.Close();
             }
+        }
+
+        private void canvasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SyncAll();
         }
 
         public class DataRow
@@ -1346,6 +1390,7 @@ namespace Grade_Calculator_3
             catWorths = temp.catWorths;
             assignments = temp.assignments;
             XMLHandler.SaveSchoolClassToFile(this, XMLHandler.D_SCHEMA_VER, false);
+            if (assignments == null) return;
             foreach (Assignment assgn in assignments)
             {
                 XMLHandler.SaveAssignmentToFile(this, assgn, false);
@@ -1400,9 +1445,15 @@ namespace Grade_Calculator_3
         public Object[] ToDataView(SchoolClass schoolClass)
         {
             double percent = 0.0;
+            double meanPercent = 0.0;
             if (!(points == 0.0 || outOf == 0.0))
                  percent = points / outOf * 100.0;
-            Object[] retVal = {active, name, schoolClass.catNames[catIndex], points, outOf, percent, real};
+            if (meanPoints != 0 && outOf != 0)
+            {
+                meanPercent = meanPoints / outOf;
+                meanPercent *= 100;
+            }
+            Object[] retVal = {active, name, schoolClass.catNames[catIndex], points, outOf, percent, meanPoints, meanPercent, real};
             return retVal;
         }
 
