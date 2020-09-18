@@ -1,17 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Linq;
 using System.Net.Http;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Forms.DataVisualization.Charting;
-using System.Windows.Forms.VisualStyles;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
 
 namespace Grade_Calculator_3
 {
@@ -21,7 +12,16 @@ namespace Grade_Calculator_3
 
         private static Uri BuildUri(string canvasURL, string accessToken, string accessArea)
         {
-            return new Uri(canvasURL + @"/api/v1/" + accessArea + @"?access_token=" + SyncSettings.AccessToken + @"&per_page=" + SyncSettings.ResponsePageLength);
+            SyncSettings.LoadSettings();
+            try
+            {
+                return new Uri(canvasURL + @"/api/v1/" + accessArea + @"?access_token=" + SyncSettings.AccessToken +
+                               @"&per_page=" + SyncSettings.ResponsePageLength);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public static List<String> ImportClassList(string canvasURL, string accessToken, out JObject[] jObjClasses)

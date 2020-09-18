@@ -258,6 +258,9 @@
             this.Controls.Add(this.groupBox1);
             this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(338, 245);
+            this.MinimumSize = new System.Drawing.Size(338, 245);
             this.Name = "Sync";
             this.Text = "Sync";
             this.groupBox1.ResumeLayout(false);

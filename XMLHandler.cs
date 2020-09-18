@@ -919,7 +919,6 @@ namespace Grade_Calculator_3
 
     static class Settings
     {
-        public static bool DEBUG_MODE = true; //TODO: CHANGE TO FALSE
 
         public static bool DebugMsg = false;
         public static int WarningLevel = 0;
@@ -934,5 +933,20 @@ namespace Grade_Calculator_3
         public static int TimeoutLength = 100;
         public static string ResponsePageLength = "256";
         public static bool ReSyncAllNonStaticData = true;
+
+        public static void LoadSettings()
+        {
+            AccessToken = Properties.Settings.Default.AccessToken;
+            CanvasURL = Properties.Settings.Default.CanvasURL;
+            if (AccessToken == null) AccessToken = "";
+            if (CanvasURL == null) CanvasURL = "";
+        }
+
+        public static void SaveSettings()
+        {
+            Properties.Settings.Default.AccessToken = AccessToken;
+            Properties.Settings.Default.CanvasURL = CanvasURL;
+            Properties.Settings.Default.Save();
+        }
     }
 }

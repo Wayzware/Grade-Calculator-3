@@ -45,6 +45,7 @@ namespace Grade_Calculator_3
 
         public void LoadPage(int page)
         {
+            SyncSettings.LoadSettings();
             if (page == 1)
             {
                 if (SyncSettings.CanvasURL != null && TextBoxCanvasURL.Text == "")
@@ -64,6 +65,10 @@ namespace Grade_Calculator_3
             }
             else if (page == 2)
             {
+                SyncSettings.AccessToken = TextBoxAccessToken.Text;
+                SyncSettings.CanvasURL = TextBoxCanvasURL.Text;
+                SyncSettings.SaveSettings();
+
                 //fail conditions
                 if ((TextBoxCanvasURL.Text == "") || (TextBoxAccessToken.Text == ""))
                 {
@@ -243,7 +248,7 @@ namespace Grade_Calculator_3
 
             }
 
-
+            SyncSettings.SaveSettings();
             _currentPage = page;
         }
 
