@@ -30,22 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddClass));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.checkBoxF = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.radioButtonSN = new System.Windows.Forms.RadioButton();
             this.textBoxF = new System.Windows.Forms.TextBox();
             this.radioButtonAF = new System.Windows.Forms.RadioButton();
-            this.checkBoxCM = new System.Windows.Forms.CheckBox();
-            this.checkBoxDM = new System.Windows.Forms.CheckBox();
-            this.checkBoxC = new System.Windows.Forms.CheckBox();
-            this.checkBoxD = new System.Windows.Forms.CheckBox();
-            this.checkBoxDP = new System.Windows.Forms.CheckBox();
-            this.checkBoxCP = new System.Windows.Forms.CheckBox();
-            this.checkBoxBM = new System.Windows.Forms.CheckBox();
-            this.checkBoxB = new System.Windows.Forms.CheckBox();
-            this.checkBoxBP = new System.Windows.Forms.CheckBox();
-            this.checkBoxAM = new System.Windows.Forms.CheckBox();
-            this.checkBoxA = new System.Windows.Forms.CheckBox();
             this.Label15 = new System.Windows.Forms.Label();
             this.Label14 = new System.Windows.Forms.Label();
             this.Label13 = new System.Windows.Forms.Label();
@@ -115,22 +103,10 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.checkBoxF);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.radioButtonSN);
             this.groupBox1.Controls.Add(this.textBoxF);
             this.groupBox1.Controls.Add(this.radioButtonAF);
-            this.groupBox1.Controls.Add(this.checkBoxCM);
-            this.groupBox1.Controls.Add(this.checkBoxDM);
-            this.groupBox1.Controls.Add(this.checkBoxC);
-            this.groupBox1.Controls.Add(this.checkBoxD);
-            this.groupBox1.Controls.Add(this.checkBoxDP);
-            this.groupBox1.Controls.Add(this.checkBoxCP);
-            this.groupBox1.Controls.Add(this.checkBoxBM);
-            this.groupBox1.Controls.Add(this.checkBoxB);
-            this.groupBox1.Controls.Add(this.checkBoxBP);
-            this.groupBox1.Controls.Add(this.checkBoxAM);
-            this.groupBox1.Controls.Add(this.checkBoxA);
             this.groupBox1.Controls.Add(this.Label15);
             this.groupBox1.Controls.Add(this.Label14);
             this.groupBox1.Controls.Add(this.Label13);
@@ -160,19 +136,6 @@
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Grade Scale";
-            // 
-            // checkBoxF
-            // 
-            this.checkBoxF.AutoSize = true;
-            this.checkBoxF.Checked = true;
-            this.checkBoxF.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxF.Enabled = false;
-            this.checkBoxF.Location = new System.Drawing.Point(91, 343);
-            this.checkBoxF.Name = "checkBoxF";
-            this.checkBoxF.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxF.TabIndex = 999;
-            this.checkBoxF.TabStop = false;
-            this.checkBoxF.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
@@ -217,105 +180,6 @@
             this.radioButtonAF.TabStop = true;
             this.radioButtonAF.Text = "A - F";
             this.radioButtonAF.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxCM
-            // 
-            this.checkBoxCM.AutoSize = true;
-            this.checkBoxCM.Location = new System.Drawing.Point(91, 239);
-            this.checkBoxCM.Name = "checkBoxCM";
-            this.checkBoxCM.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxCM.TabIndex = 41;
-            this.checkBoxCM.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxDM
-            // 
-            this.checkBoxDM.AutoSize = true;
-            this.checkBoxDM.Location = new System.Drawing.Point(91, 317);
-            this.checkBoxDM.Name = "checkBoxDM";
-            this.checkBoxDM.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxDM.TabIndex = 44;
-            this.checkBoxDM.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxC
-            // 
-            this.checkBoxC.AutoSize = true;
-            this.checkBoxC.Location = new System.Drawing.Point(91, 213);
-            this.checkBoxC.Name = "checkBoxC";
-            this.checkBoxC.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxC.TabIndex = 40;
-            this.checkBoxC.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxD
-            // 
-            this.checkBoxD.AutoSize = true;
-            this.checkBoxD.Location = new System.Drawing.Point(91, 291);
-            this.checkBoxD.Name = "checkBoxD";
-            this.checkBoxD.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxD.TabIndex = 43;
-            this.checkBoxD.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxDP
-            // 
-            this.checkBoxDP.AutoSize = true;
-            this.checkBoxDP.Location = new System.Drawing.Point(91, 265);
-            this.checkBoxDP.Name = "checkBoxDP";
-            this.checkBoxDP.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxDP.TabIndex = 42;
-            this.checkBoxDP.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxCP
-            // 
-            this.checkBoxCP.AutoSize = true;
-            this.checkBoxCP.Location = new System.Drawing.Point(91, 187);
-            this.checkBoxCP.Name = "checkBoxCP";
-            this.checkBoxCP.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxCP.TabIndex = 39;
-            this.checkBoxCP.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxBM
-            // 
-            this.checkBoxBM.AutoSize = true;
-            this.checkBoxBM.Location = new System.Drawing.Point(91, 161);
-            this.checkBoxBM.Name = "checkBoxBM";
-            this.checkBoxBM.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxBM.TabIndex = 38;
-            this.checkBoxBM.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxB
-            // 
-            this.checkBoxB.AutoSize = true;
-            this.checkBoxB.Location = new System.Drawing.Point(91, 135);
-            this.checkBoxB.Name = "checkBoxB";
-            this.checkBoxB.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxB.TabIndex = 37;
-            this.checkBoxB.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxBP
-            // 
-            this.checkBoxBP.AutoSize = true;
-            this.checkBoxBP.Location = new System.Drawing.Point(91, 109);
-            this.checkBoxBP.Name = "checkBoxBP";
-            this.checkBoxBP.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxBP.TabIndex = 36;
-            this.checkBoxBP.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxAM
-            // 
-            this.checkBoxAM.AutoSize = true;
-            this.checkBoxAM.Location = new System.Drawing.Point(91, 83);
-            this.checkBoxAM.Name = "checkBoxAM";
-            this.checkBoxAM.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxAM.TabIndex = 35;
-            this.checkBoxAM.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxA
-            // 
-            this.checkBoxA.AutoSize = true;
-            this.checkBoxA.Location = new System.Drawing.Point(91, 57);
-            this.checkBoxA.Name = "checkBoxA";
-            this.checkBoxA.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxA.TabIndex = 34;
-            this.checkBoxA.UseVisualStyleBackColor = true;
             // 
             // Label15
             // 
@@ -922,22 +786,10 @@
 
         #endregion
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.CheckBox checkBoxF;
         internal System.Windows.Forms.Label label1;
         private System.Windows.Forms.RadioButton radioButtonSN;
         internal System.Windows.Forms.TextBox textBoxF;
         private System.Windows.Forms.RadioButton radioButtonAF;
-        private System.Windows.Forms.CheckBox checkBoxCM;
-        private System.Windows.Forms.CheckBox checkBoxDM;
-        private System.Windows.Forms.CheckBox checkBoxC;
-        private System.Windows.Forms.CheckBox checkBoxD;
-        private System.Windows.Forms.CheckBox checkBoxDP;
-        private System.Windows.Forms.CheckBox checkBoxCP;
-        private System.Windows.Forms.CheckBox checkBoxBM;
-        private System.Windows.Forms.CheckBox checkBoxB;
-        private System.Windows.Forms.CheckBox checkBoxBP;
-        private System.Windows.Forms.CheckBox checkBoxAM;
-        private System.Windows.Forms.CheckBox checkBoxA;
         internal System.Windows.Forms.Label Label15;
         internal System.Windows.Forms.Label Label14;
         internal System.Windows.Forms.Label Label13;

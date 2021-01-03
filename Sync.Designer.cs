@@ -39,7 +39,6 @@
             this.TextBoxCanvasURL = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.CheckBoxSyncOnLaunch = new System.Windows.Forms.CheckBox();
             this.CheckBoxGradeScale = new System.Windows.Forms.CheckBox();
             this.CheckBoxAssignments = new System.Windows.Forms.CheckBox();
             this.ComboBoxSelectClass = new System.Windows.Forms.ComboBox();
@@ -148,7 +147,6 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.CheckBoxSyncOnLaunch);
             this.groupBox3.Controls.Add(this.CheckBoxGradeScale);
             this.groupBox3.Controls.Add(this.CheckBoxAssignments);
             this.groupBox3.Controls.Add(this.ComboBoxSelectClass);
@@ -159,16 +157,6 @@
             this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "groupBox3";
-            // 
-            // CheckBoxSyncOnLaunch
-            // 
-            this.CheckBoxSyncOnLaunch.AutoSize = true;
-            this.CheckBoxSyncOnLaunch.Location = new System.Drawing.Point(4, 132);
-            this.CheckBoxSyncOnLaunch.Name = "CheckBoxSyncOnLaunch";
-            this.CheckBoxSyncOnLaunch.Size = new System.Drawing.Size(283, 17);
-            this.CheckBoxSyncOnLaunch.TabIndex = 5;
-            this.CheckBoxSyncOnLaunch.Text = "Sync on Launch (will cause delays, not recommended)";
-            this.CheckBoxSyncOnLaunch.UseVisualStyleBackColor = true;
             // 
             // CheckBoxGradeScale
             // 
@@ -291,7 +279,6 @@
         private System.Windows.Forms.ComboBox ComboBoxSelectClass;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.CheckBox CheckBoxAssignments;
-        private System.Windows.Forms.CheckBox CheckBoxSyncOnLaunch;
         private System.Windows.Forms.CheckBox CheckBoxGradeScale;
     }
 }

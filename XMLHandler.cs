@@ -17,18 +17,18 @@ namespace Grade_Calculator_3
     {
         public static readonly string[] GradesAF = { "A", "AM", "BP", "B", "BM", "CP", "C", "CM", "DP", "D", "DM", "F" };
         public static string DIRECTORY;
-        private static readonly string CLASS_DIR = "Classes/";
-        private static readonly string D_FILE_EXT = ".gcdx";
-        public static readonly int D_SCHEMA_VER = 2;
-        private static readonly string ASSGN_DIR = "Assignments/";
-        private static readonly string A_FILE_EXT = ".gcax";
-        public static readonly int A_SCHEMA_VER = 1;
-        private static readonly string CURVE_DIR = "Curves/";
-        private static readonly string C_FILE_EXT = ".gccx";
-        private static readonly int C_SCHEMA_VER = 1;
-        private static readonly string SETTINGS_DIR = "Settings/";
-        private static readonly string S_FILE_EXT = ".gcsx";
-        private static readonly int S_SCHEMA_VER = 1;
+        private const string CLASS_DIR = "Classes/";
+        private const string D_FILE_EXT = ".gcdx";
+        public const int D_SCHEMA_VER = 2;
+        private const string ASSGN_DIR = "Assignments/";
+        private const string A_FILE_EXT = ".gcax";
+        public const int A_SCHEMA_VER = 1;
+        private const string CURVE_DIR = "Curves/";
+        private const string C_FILE_EXT = ".gccx";
+        private const int C_SCHEMA_VER = 1;
+        private const string SETTINGS_DIR = "Settings/";
+        private const string S_FILE_EXT = ".gcsx";
+        private const int S_SCHEMA_VER = 1;
 
         public static SchoolClass[] Data;
 

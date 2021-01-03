@@ -31,8 +31,16 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Assignments));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.DataGridView = new System.Windows.Forms.DataGridView();
+            this.Active = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.cName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cCat = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cOutOf = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cPercent = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cMeanPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cMeanPercent = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cReal = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label7 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label6 = new System.Windows.Forms.Label();
             this.TextBoxMeanPoints = new System.Windows.Forms.TextBox();
@@ -58,6 +66,15 @@
             this.TabCurved = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.DataGridViewCurved = new System.Windows.Forms.DataGridView();
+            this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MeanPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MeanPercent = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewCheckBoxColumn2 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.ButtonCurveHelp = new System.Windows.Forms.Button();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
@@ -99,24 +116,6 @@
             this.ButtonCurveNew = new System.Windows.Forms.Button();
             this.ButtonCurveClear = new System.Windows.Forms.Button();
             this.ButtonCurveSave = new System.Windows.Forms.Button();
-            this.Active = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.cName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cCat = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cOutOf = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cPercent = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cMeanPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cMeanPercent = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cReal = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MeanPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MeanPercent = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewCheckBoxColumn2 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -182,9 +181,75 @@
             this.DataGridView.Size = new System.Drawing.Size(554, 471);
             this.DataGridView.TabIndex = 1;
             // 
+            // Active
+            // 
+            this.Active.HeaderText = "Active";
+            this.Active.Name = "Active";
+            this.Active.ReadOnly = true;
+            this.Active.Width = 45;
+            // 
+            // cName
+            // 
+            this.cName.HeaderText = "Name";
+            this.cName.Name = "cName";
+            this.cName.ReadOnly = true;
+            this.cName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.cName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.cName.Width = 85;
+            // 
+            // cCat
+            // 
+            this.cCat.HeaderText = "Category";
+            this.cCat.Name = "cCat";
+            this.cCat.ReadOnly = true;
+            this.cCat.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.cCat.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.cCat.Width = 85;
+            // 
+            // cPoints
+            // 
+            this.cPoints.HeaderText = "Points";
+            this.cPoints.Name = "cPoints";
+            this.cPoints.ReadOnly = true;
+            this.cPoints.Width = 58;
+            // 
+            // cOutOf
+            // 
+            this.cOutOf.HeaderText = "Out Of";
+            this.cOutOf.Name = "cOutOf";
+            this.cOutOf.ReadOnly = true;
+            this.cOutOf.Width = 58;
+            // 
+            // cPercent
+            // 
+            this.cPercent.HeaderText = "Percent";
+            this.cPercent.Name = "cPercent";
+            this.cPercent.ReadOnly = true;
+            this.cPercent.Width = 58;
+            // 
+            // cMeanPoints
+            // 
+            this.cMeanPoints.HeaderText = "Mean Points";
+            this.cMeanPoints.Name = "cMeanPoints";
+            this.cMeanPoints.ReadOnly = true;
+            this.cMeanPoints.Width = 58;
+            // 
+            // cMeanPercent
+            // 
+            this.cMeanPercent.HeaderText = "Mean %";
+            this.cMeanPercent.Name = "cMeanPercent";
+            this.cMeanPercent.ReadOnly = true;
+            this.cMeanPercent.Width = 58;
+            // 
+            // cReal
+            // 
+            this.cReal.HeaderText = "Real";
+            this.cReal.Name = "cReal";
+            this.cReal.ReadOnly = true;
+            this.cReal.Width = 45;
+            // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.groupBox3);
             this.groupBox1.Controls.Add(this.groupBox2);
             this.groupBox1.Controls.Add(this.ButtonDelete);
@@ -193,20 +258,10 @@
             this.groupBox1.Controls.Add(this.ButtonSave);
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(339, 465);
+            this.groupBox1.Size = new System.Drawing.Size(339, 270);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Add/Edit Assignments";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(110, 349);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(115, 13);
-            this.label7.TabIndex = 15;
-            this.label7.Text = "Layout not yet finalized";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // groupBox3
             // 
@@ -434,7 +489,7 @@
             this.TabCurved.Padding = new System.Windows.Forms.Padding(3);
             this.TabCurved.Size = new System.Drawing.Size(909, 477);
             this.TabCurved.TabIndex = 2;
-            this.TabCurved.Text = "Curved";
+            this.TabCurved.Text = "Curved / Dropped";
             this.TabCurved.UseVisualStyleBackColor = true;
             // 
             // splitContainer2
@@ -477,6 +532,71 @@
             this.DataGridViewCurved.RowHeadersVisible = false;
             this.DataGridViewCurved.Size = new System.Drawing.Size(553, 471);
             this.DataGridViewCurved.TabIndex = 1;
+            // 
+            // dataGridViewCheckBoxColumn1
+            // 
+            this.dataGridViewCheckBoxColumn1.HeaderText = "Active";
+            this.dataGridViewCheckBoxColumn1.Name = "dataGridViewCheckBoxColumn1";
+            this.dataGridViewCheckBoxColumn1.ReadOnly = true;
+            this.dataGridViewCheckBoxColumn1.Width = 45;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.HeaderText = "Name";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.dataGridViewTextBoxColumn1.Width = 85;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.HeaderText = "Category";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            this.dataGridViewTextBoxColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewTextBoxColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.dataGridViewTextBoxColumn2.Width = 85;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.HeaderText = "Points";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.ReadOnly = true;
+            this.dataGridViewTextBoxColumn3.Width = 58;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.HeaderText = "Out Of";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            this.dataGridViewTextBoxColumn4.ReadOnly = true;
+            this.dataGridViewTextBoxColumn4.Width = 58;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.HeaderText = "Percent";
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            this.dataGridViewTextBoxColumn5.ReadOnly = true;
+            this.dataGridViewTextBoxColumn5.Width = 58;
+            // 
+            // MeanPoints
+            // 
+            this.MeanPoints.HeaderText = "Mean Points";
+            this.MeanPoints.Name = "MeanPoints";
+            this.MeanPoints.Width = 58;
+            // 
+            // MeanPercent
+            // 
+            this.MeanPercent.HeaderText = "Mean %";
+            this.MeanPercent.Name = "MeanPercent";
+            this.MeanPercent.Width = 58;
+            // 
+            // dataGridViewCheckBoxColumn2
+            // 
+            this.dataGridViewCheckBoxColumn2.HeaderText = "Real";
+            this.dataGridViewCheckBoxColumn2.Name = "dataGridViewCheckBoxColumn2";
+            this.dataGridViewCheckBoxColumn2.ReadOnly = true;
+            this.dataGridViewCheckBoxColumn2.Width = 45;
             // 
             // groupBox4
             // 
@@ -904,148 +1024,17 @@
             this.ButtonCurveSave.UseVisualStyleBackColor = true;
             this.ButtonCurveSave.Click += new System.EventHandler(this.ButtonCurveSave_Click);
             // 
-            // Active
-            // 
-            this.Active.HeaderText = "Active";
-            this.Active.Name = "Active";
-            this.Active.ReadOnly = true;
-            this.Active.Width = 45;
-            // 
-            // cName
-            // 
-            this.cName.HeaderText = "Name";
-            this.cName.Name = "cName";
-            this.cName.ReadOnly = true;
-            this.cName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.cName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.cName.Width = 85;
-            // 
-            // cCat
-            // 
-            this.cCat.HeaderText = "Category";
-            this.cCat.Name = "cCat";
-            this.cCat.ReadOnly = true;
-            this.cCat.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.cCat.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.cCat.Width = 85;
-            // 
-            // cPoints
-            // 
-            this.cPoints.HeaderText = "Points";
-            this.cPoints.Name = "cPoints";
-            this.cPoints.ReadOnly = true;
-            this.cPoints.Width = 58;
-            // 
-            // cOutOf
-            // 
-            this.cOutOf.HeaderText = "Out Of";
-            this.cOutOf.Name = "cOutOf";
-            this.cOutOf.ReadOnly = true;
-            this.cOutOf.Width = 58;
-            // 
-            // cPercent
-            // 
-            this.cPercent.HeaderText = "Percent";
-            this.cPercent.Name = "cPercent";
-            this.cPercent.ReadOnly = true;
-            this.cPercent.Width = 58;
-            // 
-            // cMeanPoints
-            // 
-            this.cMeanPoints.HeaderText = "Mean Points";
-            this.cMeanPoints.Name = "cMeanPoints";
-            this.cMeanPoints.ReadOnly = true;
-            this.cMeanPoints.Width = 58;
-            // 
-            // cMeanPercent
-            // 
-            this.cMeanPercent.HeaderText = "Mean %";
-            this.cMeanPercent.Name = "cMeanPercent";
-            this.cMeanPercent.ReadOnly = true;
-            this.cMeanPercent.Width = 58;
-            // 
-            // cReal
-            // 
-            this.cReal.HeaderText = "Real";
-            this.cReal.Name = "cReal";
-            this.cReal.ReadOnly = true;
-            this.cReal.Width = 45;
-            // 
-            // dataGridViewCheckBoxColumn1
-            // 
-            this.dataGridViewCheckBoxColumn1.HeaderText = "Active";
-            this.dataGridViewCheckBoxColumn1.Name = "dataGridViewCheckBoxColumn1";
-            this.dataGridViewCheckBoxColumn1.ReadOnly = true;
-            this.dataGridViewCheckBoxColumn1.Width = 45;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.HeaderText = "Name";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.dataGridViewTextBoxColumn1.Width = 85;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.HeaderText = "Category";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.ReadOnly = true;
-            this.dataGridViewTextBoxColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewTextBoxColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.dataGridViewTextBoxColumn2.Width = 85;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.HeaderText = "Points";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.ReadOnly = true;
-            this.dataGridViewTextBoxColumn3.Width = 58;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            this.dataGridViewTextBoxColumn4.HeaderText = "Out Of";
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            this.dataGridViewTextBoxColumn4.ReadOnly = true;
-            this.dataGridViewTextBoxColumn4.Width = 58;
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            this.dataGridViewTextBoxColumn5.HeaderText = "Percent";
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            this.dataGridViewTextBoxColumn5.ReadOnly = true;
-            this.dataGridViewTextBoxColumn5.Width = 58;
-            // 
-            // MeanPoints
-            // 
-            this.MeanPoints.HeaderText = "Mean Points";
-            this.MeanPoints.Name = "MeanPoints";
-            this.MeanPoints.Width = 58;
-            // 
-            // MeanPercent
-            // 
-            this.MeanPercent.HeaderText = "Mean %";
-            this.MeanPercent.Name = "MeanPercent";
-            this.MeanPercent.Width = 58;
-            // 
-            // dataGridViewCheckBoxColumn2
-            // 
-            this.dataGridViewCheckBoxColumn2.HeaderText = "Real";
-            this.dataGridViewCheckBoxColumn2.Name = "dataGridViewCheckBoxColumn2";
-            this.dataGridViewCheckBoxColumn2.ReadOnly = true;
-            this.dataGridViewCheckBoxColumn2.Width = 45;
-            // 
             // Assignments
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(924, 520);
-            this.ControlBox = false;
+            this.ClientSize = new System.Drawing.Size(925, 513);
             this.Controls.Add(this.TabsAssignments);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(832, 486);
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(941, 552);
+            this.MinimumSize = new System.Drawing.Size(941, 552);
             this.Name = "Assignments";
             this.Text = "Assignments";
             this.Load += new System.EventHandler(this.Assignments_Load);
@@ -1055,7 +1044,6 @@
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView)).EndInit();
             this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -1093,7 +1081,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox TextBoxMeanPoints;

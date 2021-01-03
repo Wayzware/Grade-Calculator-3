@@ -183,7 +183,7 @@ namespace Grade_Calculator_3
                         tempCanvasData.id = _courses[jObjIndex].GetValue("id").ToString();
                         tempCanvasData.syncSemiStatics = CheckBoxGradeScale.Checked;
                         tempCanvasData.syncAssignments = CheckBoxAssignments.Checked;
-                        tempCanvasData.syncOnLoad = CheckBoxSyncOnLaunch.Checked;
+                        tempCanvasData.syncOnLoad = false;
                         temp.canvasData = tempCanvasData;
 
                         if (_classesToSave == null)
@@ -205,7 +205,7 @@ namespace Grade_Calculator_3
                         }
                         tempCanvasData.id = _courses[jObjIndex].GetValue("id").ToString();
                         tempCanvasData.syncSemiStatics = CheckBoxGradeScale.Checked;
-                        tempCanvasData.syncOnLoad = CheckBoxSyncOnLaunch.Checked;
+                        tempCanvasData.syncOnLoad = false;
                         tempCanvasData.syncAssignments = CheckBoxAssignments.Checked;
                         XMLHandler.Data[dataIndex].canvasData = tempCanvasData;
                         if (_classesToSave == null)
@@ -243,7 +243,7 @@ namespace Grade_Calculator_3
                 ComboBoxSelectClass.Text = "";
                 CheckBoxGradeScale.Checked = false;
                 CheckBoxAssignments.Checked = false;
-                CheckBoxSyncOnLaunch.Checked = false;
+                //CheckBoxSyncOnLaunch.Checked = false;
                 ButtonNext.Text = subpage == totalSubpages ? @"Finish" : @"Next";
 
             }

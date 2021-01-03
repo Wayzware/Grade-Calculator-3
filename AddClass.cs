@@ -31,6 +31,7 @@ namespace Grade_Calculator_3
             pages = 1;
             DisplayPage(1);
 
+            /*
             CheckBox[] gradeScaleCheckBoxes = new CheckBox[11];
             gradeScaleCheckBoxes[0] = checkBoxA;
             gradeScaleCheckBoxes[1] = checkBoxAM;
@@ -47,6 +48,7 @@ namespace Grade_Calculator_3
             {
                 chkbx.Checked = true;
             }
+            */
         }
 
         public AddClass(Main sender, SchoolClass schoolClass)
@@ -87,19 +89,19 @@ namespace Grade_Calculator_3
             {
                 radioButtonAF.Checked = true;
                 TextBox[] GradesAF = { TextBoxA, TextBoxAM, TextBoxBP, TextBoxB, TextBoxBM, TextBoxCP, TextBoxC, TextBoxCM, TextBoxDP, TextBoxD, TextBoxDM, textBoxF };
-                CheckBox[] GradesAFEnabled = { checkBoxA, checkBoxAM, checkBoxBP, checkBoxB, checkBoxBM, checkBoxCP, checkBoxC, checkBoxCM, checkBoxDP, checkBoxD, checkBoxDM, checkBoxF };
+                //CheckBox[] GradesAFEnabled = { checkBoxA, checkBoxAM, checkBoxBP, checkBoxB, checkBoxBM, checkBoxCP, checkBoxC, checkBoxCM, checkBoxDP, checkBoxD, checkBoxDM, checkBoxF };
 
                 c = 0;
                 foreach (double x in schoolClass.gradeScale)
                 {
                     if(schoolClass.gradeScale[c] != -1)
                     {
-                        GradesAFEnabled[c].Checked = true;
+                        //GradesAFEnabled[c].Checked = true;
                         GradesAF[c].Text = schoolClass.gradeScale[c].ToString();
                     }
                     else
                     {
-                        GradesAFEnabled[c].Checked = false;
+                        //GradesAFEnabled[c].Checked = false;
                     }
                     c++;
                 }
@@ -198,7 +200,7 @@ namespace Grade_Calculator_3
             {
                 TextBox[] gradeScaleTextBoxes = new TextBox[11];
                 CheckBox[] gradeScaleCheckBoxes = new CheckBox[11];
-                Boolean[] gradeScaleEnableds = new Boolean[11];
+                bool[] gradeScaleEnableds = new bool[11];
 
                 gradeScaleTextBoxes[0] = TextBoxA;
                 gradeScaleTextBoxes[1] = TextBoxAM;
@@ -212,6 +214,7 @@ namespace Grade_Calculator_3
                 gradeScaleTextBoxes[9] = TextBoxD;
                 gradeScaleTextBoxes[10] = TextBoxDM;
 
+                /*
                 gradeScaleCheckBoxes[0] = checkBoxA;
                 gradeScaleCheckBoxes[1] = checkBoxAM;
                 gradeScaleCheckBoxes[2] = checkBoxBP;
@@ -223,10 +226,11 @@ namespace Grade_Calculator_3
                 gradeScaleCheckBoxes[8] = checkBoxDP;
                 gradeScaleCheckBoxes[9] = checkBoxD;
                 gradeScaleCheckBoxes[10] = checkBoxDM;
+                */
 
-                foreach (CheckBox chkbx in gradeScaleCheckBoxes)
+                for (int i = 0; i < 11; i++)
                 {
-                    gradeScaleEnableds[c] = chkbx.Checked;
+                    gradeScaleEnableds[c] = gradeScaleTextBoxes[i].Text != "";
                     c++;
                 }
 
